@@ -1,0 +1,19 @@
+.header {
+  background-color: var(--color-gray-100);
+  padding: 1rem 0;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  width: 136px;
+  margin-right: -136px;
+}
