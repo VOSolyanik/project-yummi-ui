@@ -44,41 +44,50 @@
   left: 0;
   right: 0;
   background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
-  padding: 1.5rem 1rem 1rem;
+  padding: 24px 24px 24px 24px;
   display: flex;
   align-items: flex-end;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: 4px;
 }
 
 .categoryName {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
+  padding: 9px 14px;
   color: var(--color-white);
-  font-weight: 600;
-  font-size: 1.125rem;
-  line-height: 1.2;
+  font-family: 'Mulish', sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: -0.02em; /* -2% */
+  display: inline-block;
 }
 
 .arrowButton {
-  width: 2rem;
-  height: 2rem;
-  border: none;
+  width: 44px; /* 18px + 13px padding з обох сторін */
+  height: 44px; /* 18px + 13px padding з обох сторін */
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: transparent;
+  padding: 13px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: all 0.2s ease;
-  backdrop-filter: blur(4px);
 }
 
 .arrowButton:hover {
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.1);
   transform: scale(1.1);
 }
 
 .arrowIcon {
-  width: 1rem;
-  height: 1rem;
+  width: 18px;
+  height: 18px;
   filter: brightness(0) invert(1); /* Робить іконку білою */
 }
 
@@ -110,21 +119,24 @@
   }
   
   .overlay {
-    padding: 1rem 0.75rem 0.75rem;
+    padding: 20px 20px 20px 20px;
+    gap: 4px;
   }
   
   .categoryName {
-    font-size: 1rem;
+    font-size: 16px;
+    padding: 8px 12px;
   }
   
   .arrowButton {
-    width: 1.75rem;
-    height: 1.75rem;
+    width: 44px; /* 18px + 13px padding з обох сторін */
+    height: 44px; /* 18px + 13px padding з обох сторін */
+    padding: 13px;
   }
   
   .arrowIcon {
-    width: 0.875rem;
-    height: 0.875rem;
+    width: 18px;
+    height: 18px;
   }
 }
 
@@ -138,21 +150,24 @@
   }
   
   .overlay {
-    padding: 1.25rem 1rem 1rem;
+    padding: 22px 22px 22px 22px;
+    gap: 4px;
   }
   
   .categoryName {
-    font-size: 1.125rem;
+    font-size: 18px;
+    padding: 9px 13px;
   }
   
   .arrowButton {
-    width: 2rem;
-    height: 2rem;
+    width: 44px; /* 18px + 13px padding з обох сторін */
+    height: 44px; /* 18px + 13px padding з обох сторін */
+    padding: 13px;
   }
   
   .arrowIcon {
-    width: 1rem;
-    height: 1rem;
+    width: 18px;
+    height: 18px;
   }
 }
 
@@ -163,21 +178,24 @@
   }
   
   .overlay {
-    padding: 2rem 1.5rem 1.5rem;
+    padding: 23px 23px 23px 23px;
+    gap: 4px;
   }
   
   .categoryName {
-    font-size: 1.25rem;
+    font-size: 19px;
+    padding: 9px 13px;
   }
   
   .arrowButton {
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 44px; /* 18px + 13px padding з обох сторін */
+    height: 44px; /* 18px + 13px padding з обох сторін */
+    padding: 13px;
   }
   
   .arrowIcon {
-    width: 1.25rem;
-    height: 1.25rem;
+    width: 18px;
+    height: 18px;
   }
 }
 
