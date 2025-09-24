@@ -35,6 +35,8 @@ const CategoryList = ({ categories, onCategoryClick, isLoading, error }) => {
 
   // Визначаємо розмір кожної картки згідно з дизайном
   const getCardSize = (categoryName) => {
+    // На десктопі: Desserts, Lamb, Pork, Side - широкі
+    // На планшетах: тільки Desserts, Pork - широкі (CSS перевизначає)
     const wideCategories = ['Desserts', 'Lamb', 'Pork', 'Side'];
     return wideCategories.includes(categoryName) ? 'wide' : 'normal';
   };

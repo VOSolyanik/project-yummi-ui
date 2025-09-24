@@ -51,6 +51,21 @@
   .categories {
     padding: 4rem 0;
   }
+  
+  .container {
+    padding: 0;
+  }
+  
+  .container .title {
+    margin-bottom: 20px !important;
+    padding: 0 32px; /* Вирівнюємо з лівим краєм категорій */
+  }
+  
+  .container .subtitle {
+    margin: 0 0 40px 0 !important;
+    padding-left: 32px; /* Тільки лівий padding для вирівнювання */
+    padding-right: 0; /* Прибираємо правий padding */
+  }
 }
 
 /* Desktop: з 1440px */

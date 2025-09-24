@@ -174,17 +174,33 @@
 /* Tablet: з 768px */
 @media screen and (min-width: 768px) and (max-width: 1439px) {
   .card {
-    height: 280px;
+    height: 369px !important; /* Висота зображень 369px для всіх карток на планшетах */
+  }
+  
+  .card.normal {
+    height: 369px !important; /* Висота зображень 369px для normal карток */
+  }
+  
+  .card.wide {
+    height: 369px !important; /* Висота зображень 369px для wide карток (Desserts та Pork) */
+    grid-column: span 2 !important; /* Desserts та Pork на всю ширину рядка */
+  }
+  
+  /* Перевизначаємо для Lamb та Side на планшетах - робимо їх normal */
+  .card.wide[data-category="Lamb"],
+  .card.wide[data-category="Side"] {
+    height: 369px !important;
+    grid-column: span 1 !important;
   }
   
   .overlay {
-    padding: 23px 23px 23px 23px;
+    padding: 24px 24px 24px 24px;
     gap: 4px;
   }
   
   .categoryName {
-    font-size: 19px;
-    padding: 9px 13px;
+    font-size: 20px;
+    padding: 9px 14px;
   }
   
   .arrowButton {

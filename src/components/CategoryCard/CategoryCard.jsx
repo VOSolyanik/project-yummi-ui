@@ -34,7 +34,7 @@ const CategoryCard = ({ category, onClick, isAllCategories = false, size = 'norm
   }
 
   return (
-    <div className={clsx(css.card, css[size])} onClick={handleClick}>
+    <div className={clsx(css.card, css[size])} data-category={category.name} onClick={handleClick}>
       <div className={css.imageContainer}>
         <img 
           src={getCategoryImage(category.name)}
