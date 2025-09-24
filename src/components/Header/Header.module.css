@@ -1,11 +1,13 @@
 .header {
-  background-color: var(--color-gray-100);
+  background-color: var(--color-gray-100, #f7f7f7);
   padding: 1rem 0;
+  border-bottom: 1px solid var(--color-gray-200, #e5e5e5);
 }
 
 .container {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .logo {
@@ -15,5 +17,195 @@
 
 .logo img {
   width: 136px;
-  margin-right: -136px;
+  height: auto;
+}
+
+.authSection {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.authenticatedUser {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.welcomeText {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-gray-900, #1a1a1a);
+}
+
+.authButtons {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.loginButton {
+  background: transparent;
+  color: #BFBFBF;
+  border: 2px solid #BFBFBF;
+  padding: 13px 16px;
+  font-family: 'Mulish', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.24px;
+  line-height: 18px;
+  border-radius: 30px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.loginButton:hover {
+  border-color: #323232;
+  background: #323232;
+  color: white;
+}
+
+.registerButton {
+  background: #BFBFBF;
+  color: white;
+  border: none;
+  padding: 13px 16px;
+  font-family: 'Mulish', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.24px;
+  line-height: 18px;
+  border-radius: 30px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.registerButton:hover {
+  background: #323232;
+  transform: translateY(-1px);
+}
+
+.logoutButton {
+  background: #BFBFBF;
+  color: white;
+  border: none;
+  padding: 13px 16px;
+  font-family: 'Mulish', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.24px;
+  line-height: 18px;
+  border-radius: 30px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.logoutButton:hover:not(:disabled) {
+  background: #323232;
+  transform: translateY(-1px);
+}
+
+.logoutButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Responsive Styles */
+/* Tablet styles */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .header {
+    padding: 0.75rem 0;
+  }
+  
+  .container {
+    padding: 0 2rem;
+  }
+  
+  .logo img {
+    width: 120px;
+  }
+  
+  .loginButton,
+  .registerButton,
+  .logoutButton {
+    padding: 10px 18px;
+    font-size: 14px;
+  }
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  .header {
+    padding: 0.5rem 0;
+  }
+  
+  .container {
+    padding: 0 1rem;
+  }
+  
+  .logo img {
+    width: 100px;
+  }
+  
+  .welcomeText {
+    font-size: 0.875rem;
+  }
+  
+  .authButtons {
+    gap: 0.5rem;
+  }
+  
+  .loginButton,
+  .registerButton,
+  .logoutButton {
+    padding: 10px 16px;
+    font-size: 11px;
+    height: 40px;
+    border-radius: 20px;
+  }
+}
+
+/* Small mobile styles */
+@media (max-width: 480px) {
+  .container {
+    padding: 0 0.75rem;
+  }
+  
+  .logo img {
+    width: 85px;
+  }
+  
+  .welcomeText {
+    display: none;
+  }
+  
+  .authButtons {
+    gap: 0.25rem;
+  }
+  
+  .loginButton,
+  .registerButton,
+  .logoutButton {
+    padding: 8px 12px;
+    font-size: 10px;
+    height: 36px;
+    border-radius: 18px;
+    min-width: 60px;
+  }
 }
