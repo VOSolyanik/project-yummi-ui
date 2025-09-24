@@ -1,0 +1,30 @@
+.categories {
+  padding: 4rem 0;
+  background-color: var(--color-white);
+}
+
+.title {
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.subtitle {
+  margin: 0 auto 3rem auto;
+  text-align: center;
+  max-width: 800px;
+  line-height: 1.6;
+}
+
+@media screen and (min-width: 768px) {
+  .categories {
+    padding: 5rem 0;
+  }
+  
+  .title {
+    margin-bottom: 1.5rem;
+  }
+  
+  .subtitle {
+    margin-bottom: 4rem;
+  }
+}
