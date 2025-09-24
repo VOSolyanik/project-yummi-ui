@@ -5,6 +5,19 @@
   color: var(--color-black);
 }
 
+/* Спеціальний стиль для заголовка Categories */
+.categoriesTitle {
+  font-family: 'Mulish', sans-serif;
+  font-weight: 800;
+  font-style: normal;
+  font-size: 40px;
+  line-height: 44px;
+  letter-spacing: -0.02em; /* -2% */
+  text-transform: uppercase;
+  color: var(--color-black);
+  margin: 0;
+}
+
 .level1 {
   font-size: 2.5rem;
   margin-bottom: 1rem;

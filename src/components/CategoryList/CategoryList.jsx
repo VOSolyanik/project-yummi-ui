@@ -30,16 +30,23 @@ const CategoryList = ({ categories, onCategoryClick, isLoading, error }) => {
     );
   }
 
-  // Беремо перші 12 категорій для сітки
-  const displayCategories = categories.slice(0, 12);
+  // Беремо перші 11 категорій для сітки (без Soup)
+  const displayCategories = categories.slice(0, 11);
+
+  // Визначаємо розмір кожної картки згідно з дизайном
+  const getCardSize = (categoryName) => {
+    const wideCategories = ['Desserts', 'Lamb', 'Pork', 'Side'];
+    return wideCategories.includes(categoryName) ? 'wide' : 'normal';
+  };
 
   return (
     <div className={css.grid}>
-      {displayCategories.map((category) => (
+      {displayCategories.map((category, index) => (
         <CategoryCard
           key={category._id}
           category={category}
           onClick={onCategoryClick}
+          size={getCardSize(category.name)}
         />
       ))}
       
@@ -47,6 +54,7 @@ const CategoryList = ({ categories, onCategoryClick, isLoading, error }) => {
       <CategoryCard
         isAllCategories={true}
         onClick={() => onCategoryClick({ _id: 'all', name: 'All Categories' })}
+        size="normal"
       />
     </div>
   );

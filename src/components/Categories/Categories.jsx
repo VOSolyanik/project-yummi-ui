@@ -18,7 +18,7 @@ import {
 
 const Categories = ({ onCategorySelect }) => {
   const dispatch = useDispatch();
-  
+
   const categories = useSelector(selectCategories);
   const isLoading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
@@ -41,24 +41,24 @@ const Categories = ({ onCategorySelect }) => {
     // TODO: Тут буде логіка відправки запиту за рецептами
     // Поки що просто логуємо
     console.log('Category selected:', category);
-    
+
     if (onCategorySelect) {
       onCategorySelect(category);
     }
   };
 
   return (
-    <section className={css.categories}>
-      <div className="container">
-        <MainTitle level={2} className={css.title}>
+    <section className={css.categories} aria-labelledby="categories-heading">
+      <div className={css.container}>
+        <MainTitle level={2} id="categories-heading" className={css.title}>
           CATEGORIES
         </MainTitle>
-        
+
         <Subtitle className={css.subtitle}>
-          Discover a limitless world of culinary possibilities, and enjoy exquisite recipes that combine taste, style and feel for a new atmosphere of the kitchen.
+          Discover a limitless world of culinary possibilities and enjoy exquisite recipes that combine taste, style and the warm atmosphere of the kitchen.
         </Subtitle>
-        
-        <CategoryList 
+
+        <CategoryList
           categories={categories}
           onCategoryClick={handleCategoryClick}
           isLoading={isLoading}

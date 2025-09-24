@@ -3,18 +3,29 @@ import React from 'react';
 import clsx from 'clsx';
 
 import css from './CategoryCard.module.css';
-import Icon from '@components/Icon/Icon';
+import arrowUpRightIcon from '../../assets/icons/arrow-up-right.svg';
 
-const CategoryCard = ({ category, onClick, isAllCategories = false }) => {
+const CategoryCard = ({ category, onClick, isAllCategories = false, size = 'normal' }) => {
   const handleClick = () => {
     if (onClick) {
       onClick(category);
     }
   };
 
+  // Функція для отримання зображення категорії
+  const getCategoryImage = (categoryName) => {
+    const imageName = categoryName.replace(/\s+/g, ''); // Видаляємо пробіли
+    try {
+      return new URL(`../../assets/images/categories/${imageName}.jpg`, import.meta.url).href;
+    } catch (error) {
+      // Fallback до випадкового зображення, якщо файл не знайдено
+      return `https://picsum.photos/300/300?random=${category._id}`;
+    }
+  };
+
   if (isAllCategories) {
     return (
-      <div className={css.card} onClick={handleClick}>
+      <div className={clsx(css.card, css[size])} onClick={handleClick}>
         <div className={css.allCategoriesButton}>
           ALL CATEGORIES
         </div>
@@ -23,10 +34,10 @@ const CategoryCard = ({ category, onClick, isAllCategories = false }) => {
   }
 
   return (
-    <div className={css.card} onClick={handleClick}>
+    <div className={clsx(css.card, css[size])} onClick={handleClick}>
       <div className={css.imageContainer}>
         <img 
-          src={`https://picsum.photos/300/300?random=${category._id}`}
+          src={getCategoryImage(category.name)}
           alt={category.name}
           className={css.image}
           loading="lazy"
@@ -38,7 +49,11 @@ const CategoryCard = ({ category, onClick, isAllCategories = false }) => {
             className={css.arrowButton}
             aria-label={`View ${category.name} recipes`}
           >
-            <Icon name="arrow-right" className={css.arrowIcon} />
+            <img 
+              src={arrowUpRightIcon} 
+              alt="arrow" 
+              className={css.arrowIcon}
+            />
           </button>
         </div>
       </div>

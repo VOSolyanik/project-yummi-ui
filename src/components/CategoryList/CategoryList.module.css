@@ -1,8 +1,8 @@
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1.5rem;
-  max-width: 1200px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px; /* Gap між зображеннями по 20px */
+  max-width: 1280px; /* 1440px - 80px*2 = 1280px */
   margin: 0 auto;
 }
 
@@ -69,15 +69,40 @@
   border: 1px solid #e9ecef;
 }
 
-@media screen and (min-width: 768px) {
+/* Mobile: верстка гумова від 320px, стає адаптивною з 375px */
+@media screen and (max-width: 374px) {
   .grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 0 1rem;
   }
 }
 
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 375px) and (max-width: 767px) {
   .grid {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    padding: 0 1rem;
+  }
+}
+
+/* Tablet: з 768px */
+@media screen and (min-width: 768px) and (max-width: 1439px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    padding: 0 2rem;
+  }
+}
+
+/* Desktop: з 1440px */
+@media screen and (min-width: 1440px) {
+  .grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Gap 20px між картками */
+    justify-content: flex-start; /* Вирівнюємо по лівому краю */
+    width: 100%;
+    padding: 0;
   }
 }

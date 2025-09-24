@@ -1,10 +1,19 @@
 .card {
   position: relative;
-  aspect-ratio: 1;
-  border-radius: 0.75rem;
+  height: 200px; /* Базова висота для мобільних */
+  border-radius: 30px; /* Border-radius зображень 30px */
   overflow: hidden;
   cursor: pointer;
   transition: transform 0.2s ease;
+}
+
+/* Розміри карток */
+.card.normal {
+  grid-column: span 1;
+}
+
+.card.wide {
+  grid-column: span 2;
 }
 
 .card:hover {
@@ -21,6 +30,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
   transition: transform 0.3s ease;
 }
 
@@ -69,7 +79,7 @@
 .arrowIcon {
   width: 1rem;
   height: 1rem;
-  color: var(--color-white);
+  filter: brightness(0) invert(1); /* Робить іконку білою */
 }
 
 .allCategoriesButton {
@@ -89,7 +99,69 @@
   background-color: #333;
 }
 
-@media screen and (min-width: 768px) {
+/* Mobile: верстка гумова від 320px, стає адаптивною з 375px */
+@media screen and (max-width: 374px) {
+  .card {
+    height: 200px;
+  }
+  
+  .card.wide {
+    grid-column: span 1;
+  }
+  
+  .overlay {
+    padding: 1rem 0.75rem 0.75rem;
+  }
+  
+  .categoryName {
+    font-size: 1rem;
+  }
+  
+  .arrowButton {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+  
+  .arrowIcon {
+    width: 0.875rem;
+    height: 0.875rem;
+  }
+}
+
+@media screen and (min-width: 375px) and (max-width: 767px) {
+  .card {
+    height: 220px;
+  }
+  
+  .card.wide {
+    grid-column: span 2;
+  }
+  
+  .overlay {
+    padding: 1.25rem 1rem 1rem;
+  }
+  
+  .categoryName {
+    font-size: 1.125rem;
+  }
+  
+  .arrowButton {
+    width: 2rem;
+    height: 2rem;
+  }
+  
+  .arrowIcon {
+    width: 1rem;
+    height: 1rem;
+  }
+}
+
+/* Tablet: з 768px */
+@media screen and (min-width: 768px) and (max-width: 1439px) {
+  .card {
+    height: 280px;
+  }
+  
   .overlay {
     padding: 2rem 1.5rem 1.5rem;
   }
@@ -106,5 +178,21 @@
   .arrowIcon {
     width: 1.25rem;
     height: 1.25rem;
+  }
+}
+
+/* Desktop: з 1440px */
+@media screen and (min-width: 1440px) {
+  .card {
+    height: 369px; /* Висота зображень 369px для всіх десктопів */
+    flex-shrink: 0; /* Не зменшується */
+  }
+  
+  .card.normal {
+    width: 325px; /* Фіксована ширина 325px */
+  }
+  
+  .card.wide {
+    width: 590px; /* Фіксована ширина 590px */
   }
 }
