@@ -184,7 +184,8 @@
   }
   
   .card.wide[data-category="Lamb"],
-  .card.wide[data-category="Side"] {
+  .card.wide[data-category="Side"],
+  .card.wide[data-category="Vegan"] {
     height: 369px !important;
     grid-column: span 1 !important;
   }

@@ -1,7 +1,7 @@
-import { mockCategories, requiredCategories } from './mockData.js';
+import { requiredCategories } from './mockData.js';
+import { isVegetarianVariant } from '../utils/abTesting';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api';
-const USE_MOCK_DATA = import.meta.env.VITE_USE_MOCK_DATA === 'true' || false; // За замовчуванням використовуємо реальний API
 
 class ApiService {
   constructor(baseURL) {
@@ -20,7 +20,7 @@ class ApiService {
 
     try {
       const response = await fetch(url, config);
-      
+
       if (!response.ok) {
         const errorText = await response.text();
         const error = new Error(`HTTP error! status: ${response.status}`);
@@ -28,7 +28,7 @@ class ApiService {
         error.responseText = errorText;
         throw error;
       }
-      
+
       const data = await response.json();
       return { data, status: response.status };
     } catch (error) {
@@ -41,7 +41,7 @@ class ApiService {
     const searchParams = new URLSearchParams(params);
     const queryString = searchParams.toString();
     const url = queryString ? `${endpoint}?${queryString}` : endpoint;
-    
+
     return this.request(url, { method: 'GET' });
   }
 
@@ -56,65 +56,75 @@ class ApiService {
 // Categories API - використовуємо реальний API (ендпоінт /categories реалізований на бекенді)
 export const categoriesAPI = {
   getCategories: async () => {
-    if (USE_MOCK_DATA) {
-      await new Promise(resolve => setTimeout(resolve, 300));
-      return { data: mockCategories };
-    }
-    
+    const isVeg = isVegetarianVariant();
+
     try {
       const response = await new ApiService(API_BASE_URL).get('/categories');
-      
-      // Мапінг назв з бекенду на назви для відображення
-      const nameMapping = {
-        'Dessert': 'Desserts',  // Бекенд: "Dessert" → Фронтенд: "Desserts"
-        // Додайте інші мапінги за потреби
-      };
-      
-      // Бекенд повертає { id, name }, але наш фронтенд очікує { _id, name }
-      const transformedCategories = response.data.map(category => ({
-        _id: category.id,
-        name: nameMapping[category.name] || category.name  // Використовуємо мапінг або оригінальну назву
-      }));
-      
-      // Фільтруємо тільки ті категорії, які є на макеті
-      const filteredCategories = transformedCategories.filter(category => 
-        requiredCategories.includes(category.name)
+
+        const nameMapping = {
+          'Dessert': 'Desserts',
+        };
+
+        const transformedCategories = response.data.map(category => ({
+          _id: category.id,
+          name: nameMapping[category.name] || category.name
+        }));
+      let finalCategories = transformedCategories;
+      if (isVeg) {
+        finalCategories = transformedCategories.map(category => {
+            switch (category.name) {
+              case 'Beef':
+                const vegetarianCategory = response.data.find(cat => cat.name === 'Vegetarian');
+                return { _id: vegetarianCategory?.id || category._id, name: 'Vegetarian' };
+              case 'Lamb':
+                const veganCategory = response.data.find(cat => cat.name === 'Vegan');
+                return { _id: veganCategory?.id || category._id, name: 'Vegan' };
+              case 'Goat':
+                const soupCategory = response.data.find(cat => cat.name === 'Soup');
+                return { _id: soupCategory?.id || category._id, name: 'Soup' };
+            default:
+              return category;
+          }
+        });
+      }
+
+      const currentRequiredCategories = isVeg ?
+        ['Vegetarian', 'Breakfast', 'Desserts', 'Vegan', 'Soup', 'Miscellaneous', 'Pasta', 'Pork', 'Seafood', 'Side', 'Starter'] :
+        requiredCategories;
+
+      const filteredCategories = finalCategories.filter(category =>
+        currentRequiredCategories.includes(category.name)
       );
-      
-      // Сортуємо за порядком з макету
-      const sortedCategories = requiredCategories.map(name => 
+
+      const sortedCategories = currentRequiredCategories.map(name =>
         filteredCategories.find(cat => cat.name === name)
-      ).filter(Boolean); // Прибираємо undefined
-      
+      ).filter(Boolean);
+
       return { data: sortedCategories };
     } catch (error) {
       console.error('Error fetching categories:', error);
-      await new Promise(resolve => setTimeout(resolve, 300));
-      return { data: mockCategories };
+      throw error;
     }
   },
 };
 
-// Recipes API - використовуємо реальний API (ендпоінт /recipes реалізований на бекенді)
 export const recipesAPI = {
   getRecipesByCategory: async (categoryId, page = 1, limit = 12) => {
     const params = { page, limit };
     if (categoryId !== 'all') {
       params.category = categoryId;
     }
-    
+
     try {
       const response = await new ApiService(API_BASE_URL).get('/recipes', params);
-      
-      // Бекенд повертає { items: [...], totalCount: 285 }
-      // Але наш фронтенд очікує { recipes: [...], totalPages: 1, currentPage: 1, totalRecipes: 285 }
+
       const transformedData = {
         recipes: response.data.items || [],
         totalPages: Math.ceil((response.data.totalCount || 0) / limit),
         currentPage: page,
         totalRecipes: response.data.totalCount || 0
       };
-      
+
       return { data: transformedData, status: response.status };
     } catch (error) {
       console.error('Error fetching recipes:', error);

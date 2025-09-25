@@ -24,26 +24,26 @@ const HomePage = () => {
   };
 
   return (
-    <>
-      <Helmet>
-        <title>{BASE_TITLE} - {showRecipes ? 'Recipes' : 'Categories'}</title>
-      </Helmet>
-      
-      {!showRecipes && (
-        <section className={css.hero}>
-          Home page
-        </section>
-      )}
+        <>
+          <Helmet>
+            <title>{BASE_TITLE} - {showRecipes ? 'Recipes' : 'Categories'}</title>
+          </Helmet>
+          
+          {!showRecipes && (
+            <section className={css.hero}>
+              Home page
+            </section>
+          )}
 
-      {showRecipes ? (
-        <Recipes 
-          categoryData={selectedCategory}
-          onBackToCategories={handleBackToCategories}
-        />
-      ) : (
-        <Categories onCategorySelect={handleCategorySelect} />
-      )}
-    </>
+          {showRecipes ? (
+            <Recipes 
+              categoryData={selectedCategory}
+              onBackToCategories={handleBackToCategories}
+            />
+          ) : (
+            <Categories onCategorySelect={handleCategorySelect} />
+          )}
+        </>
   );
 };
 

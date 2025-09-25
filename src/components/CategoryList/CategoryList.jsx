@@ -5,7 +5,7 @@ import css from './CategoryList.module.css';
 import CategoryCard from '@components/CategoryCard/CategoryCard';
 
 const CategoryList = ({ categories, onCategoryClick, isLoading, error }) => {
-  const wideCategories = ['Desserts', 'Lamb', 'Pork', 'Side'];
+  const wideCategories = ['Desserts', 'Lamb', 'Pork', 'Side', 'Vegan'];
 
   const getCardSize = (categoryName) => {
     return wideCategories.includes(categoryName) ? 'wide' : 'normal';
