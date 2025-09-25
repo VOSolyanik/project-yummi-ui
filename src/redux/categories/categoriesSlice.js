@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 import { categoriesAPI } from '../../services/api';
 
-// Async thunk для отримання категорій
+// Async thunk to get categories
 export const fetchCategories = createAsyncThunk(
   'categories/fetchCategories',
   async (_, { rejectWithValue }) => {
