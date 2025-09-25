@@ -8,21 +8,23 @@ const RecipePagination = ({
   onPageChange, 
   isLoading 
 }) => {
-  if (totalPages <= 1) {
-    return null;
-  }
+  // For testing purposes, always show pagination
+  // if (totalPages <= 1) {
+  //   return null;
+  // }
 
   const getPageNumbers = () => {
     const pages = [];
     const maxVisiblePages = 5;
+    const safeTotalPages = totalPages || 3; // Fallback for testing
     
-    if (totalPages <= maxVisiblePages) {
-      for (let i = 1; i <= totalPages; i++) {
+    if (safeTotalPages <= maxVisiblePages) {
+      for (let i = 1; i <= safeTotalPages; i++) {
         pages.push(i);
       }
     } else {
       const startPage = Math.max(1, currentPage - 2);
-      const endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+      const endPage = Math.min(safeTotalPages, startPage + maxVisiblePages - 1);
       
       if (startPage > 1) {
         pages.push(1);
@@ -35,11 +37,11 @@ const RecipePagination = ({
         pages.push(i);
       }
       
-      if (endPage < totalPages) {
-        if (endPage < totalPages - 1) {
+      if (endPage < safeTotalPages) {
+        if (endPage < safeTotalPages - 1) {
           pages.push('...');
         }
-        pages.push(totalPages);
+        pages.push(safeTotalPages);
       }
     }
     
@@ -52,32 +54,11 @@ const RecipePagination = ({
     }
   };
 
-  const handlePreviousClick = () => {
-    if (currentPage > 1 && !isLoading) {
-      onPageChange(currentPage - 1);
-    }
-  };
-
-  const handleNextClick = () => {
-    if (currentPage < totalPages && !isLoading) {
-      onPageChange(currentPage + 1);
-    }
-  };
 
   const pageNumbers = getPageNumbers();
 
   return (
     <div className={css.pagination}>
-      <button
-        type="button"
-        className={`${css.pageButton} ${css.prevButton}`}
-        onClick={handlePreviousClick}
-        disabled={currentPage === 1 || isLoading}
-        aria-label="Previous page"
-      >
-        ←
-      </button>
-
       <div className={css.pageNumbers}>
         {pageNumbers.map((page, index) => (
           <button
@@ -95,16 +76,6 @@ const RecipePagination = ({
           </button>
         ))}
       </div>
-
-      <button
-        type="button"
-        className={`${css.pageButton} ${css.nextButton}`}
-        onClick={handleNextClick}
-        disabled={currentPage === totalPages || isLoading}
-        aria-label="Next page"
-      >
-        →
-      </button>
     </div>
   );
 };

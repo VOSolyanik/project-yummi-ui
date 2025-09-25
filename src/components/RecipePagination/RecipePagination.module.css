@@ -10,7 +10,7 @@
 .pageButton {
   width: 40px;
   height: 40px;
-  border: 1px solid #BFBEBE;
+  border: none;
   border-radius: 100px;
   background: transparent;
   cursor: pointer;
@@ -30,7 +30,7 @@
 }
 
 .pageButton:hover:not(:disabled) {
-  border-color: #050505;
+  background: rgba(0, 0, 0, 0.05);
 }
 
 .pageButton:disabled {
@@ -39,7 +39,7 @@
 }
 
 .pageButton.active {
-  border: none;
+  border: 1px solid #BFBEBE;
   background: transparent;
   color: #050505;
 }
@@ -55,11 +55,6 @@
   border: none;
 }
 
-.prevButton,
-.nextButton {
-  font-size: 16px;
-  font-weight: 600;
-}
 
 .pageNumbers {
   display: flex;

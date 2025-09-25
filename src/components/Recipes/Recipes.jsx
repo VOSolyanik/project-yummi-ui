@@ -38,6 +38,15 @@ const Recipes = ({ categoryData, onBackToCategories }) => {
   const selectedIngredient = useSelector(selectSelectedIngredient);
   const selectedArea = useSelector(selectSelectedArea);
 
+  console.log('Recipes Debug:', {
+    recipesCount: recipes?.length || 0,
+    totalPages,
+    totalRecipes,
+    currentPage,
+    isLoading,
+    error
+  });
+
   const isAllCategories = categoryData?.category?.name === 'All Categories';
   const categoryId = categoryData?.category?._id || 'all';
   
