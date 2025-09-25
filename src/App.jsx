@@ -2,7 +2,7 @@ import { Suspense, lazy } from 'react';
 
 import { Helmet } from 'react-helmet-async';
 import { Toaster } from 'react-hot-toast';
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import Header from '@components/Header/Header';
 import Loader from '@components/Loader/Loader';
@@ -11,6 +11,8 @@ import './App.module.css';
 
 // Lazy loading for pages
 const HomePage = lazy(() => import('@pages/HomePage/HomePage'));
+const AddRecipePage = lazy(() => import('@pages/AddRecipePage/AddRecipePage'));
+const RecipePage = lazy(() => import('@pages/RecipePage/RecipePage'));
 const NotFoundPage = lazy(() => import('@pages/NotFoundPage/NotFoundPage'));
 
 
@@ -28,6 +30,12 @@ const App = () => {
           <Routes>
             <Route path="/" element={
               <Suspense fallback={<Loader />}><HomePage /></Suspense>
+            } />
+            <Route path="/add-recipe" element={
+              <Suspense fallback={<Loader />}><AddRecipePage /></Suspense>
+            } />
+            <Route path="/recipe/:id" element={
+              <Suspense fallback={<Loader />}><RecipePage /></Suspense>
             } />
             <Route path="*" element={
               <Suspense fallback={<Loader />}><NotFoundPage /></Suspense>
