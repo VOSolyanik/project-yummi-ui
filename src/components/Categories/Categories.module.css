@@ -22,10 +22,10 @@
 
 .subtitle {
   margin: 0 0 3rem 0;
-  max-width: 800px;
   font-family: 'Mulish', sans-serif;
   font-style: normal;
   letter-spacing: -0.02em;
+  white-space: pre-line;
 }
 
 /* Mobile styles (320px-767px) */
@@ -33,26 +33,25 @@
   .categories {
     padding: 2rem 0;
   }
-  
+
   .container {
-    padding: 0;
+    padding: 0 16px;
   }
-  
+
   .container .title {
     margin-bottom: 1rem !important;
-    padding: 0 16px;
     font-weight: 800;
     font-size: 28px;
     line-height: 32px;
   }
-  
+
   .container .subtitle {
     margin: 0 0 2rem 0 !important;
-    padding: 0 16px;
     font-weight: 500;
     font-size: 14px;
     line-height: 20px;
     color: #BFBEBE;
+    white-space: normal;
   }
 }
 
@@ -61,23 +60,21 @@
   .categories {
     padding: 4rem 0;
   }
-  
+
   .container {
-    padding: 0;
+    padding: 0 32px;
   }
-  
+
   .container .title {
     margin-bottom: 20px !important;
-    padding: 0 32px;
     font-weight: 800;
     font-size: 40px;
     line-height: 44px;
     color: #050505;
   }
-  
+
   .container .subtitle {
     margin: 0 0 40px 0 !important;
-    padding: 0 32px;
     font-weight: 500;
     font-size: 16px;
     line-height: 24px;
@@ -90,11 +87,11 @@
   .categories {
     padding: 5rem 0;
   }
-  
+
   .container .title {
     margin-bottom: 20px !important;
   }
-  
+
   .container .subtitle {
     margin: 0 0 40px 0 !important;
   }

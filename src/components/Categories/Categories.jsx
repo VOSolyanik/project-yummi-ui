@@ -66,7 +66,7 @@ const Categories = ({ onCategorySelect }) => {
         </MainTitle>
 
         <Subtitle className={css.subtitle}>
-          Discover a limitless world of culinary possibilities and enjoy exquisite recipes that combine taste, style and the warm atmosphere of the kitchen.
+          {"Discover a limitless world of culinary possibilities and enjoy exquisite \nrecipes that combine taste, style and the warm atmosphere of the kitchen."}
         </Subtitle>
 
         <CategoryList
