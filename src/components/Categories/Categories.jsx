@@ -36,7 +36,7 @@ const Categories = ({ onCategorySelect }) => {
     setIsLoadingRecipes(true);
     try {
       const response = await recipesAPI.getRecipesByCategory(category._id);
-      
+
       if (response.data.recipes.length > 0) {
         if (onCategorySelect) {
           const categoryData = {
