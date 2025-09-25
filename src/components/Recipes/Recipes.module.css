@@ -1,94 +1,123 @@
 .recipes {
-  padding: 2rem 0;
-}
-
-.container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0;
+  gap: 40px;
   max-width: 1280px;
   margin: 0 auto;
-  padding: 0 80px;
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0;
+  gap: 20px;
+  width: 100%;
+}
+
+.section {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 0;
+  gap: 40px;
+  width: 100%;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  gap: 60px;
+  flex: 1;
 }
 
 .backButton {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 24px;
-  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 0;
+  margin-bottom: 20px;
   
   background: transparent;
-  border: 1px solid #e5e5e5;
-  border-radius: 8px;
+  border: none;
   
-  font-size: 16px;
-  font-weight: 500;
-  color: #333;
+  font-family: 'Mulish', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: #050505;
+  
   cursor: pointer;
-  
-  transition: all 0.2s ease;
+  transition: opacity 0.2s ease;
 }
 
 .backButton:hover {
-  background: #f8f8f8;
-  border-color: #d0d0d0;
+  opacity: 0.7;
 }
 
 .backButton:focus {
-  outline: 2px solid #007bff;
+  outline: 2px solid #050505;
   outline-offset: 2px;
 }
 
 .title {
-  margin-bottom: 1rem;
-  text-align: left;
+  margin-bottom: 0;
+  
+  font-family: 'Mulish', sans-serif;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 40px;
+  line-height: 44px;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: #050505;
 }
 
 .subtitle {
-  margin-bottom: 3rem;
-  text-align: left;
+  margin-bottom: 0;
+  
+  font-family: 'Mulish', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: -0.02em;
+  color: #1A1A1A;
 }
 
-.tempContent {
-  padding: 2rem;
-  background: #f8f9fa;
-  border-radius: 12px;
-  border: 1px solid #e9ecef;
-}
-
-.tempContent p {
-  margin-bottom: 0.5rem;
-  color: #6c757d;
-}
-
-.tempContent p:first-child {
-  font-weight: 600;
-  color: #495057;
-}
 
 @media screen and (max-width: 767px) {
   .recipes {
-    padding: 2rem 0;
+    padding: 2rem 1rem;
+    gap: 20px;
   }
   
-  .container {
-    padding: 0 16px;
+  .section {
+    flex-direction: column;
+    gap: 20px;
   }
   
-  .backButton {
-    padding: 10px 20px;
-    margin-bottom: 1.5rem;
-    font-size: 14px;
+  .content {
+    gap: 30px;
   }
   
   .title {
-    margin-bottom: 0.5rem;
+    font-size: 32px;
+    line-height: 36px;
   }
   
   .subtitle {
-    margin-bottom: 2rem;
-  }
-  
-  .tempContent {
-    padding: 1.5rem;
+    font-size: 14px;
+    line-height: 20px;
   }
 }
 

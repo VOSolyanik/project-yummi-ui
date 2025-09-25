@@ -1,0 +1,84 @@
+.pagination {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 0 6px;
+  gap: 6px;
+  width: auto;
+}
+
+.pageButton {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #BFBEBE;
+  border-radius: 100px;
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  font-family: 'Mulish', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 143%;
+  text-align: center;
+  letter-spacing: 0.17px;
+  color: #1A1A1A;
+}
+
+.pageButton:hover:not(:disabled) {
+  border-color: #050505;
+}
+
+.pageButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pageButton.active {
+  border: none;
+  background: transparent;
+  color: #050505;
+}
+
+.ellipsis {
+  cursor: default;
+  border: none;
+  background: transparent;
+}
+
+.ellipsis:hover {
+  background: transparent;
+  border: none;
+}
+
+.prevButton,
+.nextButton {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.pageNumbers {
+  display: flex;
+  gap: 4px;
+}
+
+@media screen and (max-width: 767px) {
+  .pagination {
+    gap: 4px;
+  }
+  
+  .pageButton {
+    min-width: 36px;
+    height: 36px;
+    padding: 0 8px;
+    font-size: 13px;
+  }
+  
+  .pageNumbers {
+    gap: 2px;
+  }
+}
