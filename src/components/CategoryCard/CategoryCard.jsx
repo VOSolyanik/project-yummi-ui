@@ -1,5 +1,4 @@
 import React from 'react';
-
 import clsx from 'clsx';
 
 import css from './CategoryCard.module.css';
@@ -12,13 +11,11 @@ const CategoryCard = ({ category, onClick, isAllCategories = false, size = 'norm
     }
   };
 
-  // Функція для отримання зображення категорії
   const getCategoryImage = (categoryName) => {
-    const imageName = categoryName.replace(/\s+/g, ''); // Видаляємо пробіли
+    const imageName = categoryName.replace(/\s+/g, '');
     try {
       return new URL(`../../assets/images/categories/${imageName}.jpg`, import.meta.url).href;
     } catch (error) {
-      // Fallback до випадкового зображення, якщо файл не знайдено
       return `https://picsum.photos/300/300?random=${category._id}`;
     }
   };

@@ -5,6 +5,12 @@ import css from './CategoryList.module.css';
 import CategoryCard from '@components/CategoryCard/CategoryCard';
 
 const CategoryList = ({ categories, onCategoryClick, isLoading, error }) => {
+  const wideCategories = ['Desserts', 'Lamb', 'Pork', 'Side'];
+
+  const getCardSize = (categoryName) => {
+    return wideCategories.includes(categoryName) ? 'wide' : 'normal';
+  };
+
   if (isLoading) {
     return (
       <div className={css.loading}>
@@ -30,20 +36,11 @@ const CategoryList = ({ categories, onCategoryClick, isLoading, error }) => {
     );
   }
 
-  // Беремо перші 11 категорій для сітки (без Soup)
   const displayCategories = categories.slice(0, 11);
-
-  // Визначаємо розмір кожної картки згідно з дизайном
-  const getCardSize = (categoryName) => {
-    // На десктопі: Desserts, Lamb, Pork, Side - широкі
-    // На планшетах: тільки Desserts, Pork - широкі (CSS перевизначає)
-    const wideCategories = ['Desserts', 'Lamb', 'Pork', 'Side'];
-    return wideCategories.includes(categoryName) ? 'wide' : 'normal';
-  };
 
   return (
     <div className={css.grid}>
-      {displayCategories.map((category, index) => (
+      {displayCategories.map((category) => (
         <CategoryCard
           key={category._id}
           category={category}
@@ -52,7 +49,6 @@ const CategoryList = ({ categories, onCategoryClick, isLoading, error }) => {
         />
       ))}
       
-      {/* Картка "ALL CATEGORIES" */}
       <CategoryCard
         isAllCategories={true}
         onClick={() => onCategoryClick({ _id: 'all', name: 'All Categories' })}

@@ -11,9 +11,8 @@ const HomePage = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [showRecipes, setShowRecipes] = useState(false);
 
-
   const handleCategorySelect = (categoryData) => {
-    if (categoryData.category && categoryData.recipes) {
+    if (categoryData?.category && categoryData?.recipes) {
       setSelectedCategory(categoryData);
       setShowRecipes(true);
     }
