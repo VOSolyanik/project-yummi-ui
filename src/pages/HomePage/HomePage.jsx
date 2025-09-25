@@ -5,6 +5,7 @@ import css from './HomePage.module.css';
 
 import { BASE_TITLE } from '@constants/pages';
 import Categories from '@components/Categories/Categories';
+import Recipes from '@components/Recipes/Recipes';
 
 const HomePage = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -26,13 +27,23 @@ const HomePage = () => {
   return (
     <>
       <Helmet>
-        <title>{BASE_TITLE} - Recipes</title>
+        <title>{BASE_TITLE} - {showRecipes ? 'Recipes' : 'Categories'}</title>
       </Helmet>
-      <section className={css.hero}>
-        Home page
-      </section>
+      
+      {!showRecipes && (
+        <section className={css.hero}>
+          Home page
+        </section>
+      )}
 
-      <Categories onCategorySelect={handleCategorySelect} />
+      {showRecipes ? (
+        <Recipes 
+          categoryData={selectedCategory}
+          onBackToCategories={handleBackToCategories}
+        />
+      ) : (
+        <Categories onCategorySelect={handleCategorySelect} />
+      )}
     </>
   );
 };
