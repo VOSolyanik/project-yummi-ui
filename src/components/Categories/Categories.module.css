@@ -38,11 +38,41 @@
   .categories {
     padding: 2rem 0;
   }
+  
+  .container {
+    padding: 0;
+  }
+  
+  .container .title {
+    margin-bottom: 1rem !important;
+    padding: 0 16px;
+  }
+  
+  .container .subtitle {
+    margin: 0 0 2rem 0 !important;
+    padding-left: 16px;
+    padding-right: 0;
+  }
 }
 
 @media screen and (min-width: 375px) and (max-width: 767px) {
   .categories {
     padding: 3rem 0;
+  }
+  
+  .container {
+    padding: 0;
+  }
+  
+  .container .title {
+    margin-bottom: 1rem !important;
+    padding: 0 16px;
+  }
+  
+  .container .subtitle {
+    margin: 0 0 2rem 0 !important;
+    padding-left: 16px;
+    padding-right: 0;
   }
 }
 

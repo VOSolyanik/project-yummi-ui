@@ -16,6 +16,8 @@ import {
   selectError,
 } from '@redux/categories/categoriesSlice';
 
+import { recipesAPI } from '../../services/api';
+
 const Categories = ({ onCategorySelect }) => {
   const dispatch = useDispatch();
 
@@ -24,26 +26,37 @@ const Categories = ({ onCategorySelect }) => {
   const error = useSelector(selectError);
 
   useEffect(() => {
-    // Завантажуємо категорії при першому рендері
-    if (categories.length === 0) {
+    if (categories.length === 0 && !isLoading) {
       dispatch(fetchCategories());
     }
-  }, [dispatch, categories.length]);
+  }, [dispatch, categories.length, isLoading]);
 
   useEffect(() => {
-    // Показуємо помилку якщо вона є
     if (error) {
       toast.error(`Error loading categories: ${error}`);
     }
   }, [error]);
 
-  const handleCategoryClick = (category) => {
-    // TODO: Тут буде логіка відправки запиту за рецептами
-    // Поки що просто логуємо
-    console.log('Category selected:', category);
-
-    if (onCategorySelect) {
-      onCategorySelect(category);
+  const handleCategoryClick = async (category) => {
+    try {
+      const response = await recipesAPI.getRecipesByCategory(category._id);
+      
+      if (response.data.recipes.length > 0) {
+        if (onCategorySelect) {
+          const categoryData = {
+            category,
+            recipes: response.data.recipes,
+            totalPages: response.data.totalPages,
+            currentPage: response.data.currentPage,
+            totalRecipes: response.data.totalRecipes
+          };
+          onCategorySelect(categoryData);
+        }
+      } else {
+        toast.info(`No recipes found for category: ${category.name}`);
+      }
+    } catch (error) {
+      toast.error(`Error loading recipes for ${category.name}: ${error.message}`);
     }
   };
 

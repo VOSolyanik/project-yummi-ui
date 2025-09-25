@@ -1,4 +1,5 @@
 import { Helmet } from 'react-helmet-async';
+import { useState } from 'react';
 
 import css from './HomePage.module.css';
 
@@ -6,9 +7,20 @@ import { BASE_TITLE } from '@constants/pages';
 import Categories from '@components/Categories/Categories';
 
 const HomePage = () => {
-  const handleCategorySelect = (category) => {
-    console.log('Category selected:', category);
-    // TODO: Тут буде логіка перемикання на Recipes компонент
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [showRecipes, setShowRecipes] = useState(false);
+
+
+  const handleCategorySelect = (categoryData) => {
+    if (categoryData.category && categoryData.recipes) {
+      setSelectedCategory(categoryData);
+      setShowRecipes(true);
+    }
+  };
+
+  const handleBackToCategories = () => {
+    setShowRecipes(false);
+    setSelectedCategory(null);
   };
 
   return (
