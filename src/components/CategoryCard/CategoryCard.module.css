@@ -1,13 +1,12 @@
 .card {
   position: relative;
-  height: 200px; /* Базова висота для мобільних */
-  border-radius: 30px; /* Border-radius зображень 30px */
+  height: 200px;
+  border-radius: 30px;
   overflow: hidden;
   cursor: pointer;
   transition: transform 0.2s ease;
 }
 
-/* Розміри карток */
 .card.normal {
   grid-column: span 1;
 }
@@ -62,13 +61,13 @@
   font-style: normal;
   font-size: 20px;
   line-height: 24px;
-  letter-spacing: -0.02em; /* -2% */
+  letter-spacing: -0.02em;
   display: inline-block;
 }
 
 .arrowButton {
-  width: 44px; /* 18px + 13px padding з обох сторін */
-  height: 44px; /* 18px + 13px padding з обох сторін */
+  width: 44px;
+  height: 44px;
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 50%;
   background-color: transparent;
@@ -88,7 +87,7 @@
 .arrowIcon {
   width: 18px;
   height: 18px;
-  filter: brightness(0) invert(1); /* Робить іконку білою */
+  filter: brightness(0) invert(1);
 }
 
 .allCategoriesButton {
@@ -108,7 +107,6 @@
   background-color: #333;
 }
 
-/* Mobile: верстка гумова від 320px, стає адаптивною з 375px */
 @media screen and (max-width: 374px) {
   .card {
     height: 250px !important;
@@ -129,8 +127,8 @@
   }
   
   .arrowButton {
-    width: 44px; /* 18px + 13px padding з обох сторін */
-    height: 44px; /* 18px + 13px padding з обох сторін */
+    width: 44px;
+    height: 44px;
     padding: 13px;
   }
   
@@ -160,8 +158,8 @@
   }
   
   .arrowButton {
-    width: 44px; /* 18px + 13px padding з обох сторін */
-    height: 44px; /* 18px + 13px padding з обох сторін */
+    width: 44px;
+    height: 44px;
     padding: 13px;
   }
   
@@ -171,22 +169,20 @@
   }
 }
 
-/* Tablet: з 768px */
 @media screen and (min-width: 768px) and (max-width: 1439px) {
   .card {
-    height: 369px !important; /* Висота зображень 369px для всіх карток на планшетах */
+    height: 369px !important;
   }
   
   .card.normal {
-    height: 369px !important; /* Висота зображень 369px для normal карток */
+    height: 369px !important;
   }
   
   .card.wide {
-    height: 369px !important; /* Висота зображень 369px для wide карток (Desserts та Pork) */
-    grid-column: span 2 !important; /* Desserts та Pork на всю ширину рядка */
+    height: 369px !important;
+    grid-column: span 2 !important;
   }
   
-  /* Перевизначаємо для Lamb та Side на планшетах - робимо їх normal */
   .card.wide[data-category="Lamb"],
   .card.wide[data-category="Side"] {
     height: 369px !important;
@@ -204,8 +200,8 @@
   }
   
   .arrowButton {
-    width: 44px; /* 18px + 13px padding з обох сторін */
-    height: 44px; /* 18px + 13px padding з обох сторін */
+    width: 44px;
+    height: 44px;
     padding: 13px;
   }
   
@@ -215,18 +211,17 @@
   }
 }
 
-/* Desktop: з 1440px */
 @media screen and (min-width: 1440px) {
   .card {
-    height: 369px; /* Висота зображень 369px для всіх десктопів */
-    flex-shrink: 0; /* Не зменшується */
+    height: 369px;
+    flex-shrink: 0;
   }
   
   .card.normal {
-    width: 325px; /* Фіксована ширина 325px */
+    width: 325px;
   }
   
   .card.wide {
-    width: 590px; /* Фіксована ширина 590px */
+    width: 590px;
   }
 }

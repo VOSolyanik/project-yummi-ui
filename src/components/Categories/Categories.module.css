@@ -18,7 +18,7 @@
   font-style: normal;
   font-size: 20px;
   line-height: 24px;
-  letter-spacing: -0.02em; /* -2% */
+  letter-spacing: -0.02em;
   text-transform: uppercase;
 }
 
@@ -30,10 +30,9 @@
   font-style: normal;
   font-size: 16px;
   line-height: 24px;
-  letter-spacing: -0.02em; /* -2% */
+  letter-spacing: -0.02em;
 }
 
-/* Mobile: верстка гумова від 320px, стає адаптивною з 375px */
 @media screen and (max-width: 374px) {
   .categories {
     padding: 2rem 0;
@@ -76,7 +75,6 @@
   }
 }
 
-/* Tablet: з 768px */
 @media screen and (min-width: 768px) and (max-width: 1439px) {
   .categories {
     padding: 4rem 0;
@@ -88,17 +86,16 @@
   
   .container .title {
     margin-bottom: 20px !important;
-    padding: 0 32px; /* Вирівнюємо з лівим краєм категорій */
+    padding: 0 32px;
   }
   
   .container .subtitle {
     margin: 0 0 40px 0 !important;
-    padding-left: 32px; /* Тільки лівий padding для вирівнювання */
-    padding-right: 0; /* Прибираємо правий padding */
+    padding-left: 32px;
+    padding-right: 0;
   }
 }
 
-/* Desktop: з 1440px */
 @media screen and (min-width: 1440px) {
   .categories {
     padding: 5rem 0;
