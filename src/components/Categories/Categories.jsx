@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
 
@@ -19,6 +19,7 @@ import { recipesAPI } from '../../services/api';
 
 const Categories = ({ onCategorySelect }) => {
   const dispatch = useDispatch();
+  const [isLoadingRecipes, setIsLoadingRecipes] = useState(false);
 
   const categories = useSelector(selectCategories);
   const isLoading = useSelector(selectIsLoading);
@@ -30,13 +31,9 @@ const Categories = ({ onCategorySelect }) => {
     }
   }, [dispatch, categories.length, isLoading]);
 
-  useEffect(() => {
-    if (error) {
-      toast.error(`Error loading categories: ${error}`);
-    }
-  }, [error]);
 
   const handleCategoryClick = async (category) => {
+    setIsLoadingRecipes(true);
     try {
       const response = await recipesAPI.getRecipesByCategory(category._id);
       
@@ -56,6 +53,8 @@ const Categories = ({ onCategorySelect }) => {
       }
     } catch (error) {
       toast.error(`Error loading recipes for ${category.name}: ${error.message}`);
+    } finally {
+      setIsLoadingRecipes(false);
     }
   };
 
@@ -73,7 +72,7 @@ const Categories = ({ onCategorySelect }) => {
         <CategoryList
           categories={categories}
           onCategoryClick={handleCategoryClick}
-          isLoading={isLoading}
+          isLoading={isLoading || isLoadingRecipes}
           error={error}
         />
       </div>

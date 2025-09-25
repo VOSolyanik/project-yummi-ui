@@ -1,5 +1,4 @@
 import React from 'react';
-import clsx from 'clsx';
 
 import css from './CategoryCard.module.css';
 import arrowUpRightIcon from '../../assets/icons/arrow-up-right.svg';
@@ -22,7 +21,7 @@ const CategoryCard = ({ category, onClick, isAllCategories = false, size = 'norm
 
   if (isAllCategories) {
     return (
-      <div className={clsx(css.card, css[size])} onClick={handleClick}>
+      <div className={`${css.card} ${css[size]}`} onClick={handleClick}>
         <div className={css.allCategoriesButton}>
           ALL CATEGORIES
         </div>
@@ -31,7 +30,7 @@ const CategoryCard = ({ category, onClick, isAllCategories = false, size = 'norm
   }
 
   return (
-    <div className={clsx(css.card, css[size])} data-category={category.name} onClick={handleClick}>
+    <div className={`${css.card} ${css[size]}`} data-category={category.name} onClick={handleClick}>
       <div className={css.imageContainer}>
         <img 
           src={getCategoryImage(category.name)}

@@ -4,11 +4,12 @@ import css from './CategoryList.module.css';
 
 import CategoryCard from '@components/CategoryCard/CategoryCard';
 
-const CategoryList = ({ categories, onCategoryClick, isLoading, error }) => {
-  const wideCategories = ['Desserts', 'Lamb', 'Pork', 'Side', 'Vegan'];
+const WIDE_CATEGORIES = ['Desserts', 'Lamb', 'Pork', 'Side', 'Vegan'];
+const MAX_DISPLAY_CATEGORIES = 11;
 
+const CategoryList = ({ categories, onCategoryClick, isLoading, error }) => {
   const getCardSize = (categoryName) => {
-    return wideCategories.includes(categoryName) ? 'wide' : 'normal';
+    return WIDE_CATEGORIES.includes(categoryName) ? 'wide' : 'normal';
   };
 
   if (isLoading) {
@@ -36,7 +37,7 @@ const CategoryList = ({ categories, onCategoryClick, isLoading, error }) => {
     );
   }
 
-  const displayCategories = categories.slice(0, 11);
+  const displayCategories = categories.slice(0, MAX_DISPLAY_CATEGORIES);
 
   return (
     <div className={css.grid}>

@@ -53,52 +53,67 @@ class ApiService {
   }
 }
 
-// Categories API - використовуємо реальний API (ендпоінт /categories реалізований на бекенді)
+const NAME_MAPPING = {
+  'Dessert': 'Desserts',
+};
+
+const VEGETARIAN_CATEGORIES = [
+  'Vegetarian', 'Breakfast', 'Desserts', 'Vegan', 'Soup', 
+  'Miscellaneous', 'Pasta', 'Pork', 'Seafood', 'Side', 'Starter'
+];
+
+const CATEGORY_MAPPINGS = {
+  'Beef': 'Vegetarian',
+  'Lamb': 'Vegan', 
+  'Goat': 'Soup'
+};
+
+const transformCategories = (categories) => {
+  return categories.map(category => ({
+    _id: category.id,
+    name: NAME_MAPPING[category.name] || category.name
+  }));
+};
+
+const applyVegetarianMapping = (categories, originalData) => {
+  return categories.map(category => {
+    const mappedName = CATEGORY_MAPPINGS[category.name];
+    if (mappedName) {
+      const targetCategory = originalData.find(cat => cat.name === mappedName);
+      return { 
+        _id: targetCategory?.id || category._id, 
+        name: mappedName 
+      };
+    }
+    return category;
+  });
+};
+
+const filterAndSortCategories = (categories, requiredCategories) => {
+  const filtered = categories.filter(category =>
+    requiredCategories.includes(category.name)
+  );
+  
+  return requiredCategories
+    .map(name => filtered.find(cat => cat.name === name))
+    .filter(Boolean);
+};
+
 export const categoriesAPI = {
   getCategories: async () => {
     const isVeg = isVegetarianVariant();
 
     try {
       const response = await new ApiService(API_BASE_URL).get('/categories');
-
-        const nameMapping = {
-          'Dessert': 'Desserts',
-        };
-
-        const transformedCategories = response.data.map(category => ({
-          _id: category.id,
-          name: nameMapping[category.name] || category.name
-        }));
-      let finalCategories = transformedCategories;
+      
+      let transformedCategories = transformCategories(response.data);
+      
       if (isVeg) {
-        finalCategories = transformedCategories.map(category => {
-            switch (category.name) {
-              case 'Beef':
-                const vegetarianCategory = response.data.find(cat => cat.name === 'Vegetarian');
-                return { _id: vegetarianCategory?.id || category._id, name: 'Vegetarian' };
-              case 'Lamb':
-                const veganCategory = response.data.find(cat => cat.name === 'Vegan');
-                return { _id: veganCategory?.id || category._id, name: 'Vegan' };
-              case 'Goat':
-                const soupCategory = response.data.find(cat => cat.name === 'Soup');
-                return { _id: soupCategory?.id || category._id, name: 'Soup' };
-            default:
-              return category;
-          }
-        });
+        transformedCategories = applyVegetarianMapping(transformedCategories, response.data);
       }
 
-      const currentRequiredCategories = isVeg ?
-        ['Vegetarian', 'Breakfast', 'Desserts', 'Vegan', 'Soup', 'Miscellaneous', 'Pasta', 'Pork', 'Seafood', 'Side', 'Starter'] :
-        requiredCategories;
-
-      const filteredCategories = finalCategories.filter(category =>
-        currentRequiredCategories.includes(category.name)
-      );
-
-      const sortedCategories = currentRequiredCategories.map(name =>
-        filteredCategories.find(cat => cat.name === name)
-      ).filter(Boolean);
+      const currentRequiredCategories = isVeg ? VEGETARIAN_CATEGORIES : requiredCategories;
+      const sortedCategories = filterAndSortCategories(transformedCategories, currentRequiredCategories);
 
       return { data: sortedCategories };
     } catch (error) {
