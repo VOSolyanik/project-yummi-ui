@@ -10,14 +10,12 @@
   padding: 0;
 }
 
+/* Base styles */
 .title {
   margin-bottom: 1rem;
   text-align: left;
   font-family: 'Mulish', sans-serif;
-  font-weight: 700;
   font-style: normal;
-  font-size: 20px;
-  line-height: 24px;
   letter-spacing: -0.02em;
   text-transform: uppercase;
 }
@@ -26,14 +24,12 @@
   margin: 0 0 3rem 0;
   max-width: 800px;
   font-family: 'Mulish', sans-serif;
-  font-weight: 500;
   font-style: normal;
-  font-size: 16px;
-  line-height: 24px;
   letter-spacing: -0.02em;
 }
 
-@media screen and (max-width: 374px) {
+/* Mobile styles (320px-767px) */
+@media screen and (max-width: 767px) {
   .categories {
     padding: 2rem 0;
   }
@@ -45,36 +41,22 @@
   .container .title {
     margin-bottom: 1rem !important;
     padding: 0 16px;
+    font-weight: 800;
+    font-size: 28px;
+    line-height: 32px;
   }
   
   .container .subtitle {
     margin: 0 0 2rem 0 !important;
-    padding-left: 16px;
-    padding-right: 0;
-  }
-}
-
-@media screen and (min-width: 375px) and (max-width: 767px) {
-  .categories {
-    padding: 3rem 0;
-  }
-  
-  .container {
-    padding: 0;
-  }
-  
-  .container .title {
-    margin-bottom: 1rem !important;
     padding: 0 16px;
-  }
-  
-  .container .subtitle {
-    margin: 0 0 2rem 0 !important;
-    padding-left: 16px;
-    padding-right: 0;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    color: #BFBEBE;
   }
 }
 
+/* Tablet styles (768px-1439px) */
 @media screen and (min-width: 768px) and (max-width: 1439px) {
   .categories {
     padding: 4rem 0;
@@ -87,15 +69,23 @@
   .container .title {
     margin-bottom: 20px !important;
     padding: 0 32px;
+    font-weight: 800;
+    font-size: 40px;
+    line-height: 44px;
+    color: #050505;
   }
   
   .container .subtitle {
     margin: 0 0 40px 0 !important;
-    padding-left: 32px;
-    padding-right: 0;
+    padding: 0 32px;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    color: #1A1A1A;
   }
 }
 
+/* Desktop styles (1440px+) */
 @media screen and (min-width: 1440px) {
   .categories {
     padding: 5rem 0;
