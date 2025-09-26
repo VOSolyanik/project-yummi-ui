@@ -1,16 +1,21 @@
+import { useState, useEffect } from 'react';
+
+import { Link, useNavigate } from 'react-router-dom';
+
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuthActions } from '../../hooks/useAuthActions';
+
+import classes from './RegisterForm.module.css';
+
 import { useAuth } from '../../contexts/AuthContext';
+import { useAuthActions } from '../../hooks/useAuthActions';
 import Button from '../Button/Button';
 import Icon from '../Icon/Icon';
-import classes from './RegisterForm.module.css';
+
 
 // Схема валідації
 const registerSchema = Yup.object({
-  name: Yup.string()
+  username: Yup.string()
     .min(2, 'Name must be at least 2 characters')
     .required('Name is required'),
   email: Yup.string()
@@ -18,7 +23,7 @@ const registerSchema = Yup.object({
     .required('Email is required'),
   password: Yup.string()
     .min(6, 'Password must be at least 6 characters')
-    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/, 
+    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
       'Password must contain at least one uppercase letter, one lowercase letter and one number')
     .required('Password is required'),
 });
@@ -63,19 +68,19 @@ const RegisterForm = ({ onClose, onSwitchToLogin }) => {
   return (
     <div className={classes.modal} onClick={handleBackdropClick}>
       <div className={classes.modalContent}>
-        <button 
+        <button
           className={classes.closeButton}
           onClick={onClose}
           type="button"
         >
           <Icon name="close" />
         </button>
-        
+
         <h2 className={classes.title}>SIGN UP</h2>
-        
+
         <Formik
           initialValues={{
-            name: '',
+            username: '',
             email: '',
             password: '',
           }}
@@ -87,14 +92,14 @@ const RegisterForm = ({ onClose, onSwitchToLogin }) => {
               <div className={classes.fieldGroup}>
                 <Field
                   type="text"
-                  name="name"
+                  name="username"
                   placeholder="Name*"
                   className={classes.input}
                 />
-                <ErrorMessage 
-                  name="name" 
-                  component="span" 
-                  className={classes.error} 
+                <ErrorMessage
+                  name="username"
+                  component="span"
+                  className={classes.error}
                 />
               </div>
 
@@ -105,10 +110,10 @@ const RegisterForm = ({ onClose, onSwitchToLogin }) => {
                   placeholder="Email*"
                   className={classes.input}
                 />
-                <ErrorMessage 
-                  name="email" 
-                  component="span" 
-                  className={classes.error} 
+                <ErrorMessage
+                  name="email"
+                  component="span"
+                  className={classes.error}
                 />
               </div>
 
@@ -128,10 +133,10 @@ const RegisterForm = ({ onClose, onSwitchToLogin }) => {
                     <Icon name={showPassword ? 'eye-off' : 'eye'} />
                   </button>
                 </div>
-                <ErrorMessage 
-                  name="password" 
-                  component="span" 
-                  className={classes.error} 
+                <ErrorMessage
+                  name="password"
+                  component="span"
+                  className={classes.error}
                 />
               </div>
 
@@ -147,8 +152,8 @@ const RegisterForm = ({ onClose, onSwitchToLogin }) => {
         </Formik>
 
         <p className={classes.switchText}>
-          Already have an account? 
-          <button 
+          Already have an account?
+          <button
             type="button"
             onClick={() => {
               if (onSwitchToLogin) {
