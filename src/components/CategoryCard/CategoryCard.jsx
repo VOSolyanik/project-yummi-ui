@@ -15,27 +15,21 @@ const CategoryCard = ({ category, onClick, isAllCategories = false, size = 'norm
 
     try {
       return {
-        // AVIF версії (найкраща компресія)
+        // AVIF versions (best compression)
         avif1x: new URL(`../../assets/images/categories/${imageName}.avif`, import.meta.url).href,
         avif2x: new URL(`../../assets/images/categories/desktop/${imageName}@2x.avif`, import.meta.url).href,
         
-        // WebP версії (хороша компресія)
+        // WebP versions (good compression)
         webp1x: new URL(`../../assets/images/categories/${imageName}.webp`, import.meta.url).href,
         webp2x: new URL(`../../assets/images/categories/desktop/${imageName}@2x.webp`, import.meta.url).href,
         
-        // JPG fallback версії
+        // JPG fallback versions
         jpg1x: new URL(`../../assets/images/categories/${imageName}.jpg`, import.meta.url).href,
         jpg2x: new URL(`../../assets/images/categories/desktop/${imageName}@2x.jpg`, import.meta.url).href,
       };
     } catch (error) {
-      return {
-        avif1x: `https://picsum.photos/650/369?random=${category._id}`,
-        avif2x: `https://picsum.photos/1300/738?random=${category._id}`,
-        webp1x: `https://picsum.photos/650/369?random=${category._id}`,
-        webp2x: `https://picsum.photos/1300/738?random=${category._id}`,
-        jpg1x: `https://picsum.photos/650/369?random=${category._id}`,
-        jpg2x: `https://picsum.photos/1300/738?random=${category._id}`
-      };
+      console.error(`Failed to load images for category: ${categoryName}`, error);
+      return null;
     }
   };
 
@@ -51,23 +45,36 @@ const CategoryCard = ({ category, onClick, isAllCategories = false, size = 'norm
 
   const imageSources = getCategoryImageSources(category.name);
 
+  // If image sources failed to load, don't render the image
+  if (!imageSources) {
+    return (
+      <div className={`${css.card} ${css[size]}`} data-category={category.name} onClick={handleClick}>
+        <div className={css.imageContainer}>
+          <div className={css.errorPlaceholder}>
+            <span>Image not available</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={`${css.card} ${css[size]}`} data-category={category.name} onClick={handleClick}>
       <div className={css.imageContainer}>
         <picture className={css.picture}>
-          {/* AVIF з 2x підтримкою (найкраща компресія) */}
+          {/* AVIF with 2x support (best compression) */}
           <source
             srcSet={`${imageSources.avif1x} 1x, ${imageSources.avif2x} 2x`}
             type="image/avif"
           />
           
-          {/* WebP з 2x підтримкою (хороша компресія) */}
+          {/* WebP with 2x support (good compression) */}
           <source
             srcSet={`${imageSources.webp1x} 1x, ${imageSources.webp2x} 2x`}
             type="image/webp"
           />
           
-          {/* JPG fallback з 2x підтримкою */}
+          {/* JPG fallback with 2x support */}
           <source
             srcSet={`${imageSources.jpg1x} 1x, ${imageSources.jpg2x} 2x`}
             type="image/jpeg"
