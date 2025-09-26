@@ -52,9 +52,9 @@ api.interceptors.response.use(
   }
 );
 
-// API методи для автентифікації
+// Frontend API клієнт для взаємодії з backend
 export const authAPI = {
-  // Реєстрація
+  // Реєстрація - викликає backend endpoint
   register: async (userData) => {
     try {
       const response = await api.post('/auth/register', userData);
@@ -65,7 +65,7 @@ export const authAPI = {
     }
   },
 
-  // Логін
+  // Логін - викликає backend endpoint  
   login: async (credentials) => {
     try {
       const response = await api.post('/auth/login', credentials);
@@ -76,19 +76,18 @@ export const authAPI = {
     }
   },
 
-  // Логаут
+  // Логаут - викликає backend endpoint
   logout: async () => {
     try {
       const response = await api.post('/auth/logout');
       return response.data;
     } catch (error) {
-      // Навіть якщо запит не вдався, видаляємо токен локально
       console.error('Logout error:', error);
       throw new Error('Logout error');
     }
   },
 
-  // Отримання поточного користувача
+  // Отримання поточного користувача - викликає backend endpoint
   getCurrentUser: async () => {
     try {
       const response = await api.get('/auth/me');
@@ -98,73 +97,10 @@ export const authAPI = {
       throw new Error(message);
     }
   },
-
-  // Оновлення токену
-  refreshToken: async () => {
-    try {
-      const response = await api.post('/auth/refresh');
-      return response.data;
-    } catch (error) {
-      const message = error.response?.data?.message || 'Token refresh error';
-      throw new Error(message);
-    }
-  },
 };
 
-// Загальні API методи для роботи з захищеними ресурсами
-export const protectedAPI = {
-  // Приклад отримання профілю користувача
-  getUserProfile: async () => {
-    try {
-      const response = await api.get('/user/profile');
-      return response.data;
-    } catch (error) {
-      const message = error.response?.data?.message || 'Error loading profile';
-      throw new Error(message);
-    }
-  },
-
-  // Приклад оновлення профілю
-  updateUserProfile: async (profileData) => {
-    try {
-      const response = await api.put('/user/profile', profileData);
-      return response.data;
-    } catch (error) {
-      const message = error.response?.data?.message || 'Error updating profile';
-      throw new Error(message);
-    }
-  },
-};
-
-// Утилітарні функції
+// Утилітарні функції для frontend
 export const authUtils = {
-  // Перевірка чи токен ще дійсний
-  isTokenValid: () => {
-    const token = localStorage.getItem('token');
-    if (!token) return false;
-    
-    try {
-      const payload = JSON.parse(atob(token.split('.')[1]));
-      const currentTime = Date.now() / 1000;
-      return payload.exp > currentTime;
-    } catch (error) {
-      return false;
-    }
-  },
-
-  // Отримання даних з токену
-  getTokenData: () => {
-    const token = localStorage.getItem('token');
-    if (!token) return null;
-    
-    try {
-      const payload = JSON.parse(atob(token.split('.')[1]));
-      return payload;
-    } catch (error) {
-      return null;
-    }
-  },
-
   // Очищення всіх даних автентифікації
   clearAuthData: () => {
     localStorage.removeItem('token');
