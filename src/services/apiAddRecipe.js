@@ -1,5 +1,3 @@
-// Real API services for Yummi UI
-// Reads base URL from VITE_API_BASE_URL, defaults to http://localhost:3000/api
 
 const API_BASE = (import.meta?.env?.VITE_API_BASE_URL || 'http://localhost:3000/api').replace(/\/$/, '');
 
@@ -13,7 +11,6 @@ export async function getCategories() {
   const res = await fetch(`${API_BASE}/categories`);
   if (!res.ok) throw toError(`Failed to load categories: ${res.status}`, res.status);
   const data = await res.json();
-  // const list = Array.isArray(data) ? data : data?.categories || [];
   return data.map((c) => ({
     id: c.id,
     name: c.name,
