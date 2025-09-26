@@ -15,13 +15,26 @@ const CategoryCard = ({ category, onClick, isAllCategories = false, size = 'norm
 
     try {
       return {
-        fallback: new URL(`../../assets/images/categories/${imageName}.jpg`, import.meta.url).href,
-        retina: new URL(`../../assets/images/categories/desktop/${imageName}@2x.jpg`, import.meta.url).href,
+        // AVIF версії (найкраща компресія)
+        avif1x: new URL(`../../assets/images/categories/${imageName}.avif`, import.meta.url).href,
+        avif2x: new URL(`../../assets/images/categories/desktop/${imageName}@2x.avif`, import.meta.url).href,
+        
+        // WebP версії (хороша компресія)
+        webp1x: new URL(`../../assets/images/categories/${imageName}.webp`, import.meta.url).href,
+        webp2x: new URL(`../../assets/images/categories/desktop/${imageName}@2x.webp`, import.meta.url).href,
+        
+        // JPG fallback версії
+        jpg1x: new URL(`../../assets/images/categories/${imageName}.jpg`, import.meta.url).href,
+        jpg2x: new URL(`../../assets/images/categories/desktop/${imageName}@2x.jpg`, import.meta.url).href,
       };
     } catch (error) {
       return {
-        fallback: `https://picsum.photos/650/369?random=${category._id}`,
-        retina: `https://picsum.photos/1300/738?random=${category._id}`
+        avif1x: `https://picsum.photos/650/369?random=${category._id}`,
+        avif2x: `https://picsum.photos/1300/738?random=${category._id}`,
+        webp1x: `https://picsum.photos/650/369?random=${category._id}`,
+        webp2x: `https://picsum.photos/1300/738?random=${category._id}`,
+        jpg1x: `https://picsum.photos/650/369?random=${category._id}`,
+        jpg2x: `https://picsum.photos/1300/738?random=${category._id}`
       };
     }
   };
@@ -41,16 +54,36 @@ const CategoryCard = ({ category, onClick, isAllCategories = false, size = 'norm
   return (
     <div className={`${css.card} ${css[size]}`} data-category={category.name} onClick={handleClick}>
       <div className={css.imageContainer}>
-        <img
-          src={imageSources.fallback}
-          srcSet={`${imageSources.fallback} 1x, ${imageSources.retina} 2x`}
-          alt={category.name}
-          className={css.image}
-          loading="lazy"
-          decoding="async"
-          width="650"
-          height="369"
-        />
+        <picture className={css.picture}>
+          {/* AVIF з 2x підтримкою (найкраща компресія) */}
+          <source
+            srcSet={`${imageSources.avif1x} 1x, ${imageSources.avif2x} 2x`}
+            type="image/avif"
+          />
+          
+          {/* WebP з 2x підтримкою (хороша компресія) */}
+          <source
+            srcSet={`${imageSources.webp1x} 1x, ${imageSources.webp2x} 2x`}
+            type="image/webp"
+          />
+          
+          {/* JPG fallback з 2x підтримкою */}
+          <source
+            srcSet={`${imageSources.jpg1x} 1x, ${imageSources.jpg2x} 2x`}
+            type="image/jpeg"
+          />
+          
+          {/* Fallback img */}
+          <img
+            src={imageSources.jpg1x}
+            alt={category.name}
+            className={css.image}
+            loading="lazy"
+            decoding="async"
+            width="650"
+            height="369"
+          />
+        </picture>
 
         <div className={css.overlay}>
           <span className={css.categoryName}>{category.name}</span>
