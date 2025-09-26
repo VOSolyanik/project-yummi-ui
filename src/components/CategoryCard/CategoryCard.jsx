@@ -45,14 +45,12 @@ const CategoryCard = ({ category, onClick, isAllCategories = false, size = 'norm
 
   const imageSources = getCategoryImageSources(category.name);
 
-  // If image sources failed to load, don't render the image
+  // If image sources failed to load, show empty card
   if (!imageSources) {
     return (
       <div className={`${css.card} ${css[size]}`} data-category={category.name} onClick={handleClick}>
         <div className={css.imageContainer}>
-          <div className={css.errorPlaceholder}>
-            <span>Image not available</span>
-          </div>
+          {/* Empty container - no image */}
         </div>
       </div>
     );
