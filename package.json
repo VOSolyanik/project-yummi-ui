@@ -11,6 +11,7 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.9.0",
     "clsx": "^2.1.1",
     "formik": "^2.4.6",
     "modern-normalize": "^3.0.1",
@@ -18,6 +19,7 @@
     "react-dom": "^19.1.1",
     "react-helmet-async": "^2.0.5",
     "react-hot-toast": "^2.6.0",
+    "react-redux": "^9.2.0",
     "react-router-dom": "^7.9.1",
     "react-spinners": "^0.17.0",
     "yup": "^1.7.1"
