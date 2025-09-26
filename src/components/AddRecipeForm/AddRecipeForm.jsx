@@ -3,7 +3,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
-import { createRecipe, getCategories, getCountries, getIngredients } from '@services/api';
+import { createRecipe, getCategories, getCountries, getIngredients } from '@services/apiAddRecipe.js';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
