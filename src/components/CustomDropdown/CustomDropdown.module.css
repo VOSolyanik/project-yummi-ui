@@ -78,10 +78,18 @@
   padding: 16px 18px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
   border-bottom-right-radius: 30px;
   border-bottom-left-radius: 30px;
   border-top: none;
+
+  /* Hide scrollbar track and thumb styling */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+.dropdownList::-webkit-scrollbar {
+  display: none; /* WebKit */
 }
 
 .option {
