@@ -20,13 +20,13 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 16px 18px;
+  padding: 15px 18px;
   width: 330px;
   height: 56px;
-  
+
   border: 1px solid #BFBEBE;
   border-radius: 30px;
-  
+
   font-family: 'Mulish', sans-serif;
   font-style: normal;
   font-weight: 500;
@@ -34,7 +34,7 @@
   line-height: 24px;
   letter-spacing: -0.02em;
   color: #1A1A1A;
-  
+
   background: white;
   background-image: url('../../assets/icons/chevron-down.svg');
   background-repeat: no-repeat;
@@ -72,7 +72,7 @@
     flex-direction: column;
     gap: 16px;
   }
-  
+
   .select {
     min-width: 100%;
   }
