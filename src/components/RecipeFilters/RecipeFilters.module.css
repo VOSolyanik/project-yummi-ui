@@ -16,6 +16,12 @@
 
 /* Custom dropdown styles are now in CustomDropdown.module.css */
 
+@media screen and (min-width: 768px) and (max-width: 1439px) {
+  .filterGroup {
+    flex-direction: row;
+  }
+}
+
 @media screen and (max-width: 767px) {
   .filters {
     flex-direction: column;
