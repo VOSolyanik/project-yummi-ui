@@ -28,7 +28,19 @@
   }
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (min-width: 375px) and (max-width: 767px) {
+  .filters {
+    width: 100%;
+  }
+
+  .filterGroup {
+    flex-direction: column;
+    width: 100%;
+    gap: 16px;
+  }
+}
+
+@media screen and (max-width: 374px) {
   .filters {
     flex-direction: column;
     gap: 16px;

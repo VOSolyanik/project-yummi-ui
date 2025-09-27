@@ -96,7 +96,7 @@
 
 @media screen and (max-width: 767px) {
   .recipes {
-    padding: 2rem 1rem;
+    padding: 2rem 0;
     gap: 20px;
   }
 
@@ -118,6 +118,12 @@
     font-size: 14px;
     line-height: 20px;
     white-space: normal;
+  }
+}
+
+@media screen and (min-width: 375px) and (max-width: 767px) {
+  .recipes {
+    max-width: 343px;
   }
 }
 

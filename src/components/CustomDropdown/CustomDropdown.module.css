@@ -128,7 +128,17 @@
   }
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (min-width: 375px) and (max-width: 767px) {
+  .dropdown {
+    width: 100%;
+  }
+
+  .select {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 374px) {
   .dropdown {
     width: 100%;
   }
