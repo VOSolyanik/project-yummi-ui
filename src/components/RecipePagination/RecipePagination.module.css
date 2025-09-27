@@ -115,7 +115,7 @@
   }
   
   .navButton {
-    min-width: 36px;
+    width: 20px;
     height: 36px;
     font-size: 14px;
   }
