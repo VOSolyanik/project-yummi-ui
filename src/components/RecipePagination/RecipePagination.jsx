@@ -15,10 +15,14 @@ const RecipePagination = ({
 
   const getPageNumbers = () => {
     const pages = [];
-    const safeTotalPages = totalPages || 3; // Fallback for testing
     
-    // Always show all page numbers without ellipsis
-    for (let i = 1; i <= safeTotalPages; i++) {
+    // If no recipes or totalPages is 0, show only page 1
+    if (!totalPages || totalPages === 0) {
+      return [1];
+    }
+    
+    // Show all page numbers without ellipsis
+    for (let i = 1; i <= totalPages; i++) {
       pages.push(i);
     }
     
@@ -31,8 +35,10 @@ const RecipePagination = ({
     }
   };
 
-
   const pageNumbers = getPageNumbers();
+  
+  // When no recipes, always show page 1 as active
+  const activePage = (!totalPages || totalPages === 0) ? 1 : currentPage;
 
   return (
     <div className={css.pagination}>
@@ -42,12 +48,12 @@ const RecipePagination = ({
             key={index}
             type="button"
             className={`${css.pageButton} ${
-              page === currentPage ? css.active : ''
+              page === activePage ? css.active : ''
             }`}
             onClick={() => handlePageClick(page)}
             disabled={isLoading}
             aria-label={`Go to page ${page}`}
-            aria-current={page === currentPage ? 'page' : undefined}
+            aria-current={page === activePage ? 'page' : undefined}
           >
             {page}
           </button>
