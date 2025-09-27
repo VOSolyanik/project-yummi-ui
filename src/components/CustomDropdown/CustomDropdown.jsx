@@ -45,11 +45,13 @@ const CustomDropdown = ({
     setIsOpen(false);
   };
 
+  const isPlaceholder = !selectedOption || selectedOption.value === '';
+
   return (
     <div className={css.dropdown} ref={dropdownRef}>
       <button
         type="button"
-        className={`${css.select} ${isOpen ? css.open : ''} ${disabled ? css.disabled : ''}`}
+        className={`${css.select} ${isOpen ? css.open : ''} ${disabled ? css.disabled : ''} ${isPlaceholder ? css.placeholder : ''}`}
         onClick={handleToggle}
         disabled={disabled}
       >

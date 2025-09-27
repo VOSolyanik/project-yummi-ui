@@ -123,8 +123,8 @@
     width: 345px;
   }
 
-  .select {
-    width: 345px;
+  .select.placeholder {
+    color: #BFBEBE;
   }
 }
 
@@ -136,6 +136,10 @@
   .select {
     width: 100%;
   }
+
+  .select.placeholder {
+    color: #BFBEBE;
+  }
 }
 
 @media screen and (max-width: 374px) {
@@ -145,5 +149,9 @@
 
   .select {
     width: 100%;
+  }
+
+  .select.placeholder {
+    color: #BFBEBE;
   }
 }
