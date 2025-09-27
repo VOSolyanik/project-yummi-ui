@@ -43,6 +43,12 @@
   cursor: not-allowed;
 }
 
+.select.open {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  border-bottom: none;
+}
+
 .selectedText {
   flex: 1;
   text-align: left;
@@ -67,12 +73,14 @@
   z-index: 1000;
   background: #FFFFFF;
   border: 1px solid #BFBEBE;
-  max-height: 206px;
+  height: 206px;
   overflow-y: scroll;
-  padding: 16px 18px;
+  padding: 20px 18px 16px 18px;
   display: flex;
   flex-direction: column;
   gap: 6px;
+  border-bottom-right-radius: 30px;
+  border-bottom-left-radius: 30px;
   border-top: none;
 }
 
