@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import css from './RecipeFilters.module.css';
+import CustomDropdown from '@components/CustomDropdown/CustomDropdown';
 
 import {
   fetchIngredients,
@@ -35,50 +36,53 @@ const RecipeFilters = ({ onFiltersChange }) => {
     }
   }, [dispatch, ingredients.length, areas.length]);
 
-  const handleIngredientChange = (event) => {
-    const value = event.target.value;
+  const handleIngredientChange = (value) => {
     const ingredient = value ? ingredients.find(ing => ing.id === value) : null;
     dispatch(setSelectedIngredient(ingredient));
     onFiltersChange({ ingredient: value, area: selectedArea?.id || null });
   };
 
-  const handleAreaChange = (event) => {
-    const value = event.target.value;
+  const handleAreaChange = (value) => {
     const area = value ? areas.find(area => area.id === value) : null;
     dispatch(setSelectedArea(area));
     onFiltersChange({ ingredient: selectedIngredient?.id || null, area: value });
   };
 
+  // Prepare options for dropdowns
+  const ingredientOptions = [
+    { value: '', label: 'Ingredients' },
+    ...ingredients.map(ingredient => ({
+      value: ingredient.id,
+      label: ingredient.name
+    }))
+  ];
+
+  const areaOptions = [
+    { value: '', label: 'Area' },
+    ...areas.map(area => ({
+      value: area.id,
+      label: area.name
+    }))
+  ];
+
   return (
     <div className={css.filters}>
       <div className={css.filterGroup}>
-        <select
-          className={css.select}
+        <CustomDropdown
+          options={ingredientOptions}
           value={selectedIngredient?.id || ''}
           onChange={handleIngredientChange}
+          placeholder="Ingredients"
           disabled={isLoadingIngredients}
-        >
-          <option value="">Ingredients</option>
-          {ingredients.map((ingredient) => (
-            <option key={ingredient.id} value={ingredient.id}>
-              {ingredient.name}
-            </option>
-          ))}
-        </select>
+        />
         
-        <select
-          className={css.select}
+        <CustomDropdown
+          options={areaOptions}
           value={selectedArea?.id || ''}
           onChange={handleAreaChange}
+          placeholder="Area"
           disabled={isLoadingAreas}
-        >
-          <option value="">Area</option>
-          {areas.map((area) => (
-            <option key={area.id} value={area.id}>
-              {area.name}
-            </option>
-          ))}
-        </select>
+        />
       </div>
     </div>
   );

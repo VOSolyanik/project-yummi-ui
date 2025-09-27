@@ -1,0 +1,123 @@
+.dropdown {
+  position: relative;
+  width: 330px;
+}
+
+.select {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 18px;
+  width: 330px;
+  height: 56px;
+
+  border: 1px solid #BFBEBE;
+  border-radius: 30px;
+
+  font-family: 'Mulish', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: -0.02em;
+  color: #1A1A1A;
+
+  background: white;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.select:hover:not(.disabled) {
+  border-color: #050505;
+}
+
+.select:focus {
+  outline: none;
+  border-color: #050505;
+}
+
+.select.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.selectedText {
+  flex: 1;
+  text-align: left;
+}
+
+.chevron {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.chevron.rotated {
+  transform: rotate(180deg);
+}
+
+.dropdownList {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+
+  background: #FFFFFF;
+  border: 1px solid #BFBEBE;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+  max-height: 206px;
+  overflow-y: auto;
+}
+
+.option {
+  width: 100%;
+  padding: 6px 18px;
+  height: 24px;
+
+  font-family: 'Mulish', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: -0.02em;
+  color: #050505;
+  text-align: left;
+
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.option:hover {
+  background-color: #F8F8F8;
+}
+
+.option.selected {
+  background-color: #F0F0F0;
+  color: #050505;
+}
+
+.option:first-child {
+  border-radius: 15px 15px 0 0;
+}
+
+.option:last-child {
+  border-radius: 0 0 15px 15px;
+}
+
+@media screen and (max-width: 767px) {
+  .dropdown {
+    width: 100%;
+  }
+
+  .select {
+    width: 100%;
+  }
+}
