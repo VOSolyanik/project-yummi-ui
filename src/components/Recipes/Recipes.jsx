@@ -55,13 +55,24 @@ const Recipes = ({ categoryData, onBackToCategories }) => {
 
   const subtitle = 'Go on a taste journey, where every sip is a sophisticated creative chord, and\n every dessert is an expression of the most refined gastronomic desires.';
 
+  // Determine items per page based on screen size
+  const getItemsPerPage = () => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth <= 767 ? 8 : 12;
+    }
+    return 12; // Default for SSR
+  };
+
+  // Use consistent limit to avoid double requests
+  const itemsPerPage = getItemsPerPage();
+
   useEffect(() => {
     if (categoryId) {
       setCurrentPage(1);
       dispatch(fetchRecipes({
         categoryId,
         page: 1,
-        limit: 12,
+        limit: itemsPerPage,
         ingredient: selectedIngredient?.id || null,
         area: selectedArea?.id || null
       }));
@@ -73,7 +84,7 @@ const Recipes = ({ categoryData, onBackToCategories }) => {
     dispatch(fetchRecipes({
       categoryId,
       page: 1,
-      limit: 12,
+      limit: itemsPerPage,
       ingredient,
       area
     }));
@@ -84,7 +95,7 @@ const Recipes = ({ categoryData, onBackToCategories }) => {
     dispatch(fetchRecipes({
       categoryId,
       page,
-      limit: 12,
+      limit: itemsPerPage,
       ingredient: selectedIngredient?.id || null,
       area: selectedArea?.id || null
     }));
