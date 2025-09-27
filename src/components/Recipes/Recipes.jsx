@@ -145,6 +145,7 @@ const Recipes = ({ categoryData, onBackToCategories }) => {
             totalPages={totalPages}
             onPageChange={handlePageChange}
             isLoading={isLoading}
+            totalRecipes={totalRecipes}
           />
         </div>
       </div>

@@ -6,12 +6,13 @@ const RecipePagination = ({
   currentPage, 
   totalPages, 
   onPageChange, 
-  isLoading 
+  isLoading,
+  totalRecipes 
 }) => {
-  // For testing purposes, always show pagination
-  // if (totalPages <= 1) {
-  //   return null;
-  // }
+  // Don't show pagination if no recipes found
+  if (!totalRecipes || totalRecipes === 0) {
+    return null;
+  }
 
   const getPageNumbers = () => {
     // If no recipes or totalPages is 0, show only page 1
