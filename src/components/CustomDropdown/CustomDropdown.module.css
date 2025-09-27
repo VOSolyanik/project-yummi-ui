@@ -30,12 +30,12 @@
 }
 
 .select:hover:not(.disabled) {
-  border-color: #050505;
+  border-color: #BFBEBE;
 }
 
 .select:focus {
   outline: none;
-  border-color: #050505;
+  border-color: #BFBEBE;
 }
 
 .select.disabled {
@@ -75,7 +75,7 @@
   border: 1px solid #BFBEBE;
   height: 206px;
   overflow-y: scroll;
-  padding: 20px 18px 16px 18px;
+  padding: 16px 18px;
   display: flex;
   flex-direction: column;
   gap: 6px;
