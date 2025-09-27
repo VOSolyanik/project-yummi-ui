@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import css from './RecipeCard.module.css';
 
-import heartIcon from '../../assets/icons/heart.svg';
+import heartIcon from '../../assets/icons/favorites.svg';
 import arrowIcon from '../../assets/icons/arrow-up-right.svg';
 
 const RecipeCard = ({ recipe, onFavoriteToggle }) => {

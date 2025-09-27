@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
 
 import css from './Recipes.module.css';
+import arrowBackIcon from '../../assets/icons/arrow-back.svg';
 
 import MainTitle from '@components/MainTitle/MainTitle';
 import Subtitle from '@components/Subtitle/Subtitle';
@@ -49,12 +50,10 @@ const Recipes = ({ categoryData, onBackToCategories }) => {
 
   const isAllCategories = categoryData?.category?.name === 'All Categories';
   const categoryId = categoryData?.category?._id || 'all';
-  
+
   const title = isAllCategories ? 'All categories' : categoryData?.category?.name || 'Recipes';
-  
-  const subtitle = isAllCategories 
-    ? 'Discover a limitless world of culinary possibilities and enjoy exquisite recipes that combine taste, style and the warm atmosphere of the kitchen.'
-    : `Explore delicious ${categoryData?.category?.name?.toLowerCase() || 'recipes'} and discover new flavors that will delight your taste buds.`;
+
+  const subtitle = 'Go on a taste journey, where every sip is a sophisticated creative chord, and\n every dessert is an expression of the most refined gastronomic desires.';
 
   useEffect(() => {
     if (categoryId) {
@@ -107,13 +106,18 @@ const Recipes = ({ categoryData, onBackToCategories }) => {
   return (
     <section className={css.recipes} aria-labelledby="recipes-heading">
       <div className={css.header}>
-        <button 
-          type="button" 
+        <button
+          type="button"
           className={css.backButton}
           onClick={handleBackClick}
           aria-label="Back to categories"
         >
-          ← Back
+          <img
+            src={arrowBackIcon}
+            alt="Back arrow"
+            className={css.backIcon}
+          />
+          Back
         </button>
 
         <MainTitle level={2} id="recipes-heading" className={css.title}>
@@ -129,7 +133,7 @@ const Recipes = ({ categoryData, onBackToCategories }) => {
         <RecipeFilters onFiltersChange={handleFiltersChange} />
 
         <div className={css.content}>
-          <RecipeList 
+          <RecipeList
             recipes={recipes}
             onFavoriteToggle={handleFavoriteToggle}
             isLoading={isLoading}

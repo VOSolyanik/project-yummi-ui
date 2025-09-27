@@ -42,11 +42,8 @@
   align-items: flex-start;
   gap: 6px;
   padding: 0;
-  margin-bottom: 20px;
-  
   background: transparent;
   border: none;
-  
   font-family: 'Mulish', sans-serif;
   font-style: normal;
   font-weight: 700;
@@ -55,7 +52,6 @@
   letter-spacing: -0.02em;
   text-transform: uppercase;
   color: #050505;
-  
   cursor: pointer;
   transition: opacity 0.2s ease;
 }
@@ -69,9 +65,13 @@
   outline-offset: 2px;
 }
 
+.backIcon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
 .title {
-  margin-bottom: 0;
-  
   font-family: 'Mulish', sans-serif;
   font-style: normal;
   font-weight: 800;
@@ -83,8 +83,6 @@
 }
 
 .subtitle {
-  margin-bottom: 0;
-  
   font-family: 'Mulish', sans-serif;
   font-style: normal;
   font-weight: 500;
@@ -92,6 +90,7 @@
   line-height: 24px;
   letter-spacing: -0.02em;
   color: #1A1A1A;
+  white-space: pre-line;
 }
 
 
@@ -100,24 +99,25 @@
     padding: 2rem 1rem;
     gap: 20px;
   }
-  
+
   .section {
     flex-direction: column;
     gap: 20px;
   }
-  
+
   .content {
     gap: 30px;
   }
-  
+
   .title {
     font-size: 32px;
     line-height: 36px;
   }
-  
+
   .subtitle {
     font-size: 14px;
     line-height: 20px;
+    white-space: normal;
   }
 }
 
@@ -125,22 +125,9 @@
   .recipes {
     padding: 4rem 0;
   }
-  
+
   .container {
     padding: 0 32px;
-  }
-  
-  .backButton {
-    padding: 12px 24px;
-    margin-bottom: 2rem;
-  }
-  
-  .title {
-    margin-bottom: 1rem;
-  }
-  
-  .subtitle {
-    margin-bottom: 3rem;
   }
 }
 
@@ -148,21 +135,8 @@
   .recipes {
     padding: 4rem 0;
   }
-  
+
   .container {
     padding: 0 80px;
-  }
-  
-  .backButton {
-    padding: 12px 24px;
-    margin-bottom: 2rem;
-  }
-  
-  .title {
-    margin-bottom: 1.25rem;
-  }
-  
-  .subtitle {
-    margin-bottom: 3rem;
   }
 }

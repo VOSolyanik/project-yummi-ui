@@ -36,8 +36,15 @@
   color: #1A1A1A;
   
   background: white;
+  background-image: url('../../assets/icons/chevron-down.svg');
+  background-repeat: no-repeat;
+  background-position: right 19px center;
+  background-size: 18px 18px;
   cursor: pointer;
   transition: border-color 0.2s ease;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
 }
 
 .select:hover {
