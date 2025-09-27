@@ -17,8 +17,14 @@
 /* Custom dropdown styles are now in CustomDropdown.module.css */
 
 @media screen and (min-width: 768px) and (max-width: 1439px) {
+  .filters {
+    width: 100%;
+  }
+
   .filterGroup {
     flex-direction: row;
+    width: 100%;
+    gap: 14px;
   }
 }
 

@@ -118,6 +118,16 @@
   color: #050505;
 }
 
+@media screen and (min-width: 768px) and (max-width: 1439px) {
+  .dropdown {
+    width: 345px;
+  }
+
+  .select {
+    width: 345px;
+  }
+}
+
 @media screen and (max-width: 767px) {
   .dropdown {
     width: 100%;

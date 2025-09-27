@@ -124,6 +124,7 @@
 @media screen and (min-width: 768px) and (max-width: 1439px) {
   .recipes {
     padding: 4rem 0;
+    max-width: 704px;
   }
 
   .section {
