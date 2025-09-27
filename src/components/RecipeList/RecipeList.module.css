@@ -44,7 +44,7 @@
 @media screen and (min-width: 375px) and (max-width: 767px) {
   .grid {
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 32px;
     width: 100%;
   }
 }
@@ -52,7 +52,7 @@
 @media screen and (max-width: 374px) {
   .grid {
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 32px;
   }
 }
 
