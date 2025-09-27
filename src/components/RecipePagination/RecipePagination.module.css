@@ -1,8 +1,8 @@
 .pagination {
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
-  padding: 0 6px;
+  align-items: center;
+  padding: 0;
   gap: 6px;
   width: auto;
 }
@@ -44,7 +44,52 @@
   color: #050505;
 }
 
+.navButton {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 100px;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  font-family: 'Mulish', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 143%;
+  text-align: center;
+  letter-spacing: 0.17px;
+  color: #1A1A1A;
+}
 
+.navButton:hover:not(:disabled) {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.navButton:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.ellipsis {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  font-family: 'Mulish', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 143%;
+  text-align: center;
+  letter-spacing: 0.17px;
+  color: #1A1A1A;
+}
 
 .pageNumbers {
   display: flex;
@@ -61,6 +106,18 @@
     height: 36px;
     padding: 0 8px;
     font-size: 13px;
+  }
+  
+  .ellipsis {
+    min-width: 36px;
+    height: 36px;
+    font-size: 13px;
+  }
+  
+  .navButton {
+    min-width: 36px;
+    height: 36px;
+    font-size: 14px;
   }
   
   .pageNumbers {
