@@ -14,16 +14,27 @@ import { Icon } from '@components/Icon/Icon';
 
 const validationSchema = Yup.object({
   photo: Yup.mixed().required('Photo is required'),
-  title: Yup.string().trim().required('Title is required'),
-  description: Yup.string().trim().max(200, 'Max 200 characters').required('Description is required'),
+  title: Yup.string().trim()
+    .required('Title is required'),
+  description: Yup.string().trim()
+    .max(200, 'Max 200 characters')
+    .required('Description is required'),
   category: Yup.string().required('Category is required'),
   country: Yup.string().required('Country is required'),
-  time: Yup.number().min(1, 'Min 1 minute').required('Time is required'),
+  time: Yup.number().min(1, 'Min 1 minute')
+    .required('Time is required'),
   ingredientId: Yup.string().required('Ingredient is required'),
-  ingredientAmount: Yup.string().trim().required('Amount is required'),
-  instructions: Yup.string().trim().max(1000, 'Max 1000 characters').required('Instructions are required'),
+  ingredientAmount: Yup.string().trim()
+    .required('Amount is required'),
+  instructions: Yup.string().trim()
+    .max(1000, 'Max 1000 characters')
+    .required('Instructions are required'),
   ingredients: Yup.array()
-    .of(Yup.object({ id: Yup.string().required(), name: Yup.string().required(), amount: Yup.string().required() }))
+    .of(Yup.object({
+      id: Yup.string().required(),
+      name: Yup.string().required(),
+      amount: Yup.string().required(),
+    }))
     .min(1, 'Add at least 1 ingredient')
     .required(),
 });
@@ -61,20 +72,25 @@ const AddRecipeForm = () => {
         setCategories(categories);
         setCountries(countries);
         setIngredients(ingredients);
-      } catch (e) {
+      } catch {
         toast.error('Failed to load form data');
       }
     })();
   }, []);
 
-  useEffect(() => () => {
-    if (fileUrlRef.current) URL.revokeObjectURL(fileUrlRef.current);
-  }, []);
+  useEffect(
+    () => () => {
+      if (fileUrlRef.current) URL.revokeObjectURL(fileUrlRef.current);
+    },
+    [],
+  );
 
-  const ingredientMap = useMemo(() =>
-    Object.fromEntries(ingredients.map(i => [i.id, i])), [ingredients]);
+  const ingredientMap = useMemo(
+    () => Object.fromEntries(ingredients.map(i => [i.id, i])),
+    [ingredients],
+  );
 
-  const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+  const handleSubmit = async (values, { setSubmitting }) => {
     try {
       const formData = new FormData();
       formData.append('photo', values.photo);
@@ -97,22 +113,25 @@ const AddRecipeForm = () => {
   };
 
   return (
-    <Formik initialValues={initialValues} validationSchema={validationSchema}
+    <Formik initialValues={initialValues}
+      validationSchema={validationSchema}
       onSubmit={handleSubmit}>
       {({ values,
         setFieldValue,
         isSubmitting,
         resetForm,
-        errors, touched }) => (
+        errors,
+        touched,
+      }) => (
         <Form className={css.form}>
-
+          {/* Photo upload */}
           <div>
             <div className={css.label}>Recipe photo</div>
             {photoPreview && <img className={css.filePreview} src={photoPreview} alt="Preview" />}
             <input
               type="file"
               accept="image/*"
-              onChange={(e) => {
+              onChange={e => {
                 const file = e.currentTarget.files?.[0] || null;
                 setFieldValue('photo', file);
                 if (fileUrlRef.current) URL.revokeObjectURL(fileUrlRef.current);
@@ -125,31 +144,50 @@ const AddRecipeForm = () => {
                 }
               }}
               className={css.fileInput}
+              title="Upload a photo"
             />
             <ErrorMessage name="photo" component="div" className={css.error} />
           </div>
 
+          {/* Title + Category */}
           <div className={css.row}>
             <div>
               <div className={css.label}>The name of the recipe</div>
               <Field name="title">
                 {({ field }) => (
-                  <input {...field} type="text" className={css.input + (errors.title && touched.title ? ' ' + css.invalid : '')} placeholder="" />
+                  <input
+                    {...field}
+                    type="text"
+                    className={css.input + (errors.title && touched.title ? ' ' + css.invalid : '')}
+                    placeholder=""
+                  />
                 )}
               </Field>
               <ErrorMessage name="title" component="div" className={css.error} />
             </div>
+
             <div>
               <div className={css.label}>Category</div>
               <div className={css.select}>
-                <button type="button" className={css.selectBtn} onClick={() => setOpenSelect(openSelect === 'category' ? null : 'category')}>
+                <button
+                  type="button"
+                  className={css.selectBtn}
+                  onClick={() => setOpenSelect(openSelect === 'category' ? null : 'category')}
+                >
                   {values.category ? categories.find(c => c.id === values.category)?.name : 'Select a category'}
                   <Icon name="chevron-down" width={18} height={18} />
                 </button>
                 {openSelect === 'category' && (
                   <div className={css.dropdown}>
                     {categories.map(c => (
-                      <div key={c.id} className={css.option} onClick={() => { setFieldValue('category', c.id); setOpenSelect(null); }}>
+                      <div
+                        key={c.id}
+                        className={css.option}
+                        onClick={() => {
+                          setFieldValue('category', c.id);
+                          setOpenSelect(null);
+                        }}
+                      >
                         {c.name}
                       </div>
                     ))}
@@ -164,7 +202,13 @@ const AddRecipeForm = () => {
             <div className={css.label}>Short description</div>
             <Field name="description">
               {({ field }) => (
-                <input {...field} type="text" maxLength={200} className={css.input + (errors.description && touched.description ? ' ' + css.invalid : '')} placeholder="Enter a description of the dish" />
+                <input
+                  {...field}
+                  type="text"
+                  maxLength={200}
+                  className={css.input + (errors.description && touched.description ? ' ' + css.invalid : '')}
+                  placeholder="Enter a description of the dish"
+                />
               )}
             </Field>
             <div className={css.counter}>{values.description.length}/200</div>
@@ -175,14 +219,25 @@ const AddRecipeForm = () => {
             <div>
               <div className={css.label}>Area</div>
               <div className={css.select}>
-                <button type="button" className={css.selectBtn} onClick={() => setOpenSelect(openSelect === 'country' ? null : 'country')}>
+                <button
+                  type="button"
+                  className={css.selectBtn}
+                  onClick={() => setOpenSelect(openSelect === 'country' ? null : 'country')}
+                >
                   {values.country ? countries.find(c => c.code === values.country)?.name : 'Area'}
                   <Icon name="chevron-down" width={18} height={18} />
                 </button>
                 {openSelect === 'country' && (
                   <div className={css.dropdown}>
                     {countries.map(c => (
-                      <div key={c.code} className={css.option} onClick={() => { setFieldValue('country', c.code); setOpenSelect(null); }}>
+                      <div
+                        key={c.code}
+                        className={css.option}
+                        onClick={() => {
+                          setFieldValue('country', c.code);
+                          setOpenSelect(null);
+                        }}
+                      >
                         {c.name}
                       </div>
                     ))}
@@ -191,14 +246,31 @@ const AddRecipeForm = () => {
               </div>
               <ErrorMessage name="country" component="div" className={css.error} />
             </div>
+
             <div>
-              <div className={css.label}>Cooking time (min)</div>
+              <div className={css.label}>Cooking time</div>
               <div className={css.timeControl}>
-                <button type="button" className={css.iconBtn} onClick={() => setFieldValue('time', Math.max(1, Number(values.time) - 1))}>
+                <button
+                  type="button"
+                  className={css.iconBtn}
+                  onClick={() => setFieldValue('time', Math.max(1, Number(values.time) - 1))}
+                >
                   <Icon name="minus" width={16} height={16} />
                 </button>
-                <input type="number" min={1} value={values.time} onChange={(e) => setFieldValue('time', Math.max(1, Number(e.target.value || 0)))} className={css.input} style={{ width: 120 }} />
-                <button type="button" className={css.iconBtn} onClick={() => setFieldValue('time', Number(values.time) + 1)}>
+                <input
+                  type="number"
+                  min={1}
+                  value={values.time}
+                  onChange={e => setFieldValue('time', Math.max(1, Number(e.target.value || 0)))}
+                  className={css.input}
+                  style={{ width: 120 }}
+                />
+                <span>min</span>
+                <button
+                  type="button"
+                  className={css.iconBtn}
+                  onClick={() => setFieldValue('time', Number(values.time) + 1)}
+                >
                   <Icon name="plus" width={16} height={16} />
                 </button>
               </div>
@@ -210,14 +282,25 @@ const AddRecipeForm = () => {
             <div>
               <div className={css.label}>Ingredients</div>
               <div className={css.select}>
-                <button type="button" className={css.selectBtn} onClick={() => setOpenSelect(openSelect === 'ingredient' ? null : 'ingredient')}>
+                <button
+                  type="button"
+                  className={css.selectBtn}
+                  onClick={() => setOpenSelect(openSelect === 'ingredient' ? null : 'ingredient')}
+                >
                   {values.ingredientId ? ingredientMap[values.ingredientId]?.name : 'Add the ingredient'}
                   <Icon name="chevron-down" width={18} height={18} />
                 </button>
                 {openSelect === 'ingredient' && (
                   <div className={css.dropdown}>
                     {ingredients.map(i => (
-                      <div key={i.id} className={css.option} onClick={() => { setFieldValue('ingredientId', i.id); setOpenSelect(null); }}>
+                      <div
+                        key={i.id}
+                        className={css.option}
+                        onClick={() => {
+                          setFieldValue('ingredientId', i.id);
+                          setOpenSelect(null);
+                        }}
+                      >
                         {i.name}
                       </div>
                     ))}
@@ -226,38 +309,48 @@ const AddRecipeForm = () => {
               </div>
               <ErrorMessage name="ingredientId" component="div" className={css.error} />
             </div>
+
             <div>
               <div className={css.label}>Amount</div>
               <Field name="ingredientAmount">
                 {({ field }) => (
-                  <input {...field} type="text" className={css.input + (errors.ingredientAmount && touched.ingredientAmount ? ' ' + css.invalid : '')} placeholder="Enter quantity" />
+                  <input
+                    {...field}
+                    type="text"
+                    className={css.input + (errors.ingredientAmount && touched.ingredientAmount ? ' ' + css.invalid : '')}
+                    placeholder="Enter quantity"
+                  />
                 )}
               </Field>
               <ErrorMessage name="ingredientAmount" component="div" className={css.error} />
             </div>
           </div>
+
           <div>
-            <Button type="button" variant="primary" onClick={() => {
-              if (!values.ingredientId || !values.ingredientAmount) {
-                toast.error('Select ingredient and amount');
-                return;
-              }
-              const ing = ingredientMap[values.ingredientId];
-              const newItem = { id: ing.id,
-                name: ing.name,
-                amount: values.ingredientAmount,
-                image: ing.image };
-              setFieldValue('ingredients', [...values.ingredients.filter(i => i.id !== newItem.id), newItem]);
-              setFieldValue('ingredientId', '');
-              setFieldValue('ingredientAmount', '');
-              setOpenSelect(null);
-            }}>
+            <Button
+              type="button"
+              variant="primary"
+              onClick={() => {
+                if (!values.ingredientId || !values.ingredientAmount) {
+                  toast.error('Select ingredient and amount');
+                  return;
+                }
+                const ing = ingredientMap[values.ingredientId];
+                const newItem = { id: ing.id,
+                  name: ing.name,
+                  amount: values.ingredientAmount,
+                  image: ing.image };
+                setFieldValue('ingredients', [...values.ingredients.filter(i => i.id !== newItem.id), newItem]);
+                setFieldValue('ingredientId', '');
+                setFieldValue('ingredientAmount', '');
+                setOpenSelect(null);
+              }}
+            >
               Add ingredient +
             </Button>
             <ErrorMessage name="ingredients" component="div" className={css.error} />
           </div>
 
-          {/* Ingredients list */}
           <div className={css.ingredientList}>
             {values.ingredients.map(item => (
               <div key={item.id} className={css.ingredientCard}>
@@ -266,7 +359,11 @@ const AddRecipeForm = () => {
                   <div>{item.name}</div>
                   <div className={css.counter}>Amount: {item.amount}</div>
                 </div>
-                <button type="button" className={css.iconBtn} onClick={() => setFieldValue('ingredients', values.ingredients.filter(i => i.id !== item.id))}>
+                <button
+                  type="button"
+                  className={css.iconBtn}
+                  onClick={() => setFieldValue('ingredients', values.ingredients.filter(i => i.id !== item.id))}
+                >
                   <Icon name="trash" width={16} height={16} />
                 </button>
               </div>
@@ -277,7 +374,12 @@ const AddRecipeForm = () => {
             <div className={css.label}>Recipe preparation</div>
             <Field name="instructions">
               {({ field }) => (
-                <textarea {...field} maxLength={1000} className={css.textarea + (errors.instructions && touched.instructions ? ' ' + css.invalid : '')} placeholder="Enter recipe" />
+                <textarea
+                  {...field}
+                  maxLength={1000}
+                  className={css.textarea + (errors.instructions && touched.instructions ? ' ' + css.invalid : '')}
+                  placeholder="Enter recipe"
+                />
               )}
             </Field>
             <div className={css.counter}>{values.instructions.length}/1000</div>
