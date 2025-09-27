@@ -123,6 +123,10 @@
     width: 345px;
   }
 
+  .select {
+    width: 345px;
+  }
+
   .select.placeholder {
     color: #BFBEBE;
   }
@@ -135,6 +139,13 @@
 
   .select {
     width: 100%;
+    height: 48px;
+    font-family: 'Mulish', sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: -0.02em;
   }
 
   .select.placeholder {
@@ -149,6 +160,13 @@
 
   .select {
     width: 100%;
+    height: 48px;
+    font-family: 'Mulish', sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: -0.02em;
   }
 
   .select.placeholder {
