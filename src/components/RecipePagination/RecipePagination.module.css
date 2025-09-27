@@ -102,16 +102,29 @@
   }
   
   .pageButton {
-    min-width: 36px;
-    height: 36px;
-    padding: 0 8px;
-    font-size: 13px;
+    width: 40px;
+    height: 40px;
+    font-family: 'Mulish', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 143%;
+    letter-spacing: 0.17px;
+    text-align: center;
+  }
+
+  .pageButton.active {
+    border: 1px solid #050505;
   }
   
   .ellipsis {
-    min-width: 36px;
-    height: 36px;
-    font-size: 13px;
+    width: 40px;
+    height: 40px;
+    font-family: 'Mulish', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 143%;
+    letter-spacing: 0.17px;
+    text-align: center;
   }
   
   .navButton {

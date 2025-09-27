@@ -100,6 +100,10 @@
     gap: 20px;
   }
 
+  .header {
+    gap: 16px;
+  }
+
   .section {
     flex-direction: column;
     gap: 20px;
