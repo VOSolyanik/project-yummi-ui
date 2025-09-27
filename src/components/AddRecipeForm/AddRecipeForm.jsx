@@ -182,7 +182,9 @@ const AddRecipeForm = () => {
                 />
               )}
             </Field>
-            <div className={css.counterInline}>{values.description.length}/200</div>
+            <div className={css.counterInline}>
+              {values.description.length}/200
+            </div>
             <ErrorMessage name="description" component="div" className={css.error} />
           </div>
 
