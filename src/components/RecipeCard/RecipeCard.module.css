@@ -41,8 +41,15 @@
   transition: all 0.2s ease;
 }
 
-.favoriteButton:hover {
-  background: #f5f5f5;
+.favoriteButton:hover,
+.favoriteButton:focus {
+  background: #050505;
+  border-color: #050505;
+}
+
+.favoriteButton:hover .heartIcon,
+.favoriteButton:focus .heartIcon {
+  filter: brightness(0) saturate(100%) invert(100%);
 }
 
 .favoriteActive {
@@ -172,8 +179,15 @@
   transition: all 0.2s ease;
 }
 
-.viewButton:hover {
-  background: #f5f5f5;
+.viewButton:hover,
+.viewButton:focus {
+  background: #050505;
+  border-color: #050505;
+}
+
+.viewButton:hover .arrowIcon,
+.viewButton:focus .arrowIcon {
+  filter: brightness(0) saturate(100%) invert(100%);
 }
 
 .arrowIcon {
