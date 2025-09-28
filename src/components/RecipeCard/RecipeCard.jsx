@@ -5,9 +5,11 @@ import css from './RecipeCard.module.css';
 
 import heartIcon from '../../assets/icons/favorites.svg';
 import arrowIcon from '../../assets/icons/arrow-up-right-black.svg';
+import noImagePlaceholder from '../../assets/images/no-image.jpg';
 
 const RecipeCard = ({ recipe, onFavoriteToggle }) => {
   const [isFavorite, setIsFavorite] = useState(false);
+  const [imageError, setImageError] = useState(false);
 
   const handleFavoriteClick = (e) => {
     e.preventDefault();
@@ -28,14 +30,19 @@ const RecipeCard = ({ recipe, onFavoriteToggle }) => {
   const handleRecipeClick = () => {
   };
 
+  const handleImageError = () => {
+    setImageError(true);
+  };
+
   return (
     <div className={css.card} onClick={handleRecipeClick}>
       <div className={css.imageContainer}>
         <img
-          src={recipe.thumbUrl || `https://picsum.photos/300/300?random=${recipe.id}`}
+          src={imageError || !recipe.thumbUrl ? noImagePlaceholder : recipe.thumbUrl}
           alt={recipe.title}
           className={css.image}
           loading="lazy"
+          onError={handleImageError}
         />
       </div>
 
