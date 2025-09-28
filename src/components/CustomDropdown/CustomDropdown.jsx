@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import css from './CustomDropdown.module.css';
 import chevronDownIcon from '../../assets/icons/chevron-down.svg';
 
@@ -33,30 +33,21 @@ const CustomDropdown = ({
     setSelectedOption(option || null);
   }, [value, options]);
 
-  const handleToggle = () => {
+  const handleToggle = useCallback(() => {
     if (!disabled) {
       setIsOpen(!isOpen);
     }
-  };
+  }, [disabled, isOpen]);
 
-  const handleOptionClick = (option) => {
-    console.log('🎯 CustomDropdown handleOptionClick:', {
-      currentValue: selectedOption?.value,
-      newValue: option.value,
-      hasChanged: selectedOption?.value !== option.value
-    });
-    
-    // Only call onChange if the value actually changed
+  const handleOptionClick = useCallback((option) => {
     if (selectedOption?.value !== option.value) {
-      console.log('📞 Calling onChange because value changed');
       setSelectedOption(option);
       onChange(option.value);
     } else {
-      console.log('⏭️ Skipping onChange because value is the same');
       setSelectedOption(option);
     }
     setIsOpen(false);
-  };
+  }, [selectedOption?.value, onChange]);
 
   const isPlaceholder = !selectedOption || selectedOption.value === '';
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
 
@@ -27,9 +27,11 @@ import {
   clearFilters,
 } from '@redux/filters/filtersSlice';
 
+const MOBILE_BREAKPOINT = 767;
+const MOBILE_ITEMS_PER_PAGE = 8;
+const DESKTOP_ITEMS_PER_PAGE = 12;
+
 const Recipes = ({ categoryData, onBackToCategories }) => {
-  console.log('🎬 Recipes component rendered');
-  
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -41,36 +43,33 @@ const Recipes = ({ categoryData, onBackToCategories }) => {
   const selectedIngredient = useSelector(selectSelectedIngredient);
   const selectedArea = useSelector(selectSelectedArea);
 
-
   const isAllCategories = categoryData?.category?.name === 'All Categories';
   const categoryId = categoryData?.category?._id || 'all';
-
   const title = isAllCategories ? 'All categories' : categoryData?.category?.name || 'Recipes';
-
   const subtitle = 'Go on a taste journey, where every sip is a sophisticated creative chord, and\n every dessert is an expression of the most refined gastronomic desires.';
 
-  // Dynamic limit based on screen size
-  const itemsPerPage = useMemo(() => {
-    return typeof window !== 'undefined' && window.innerWidth <= 767 ? 8 : 12;
+  const getItemsPerPage = useCallback(() => {
+    return typeof window !== 'undefined' && window.innerWidth <= MOBILE_BREAKPOINT 
+      ? MOBILE_ITEMS_PER_PAGE 
+      : DESKTOP_ITEMS_PER_PAGE;
   }, []);
 
   useEffect(() => {
     if (categoryId) {
-      console.log('🚀 Fetching recipes for category:', categoryId);
       setCurrentPage(1);
       dispatch(fetchRecipes({
         categoryId,
         page: 1,
-        limit: itemsPerPage,
-        ingredient: null, // Always null for initial load
-        area: null // Always null for initial load
+        limit: getItemsPerPage(),
+        ingredient: null,
+        area: null
       }));
     }
-  }, [dispatch, categoryId]); // Only categoryId - filters are handled by handleFiltersChange
+  }, [dispatch, categoryId, getItemsPerPage]);
 
-  const handleFiltersChange = ({ ingredient, area }) => {
+  const handleFiltersChange = useCallback(({ ingredient, area }) => {
     setCurrentPage(1);
-    const limit = typeof window !== 'undefined' && window.innerWidth <= 767 ? 8 : 12;
+    const limit = getItemsPerPage();
     dispatch(fetchRecipes({
       categoryId,
       page: 1,
@@ -78,11 +77,11 @@ const Recipes = ({ categoryData, onBackToCategories }) => {
       ingredient,
       area
     }));
-  };
+  }, [dispatch, categoryId, getItemsPerPage]);
 
-  const handlePageChange = (page) => {
+  const handlePageChange = useCallback((page) => {
     setCurrentPage(page);
-    const limit = typeof window !== 'undefined' && window.innerWidth <= 767 ? 8 : 12;
+    const limit = getItemsPerPage();
     dispatch(fetchRecipes({
       categoryId,
       page,
@@ -90,20 +89,20 @@ const Recipes = ({ categoryData, onBackToCategories }) => {
       ingredient: selectedIngredient?.id || null,
       area: selectedArea?.id || null
     }));
-  };
+  }, [dispatch, categoryId, selectedIngredient?.id, selectedArea?.id, getItemsPerPage]);
 
-  const handleFavoriteToggle = async (recipeId) => {
+  const handleFavoriteToggle = useCallback(async (recipeId) => {
     try {
       toast.success('Recipe added to favorites!');
     } catch (error) {
       toast.error('Failed to update favorites');
     }
-  };
+  }, []);
 
-  const handleBackClick = () => {
+  const handleBackClick = useCallback(() => {
     dispatch(clearFilters());
     onBackToCategories();
-  };
+  }, [dispatch, onBackToCategories]);
 
   return (
     <section className={css.recipes} aria-labelledby="recipes-heading">

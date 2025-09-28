@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo, useCallback } from 'react';
 
 import css from './RecipePagination.module.css';
 
@@ -9,13 +9,11 @@ const RecipePagination = ({
   isLoading,
   totalRecipes 
 }) => {
-  // Don't show pagination if no recipes found
   if (!totalRecipes || totalRecipes === 0) {
     return null;
   }
 
-  const getPageNumbers = () => {
-    // If no recipes or totalPages is 0, show only page 1
+  const pageNumbers = useMemo(() => {
     if (!totalPages || totalPages === 0) {
       return [1];
     }
@@ -23,13 +21,11 @@ const RecipePagination = ({
     const window = 3;
     const current = currentPage || 1;
     
-    // If 3 or fewer pages, show all
     if (totalPages <= window) {
       return Array.from({ length: totalPages }, (_, i) => i + 1);
     }
     
-    // Calculate window of 3 pages centered around current
-    const half = Math.floor(window / 2); // 1 for window=3
+    const half = Math.floor(window / 2);
     let start = Math.max(1, current - half);
     let end = start + window - 1;
     
@@ -41,7 +37,6 @@ const RecipePagination = ({
     const core = Array.from({ length: end - start + 1 }, (_, i) => start + i);
     const tokens = [];
     
-    // Add edges
     if (start > 1) {
       tokens.push(1);
       if (start > 2) {
@@ -59,20 +54,15 @@ const RecipePagination = ({
     }
     
     return tokens;
-  };
+  }, [totalPages, currentPage]);
 
-  const handlePageClick = (page) => {
+  const handlePageClick = useCallback((page) => {
     if (page !== currentPage && !isLoading) {
       onPageChange(page);
     }
-  };
-
-  const pageNumbers = getPageNumbers();
+  }, [currentPage, isLoading, onPageChange]);
   
-  // When no recipes, always show page 1 as active
   const activePage = (!totalPages || totalPages === 0) ? 1 : currentPage;
-  
-  // Navigation arrows logic
   const canPrev = activePage > 1;
   const canNext = activePage < totalPages;
   const showArrows = totalPages > 3;

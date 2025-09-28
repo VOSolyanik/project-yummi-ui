@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import css from './RecipeFilters.module.css';
@@ -18,8 +18,6 @@ import {
 } from '@redux/filters/filtersSlice';
 
 const RecipeFilters = ({ onFiltersChange }) => {
-  console.log('🔧 RecipeFilters component rendered');
-  
   const dispatch = useDispatch();
   const initialFetchDone = useRef(false);
 
@@ -31,54 +29,44 @@ const RecipeFilters = ({ onFiltersChange }) => {
   const isLoadingAreas = useSelector(selectIsLoadingAreas);
 
   useEffect(() => {
-    console.log('🔧 RecipeFilters useEffect triggered:', {
-      ingredientsLength: ingredients.length,
-      areasLength: areas.length,
-      initialFetchDone: initialFetchDone.current
-    });
-    
-    // Only fetch if we haven't done initial fetch yet
     if (!initialFetchDone.current) {
       if (ingredients.length === 0) {
-        console.log('🔧 Fetching ingredients...');
         dispatch(fetchIngredients());
       }
       if (areas.length === 0) {
-        console.log('🔧 Fetching areas...');
         dispatch(fetchAreas());
       }
       initialFetchDone.current = true;
     }
   }, [dispatch, ingredients.length, areas.length]);
 
-  const handleIngredientChange = (value) => {
+  const handleIngredientChange = useCallback((value) => {
     const ingredient = value ? ingredients.find(ing => ing.id === value) : null;
     dispatch(setSelectedIngredient(ingredient));
     onFiltersChange({ ingredient: value, area: selectedArea?.id || null });
-  };
+  }, [dispatch, ingredients, selectedArea?.id, onFiltersChange]);
 
-  const handleAreaChange = (value) => {
+  const handleAreaChange = useCallback((value) => {
     const area = value ? areas.find(area => area.id === value) : null;
     dispatch(setSelectedArea(area));
     onFiltersChange({ ingredient: selectedIngredient?.id || null, area: value });
-  };
+  }, [dispatch, areas, selectedIngredient?.id, onFiltersChange]);
 
-  // Prepare options for dropdowns
-  const ingredientOptions = [
+  const ingredientOptions = useMemo(() => [
     { value: '', label: 'Ingredients' },
     ...ingredients.map(ingredient => ({
       value: ingredient.id,
       label: ingredient.name
     }))
-  ];
+  ], [ingredients]);
 
-  const areaOptions = [
+  const areaOptions = useMemo(() => [
     { value: '', label: 'Area' },
     ...areas.map(area => ({
       value: area.id,
       label: area.name
     }))
-  ];
+  ], [areas]);
 
   return (
     <div className={css.filters}>
