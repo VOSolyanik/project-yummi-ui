@@ -60,11 +60,11 @@ const Recipes = ({ categoryData, onBackToCategories }) => {
         categoryId,
         page: 1,
         limit: itemsPerPage,
-        ingredient: selectedIngredient?.id || null,
-        area: selectedArea?.id || null
+        ingredient: null, // Always null for initial load
+        area: null // Always null for initial load
       }));
     }
-  }, [dispatch, categoryId, selectedIngredient?.id, selectedArea?.id]);
+  }, [dispatch, categoryId]); // Only categoryId - filters are handled by handleFiltersChange
 
   const handleFiltersChange = ({ ingredient, area }) => {
     setCurrentPage(1);
