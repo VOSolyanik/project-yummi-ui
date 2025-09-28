@@ -49,8 +49,10 @@ const Recipes = ({ categoryData, onBackToCategories }) => {
 
   const subtitle = 'Go on a taste journey, where every sip is a sophisticated creative chord, and\n every dessert is an expression of the most refined gastronomic desires.';
 
-  // Fixed limit to prevent double requests - will be updated on resize if needed
-  const itemsPerPage = 12; // Default, will be overridden by filters/page changes
+  // Dynamic limit based on screen size
+  const itemsPerPage = useMemo(() => {
+    return typeof window !== 'undefined' && window.innerWidth <= 767 ? 8 : 12;
+  }, []);
 
   useEffect(() => {
     if (categoryId) {
