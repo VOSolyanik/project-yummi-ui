@@ -54,11 +54,11 @@ const RecipeCard = ({ recipe, onFavoriteToggle }) => {
           >
             <img
               src={recipe.owner?.avatarUrl || `https://ui-avatars.com/api/?name=${recipe.owner?.name || 'User'}&background=random`}
-              alt={recipe.owner?.name || 'Author'}
+              alt={recipe.owner?.name ? recipe.owner.name.split(' ')[0] : 'Author'}
               className={css.authorAvatar}
             />
             <span className={css.authorName}>
-              {recipe.owner?.name || 'Unknown'}
+              {recipe.owner?.name ? recipe.owner.name.split(' ')[0] : 'Unknown'}
             </span>
           </button>
 
