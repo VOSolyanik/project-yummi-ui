@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import css from './RecipeCard.module.css';
 
@@ -7,11 +8,23 @@ import heartIcon from '../../assets/icons/favorites.svg';
 import arrowIcon from '../../assets/icons/arrow-up-right-black.svg';
 import noImagePlaceholder from '../../assets/images/no-image.webp';
 
-const RecipeCard = ({ recipe, onFavoriteToggle }) => {
+const RecipeCard = ({ recipe, onFavoriteToggle, onAuthorClick, onRecipeClick }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [imageError, setImageError] = useState(false);
 
-  const handleFavoriteClick = (e) => {
+  const firstName = useMemo(() => {
+    return recipe.owner?.name ? recipe.owner.name.split(' ')[0] : 'Unknown';
+  }, [recipe.owner?.name]);
+
+  const avatarUrl = useMemo(() => {
+    if (recipe.owner?.avatarUrl) {
+      return recipe.owner.avatarUrl;
+    }
+    const name = recipe.owner?.name || 'User';
+    return `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=random`;
+  }, [recipe.owner?.avatarUrl, recipe.owner?.name]);
+
+  const handleFavoriteClick = useCallback((e) => {
     e.preventDefault();
     e.stopPropagation();
 
@@ -20,19 +33,26 @@ const RecipeCard = ({ recipe, onFavoriteToggle }) => {
     } else {
       setIsFavorite(!isFavorite);
     }
-  };
+  }, [onFavoriteToggle, recipe.id, isFavorite]);
 
-  const handleAuthorClick = (e) => {
+  const handleAuthorClick = useCallback((e) => {
     e.preventDefault();
     e.stopPropagation();
-  };
+    
+    if (onAuthorClick) {
+      onAuthorClick(recipe.owner);
+    }
+  }, [onAuthorClick, recipe.owner]);
 
-  const handleRecipeClick = () => {
-  };
+  const handleRecipeClick = useCallback(() => {
+    if (onRecipeClick) {
+      onRecipeClick(recipe);
+    }
+  }, [onRecipeClick, recipe]);
 
-  const handleImageError = () => {
+  const handleImageError = useCallback(() => {
     setImageError(true);
-  };
+  }, []);
 
   return (
     <div className={css.card} onClick={handleRecipeClick}>
@@ -60,12 +80,12 @@ const RecipeCard = ({ recipe, onFavoriteToggle }) => {
             onClick={handleAuthorClick}
           >
             <img
-              src={recipe.owner?.avatarUrl || `https://ui-avatars.com/api/?name=${recipe.owner?.name || 'User'}&background=random`}
-              alt={recipe.owner?.name ? recipe.owner.name.split(' ')[0] : 'Author'}
+              src={avatarUrl}
+              alt={firstName}
               className={css.authorAvatar}
             />
             <span className={css.authorName}>
-              {recipe.owner?.name ? recipe.owner.name.split(' ')[0] : 'Unknown'}
+              {firstName}
             </span>
           </button>
 
@@ -99,6 +119,29 @@ const RecipeCard = ({ recipe, onFavoriteToggle }) => {
       </div>
     </div>
   );
+};
+
+RecipeCard.propTypes = {
+  recipe: PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string,
+    thumbUrl: PropTypes.string,
+    owner: PropTypes.shape({
+      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+      name: PropTypes.string,
+      avatarUrl: PropTypes.string,
+    }),
+  }).isRequired,
+  onFavoriteToggle: PropTypes.func,
+  onAuthorClick: PropTypes.func,
+  onRecipeClick: PropTypes.func,
+};
+
+RecipeCard.defaultProps = {
+  onFavoriteToggle: null,
+  onAuthorClick: null,
+  onRecipeClick: null,
 };
 
 export default RecipeCard;
