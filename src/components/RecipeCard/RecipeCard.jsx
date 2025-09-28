@@ -55,9 +55,7 @@ const RecipeCard = ({ recipe, onFavoriteToggle }) => {
         <h3 className={css.title}>{recipe.title}</h3>
 
         <p className={css.description}>
-          {recipe.description?.length > 100
-            ? `${recipe.description.substring(0, 100)}...`
-            : recipe.description}
+          {recipe.description}
         </p>
 
         <div className={css.footer}>

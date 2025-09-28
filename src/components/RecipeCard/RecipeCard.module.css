@@ -84,7 +84,7 @@
 
 .description {
   margin: 0;
-
+  
   font-family: 'Mulish', sans-serif;
   font-style: normal;
   font-weight: 500;
@@ -92,6 +92,11 @@
   line-height: 24px;
   letter-spacing: -0.02em;
   color: #1A1A1A;
+  
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .footer {
@@ -169,24 +174,28 @@
   .card {
     width: 100%;
   }
-
+  
   .imageContainer {
     width: 100%;
     height: 200px;
   }
-
+  
   .content {
     width: 100%;
   }
-
+  
   .title {
     font-size: 18px;
     line-height: 22px;
   }
-
+  
   .description {
     font-size: 14px;
     line-height: 20px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
   .footer {
@@ -230,24 +239,28 @@
   .card {
     width: 100%;
   }
-
+  
   .imageContainer {
     width: 100%;
     height: 200px;
   }
-
+  
   .content {
     width: 100%;
   }
-
+  
   .title {
     font-size: 18px;
     line-height: 22px;
   }
-
+  
   .description {
     font-size: 14px;
     line-height: 20px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
   .footer {
@@ -310,6 +323,10 @@
   .description {
     font-size: 16px;
     line-height: 24px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
   .footer {
