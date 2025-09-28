@@ -96,7 +96,7 @@
 
 @media screen and (max-width: 767px) {
   .recipes {
-    padding: 2rem 0;
+    padding: 2rem 16px;
     gap: 32px;
   }
 

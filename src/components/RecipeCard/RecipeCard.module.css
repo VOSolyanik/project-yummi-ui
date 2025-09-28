@@ -71,7 +71,7 @@
 
 .title {
   margin: 0;
-  
+
   font-family: 'Mulish', sans-serif;
   font-style: normal;
   font-weight: 800;
@@ -84,7 +84,7 @@
 
 .description {
   margin: 0;
-  
+
   font-family: 'Mulish', sans-serif;
   font-style: normal;
   font-weight: 500;
@@ -130,7 +130,7 @@
 .authorName {
   width: auto;
   height: 24px;
-  
+
   font-family: 'Mulish', sans-serif;
   font-style: normal;
   font-weight: 700;
@@ -169,57 +169,57 @@
   .card {
     width: 100%;
   }
-  
+
   .imageContainer {
     width: 100%;
     height: 200px;
   }
-  
+
   .content {
     width: 100%;
   }
-  
+
   .title {
     font-size: 18px;
     line-height: 22px;
   }
-  
+
   .description {
     font-size: 14px;
     line-height: 20px;
   }
-  
+
   .footer {
     width: 100%;
     gap: 20px;
   }
-  
+
   .authorAvatar {
     width: 32px;
     height: 32px;
   }
-  
+
   .authorName {
     font-size: 14px;
   }
-  
+
   .favoriteButton {
     width: 36px;
     height: 36px;
     top: 10px;
     right: 10px;
   }
-  
+
   .heartIcon {
     width: 16px;
     height: 16px;
   }
-  
+
   .viewButton {
     width: 36px;
     height: 36px;
   }
-  
+
   .arrowIcon {
     width: 16px;
     height: 16px;
@@ -230,57 +230,57 @@
   .card {
     width: 100%;
   }
-  
+
   .imageContainer {
     width: 100%;
     height: 200px;
   }
-  
+
   .content {
     width: 100%;
   }
-  
+
   .title {
     font-size: 18px;
     line-height: 22px;
   }
-  
+
   .description {
     font-size: 14px;
     line-height: 20px;
   }
-  
+
   .footer {
     width: 100%;
     gap: 20px;
   }
-  
+
   .authorAvatar {
     width: 32px;
     height: 32px;
   }
-  
+
   .authorName {
     font-size: 14px;
   }
-  
+
   .favoriteButton {
     width: 36px;
     height: 36px;
     top: 10px;
     right: 10px;
   }
-  
+
   .heartIcon {
     width: 16px;
     height: 16px;
   }
-  
+
   .viewButton {
     width: 36px;
     height: 36px;
   }
-  
+
   .arrowIcon {
     width: 16px;
     height: 16px;
@@ -292,58 +292,57 @@
     width: 342px;
     height: 427px;
   }
-  
+
   .imageContainer {
     width: 342px;
     height: 275px;
   }
-  
+
   .content {
     width: 342px;
-    gap: 12px;
   }
-  
+
   .title {
     font-size: 20px;
     line-height: 24px;
   }
-  
+
   .description {
     font-size: 16px;
     line-height: 24px;
   }
-  
+
   .footer {
     width: 342px;
     gap: 160px;
   }
-  
+
   .authorAvatar {
     width: 40px;
     height: 40px;
   }
-  
+
   .authorName {
     font-size: 16px;
   }
-  
+
   .favoriteButton {
     width: 42px;
     height: 42px;
     top: 12px;
     right: 12px;
   }
-  
+
   .heartIcon {
     width: 18px;
     height: 18px;
   }
-  
+
   .viewButton {
     width: 42px;
     height: 42px;
   }
-  
+
   .arrowIcon {
     width: 18px;
     height: 18px;

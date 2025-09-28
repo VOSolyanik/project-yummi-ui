@@ -44,6 +44,11 @@
   .filters {
     flex-direction: column;
     gap: 16px;
+    width: 100%;
+  }
+
+  .filterGroup {
+    width: 100%;
   }
 
   .select {
