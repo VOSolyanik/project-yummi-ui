@@ -71,7 +71,7 @@
 
 .title {
   margin: 0;
-
+  
   font-family: 'Mulish', sans-serif;
   font-style: normal;
   font-weight: 800;
@@ -80,6 +80,11 @@
   letter-spacing: -0.02em;
   text-transform: uppercase;
   color: #050505;
+  
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .description {
@@ -187,6 +192,10 @@
   .title {
     font-size: 18px;
     line-height: 22px;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
   
   .description {
@@ -252,6 +261,10 @@
   .title {
     font-size: 18px;
     line-height: 22px;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
   
   .description {
@@ -318,6 +331,10 @@
   .title {
     font-size: 20px;
     line-height: 24px;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
   .description {
