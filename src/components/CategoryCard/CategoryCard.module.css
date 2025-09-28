@@ -4,7 +4,7 @@
   border-radius: 30px;
   overflow: hidden;
   cursor: pointer;
-  transition: transform 0.2s ease;
+  transition: transform 0.15s ease;
 }
 
 .card.normal {
@@ -35,7 +35,7 @@
   height: 100%;
   object-fit: cover;
   object-position: center;
-  transition: transform 0.3s ease;
+  transition: transform 0.2s ease;
   image-rendering: optimizeQuality;
   image-rendering: -webkit-optimize-contrast;
   will-change: transform;
@@ -56,6 +56,9 @@
   align-items: flex-end;
   justify-content: flex-start;
   gap: 4px;
+  opacity: 1;
+  transition: opacity 0.2s ease;
+  will-change: opacity;
 }
 
 .categoryName {
@@ -71,6 +74,7 @@
   line-height: 24px;
   letter-spacing: -0.02em;
   display: inline-block;
+  transition: all 0.2s ease;
 }
 
 .arrowButton {
