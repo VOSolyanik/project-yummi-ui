@@ -416,7 +416,7 @@ const AddRecipeForm = () => {
             >
               <Icon name="trash" width={16} height={16} />
             </button>
-            <Button type="submit" variant="primary" disabled={isSubmitting}>
+            <Button type="submit" variant="primary" disabled={isSubmitting} className={css.publishBtn}>
               Publish
             </Button>
           </div>
