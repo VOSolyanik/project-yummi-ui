@@ -125,6 +125,17 @@ export const categoriesAPI = {
 
 export const recipesAPI = {
   getRecipesByCategory: async (categoryId, page = 1, limit = 12, ingredient = null, area = null) => {
+    const callId = Math.random().toString(36).substr(2, 9);
+    console.log(`🔥 API CALL [${callId}]: getRecipesByCategory`, {
+      categoryId,
+      page,
+      limit,
+      ingredient,
+      area,
+      timestamp: new Date().toISOString()
+    });
+    console.trace(`Stack trace for API call [${callId}]:`);
+    
     const params = { page, limit };
     if (categoryId !== 'all') {
       params.category = categoryId;

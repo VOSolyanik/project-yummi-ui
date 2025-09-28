@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
 
@@ -28,6 +28,8 @@ import {
 } from '@redux/filters/filtersSlice';
 
 const Recipes = ({ categoryData, onBackToCategories }) => {
+  console.log('🎬 Recipes component rendered');
+  
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -39,14 +41,6 @@ const Recipes = ({ categoryData, onBackToCategories }) => {
   const selectedIngredient = useSelector(selectSelectedIngredient);
   const selectedArea = useSelector(selectSelectedArea);
 
-  console.log('Recipes Debug:', {
-    recipesCount: recipes?.length || 0,
-    totalPages,
-    totalRecipes,
-    currentPage,
-    isLoading,
-    error
-  });
 
   const isAllCategories = categoryData?.category?.name === 'All Categories';
   const categoryId = categoryData?.category?._id || 'all';
@@ -55,19 +49,12 @@ const Recipes = ({ categoryData, onBackToCategories }) => {
 
   const subtitle = 'Go on a taste journey, where every sip is a sophisticated creative chord, and\n every dessert is an expression of the most refined gastronomic desires.';
 
-  // Determine items per page based on screen size
-  const getItemsPerPage = () => {
-    if (typeof window !== 'undefined') {
-      return window.innerWidth <= 767 ? 8 : 12;
-    }
-    return 12; // Default for SSR
-  };
-
-  // Use consistent limit to avoid double requests
-  const itemsPerPage = getItemsPerPage();
+  // Fixed limit to prevent double requests - will be updated on resize if needed
+  const itemsPerPage = 12; // Default, will be overridden by filters/page changes
 
   useEffect(() => {
     if (categoryId) {
+      console.log('🚀 Fetching recipes for category:', categoryId);
       setCurrentPage(1);
       dispatch(fetchRecipes({
         categoryId,
@@ -81,10 +68,11 @@ const Recipes = ({ categoryData, onBackToCategories }) => {
 
   const handleFiltersChange = ({ ingredient, area }) => {
     setCurrentPage(1);
+    const limit = typeof window !== 'undefined' && window.innerWidth <= 767 ? 8 : 12;
     dispatch(fetchRecipes({
       categoryId,
       page: 1,
-      limit: itemsPerPage,
+      limit,
       ingredient,
       area
     }));
@@ -92,10 +80,11 @@ const Recipes = ({ categoryData, onBackToCategories }) => {
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
+    const limit = typeof window !== 'undefined' && window.innerWidth <= 767 ? 8 : 12;
     dispatch(fetchRecipes({
       categoryId,
       page,
-      limit: itemsPerPage,
+      limit,
       ingredient: selectedIngredient?.id || null,
       area: selectedArea?.id || null
     }));

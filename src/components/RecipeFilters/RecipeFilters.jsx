@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import css from './RecipeFilters.module.css';
@@ -18,7 +18,10 @@ import {
 } from '@redux/filters/filtersSlice';
 
 const RecipeFilters = ({ onFiltersChange }) => {
+  console.log('🔧 RecipeFilters component rendered');
+  
   const dispatch = useDispatch();
+  const initialFetchDone = useRef(false);
 
   const ingredients = useSelector(selectIngredients);
   const areas = useSelector(selectAreas);
@@ -28,11 +31,23 @@ const RecipeFilters = ({ onFiltersChange }) => {
   const isLoadingAreas = useSelector(selectIsLoadingAreas);
 
   useEffect(() => {
-    if (ingredients.length === 0) {
-      dispatch(fetchIngredients());
-    }
-    if (areas.length === 0) {
-      dispatch(fetchAreas());
+    console.log('🔧 RecipeFilters useEffect triggered:', {
+      ingredientsLength: ingredients.length,
+      areasLength: areas.length,
+      initialFetchDone: initialFetchDone.current
+    });
+    
+    // Only fetch if we haven't done initial fetch yet
+    if (!initialFetchDone.current) {
+      if (ingredients.length === 0) {
+        console.log('🔧 Fetching ingredients...');
+        dispatch(fetchIngredients());
+      }
+      if (areas.length === 0) {
+        console.log('🔧 Fetching areas...');
+        dispatch(fetchAreas());
+      }
+      initialFetchDone.current = true;
     }
   }, [dispatch, ingredients.length, areas.length]);
 

@@ -40,8 +40,21 @@ const CustomDropdown = ({
   };
 
   const handleOptionClick = (option) => {
-    setSelectedOption(option);
-    onChange(option.value);
+    console.log('🎯 CustomDropdown handleOptionClick:', {
+      currentValue: selectedOption?.value,
+      newValue: option.value,
+      hasChanged: selectedOption?.value !== option.value
+    });
+    
+    // Only call onChange if the value actually changed
+    if (selectedOption?.value !== option.value) {
+      console.log('📞 Calling onChange because value changed');
+      setSelectedOption(option);
+      onChange(option.value);
+    } else {
+      console.log('⏭️ Skipping onChange because value is the same');
+      setSelectedOption(option);
+    }
     setIsOpen(false);
   };
 
