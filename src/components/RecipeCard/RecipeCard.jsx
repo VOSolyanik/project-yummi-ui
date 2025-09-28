@@ -5,7 +5,7 @@ import css from './RecipeCard.module.css';
 
 import heartIcon from '../../assets/icons/favorites.svg';
 import arrowIcon from '../../assets/icons/arrow-up-right-black.svg';
-import noImagePlaceholder from '../../assets/images/no-image.jpg';
+import noImagePlaceholder from '../../assets/images/no-image.webp';
 
 const RecipeCard = ({ recipe, onFavoriteToggle }) => {
   const [isFavorite, setIsFavorite] = useState(false);
