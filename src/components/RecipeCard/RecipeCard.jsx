@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import css from './RecipeCard.module.css';
 
 import heartIcon from '../../assets/icons/favorites.svg';
-import arrowIcon from '../../assets/icons/arrow-up-right.svg';
+import arrowIcon from '../../assets/icons/arrow-up-right-black.svg';
 
 const RecipeCard = ({ recipe, onFavoriteToggle }) => {
   const [isFavorite, setIsFavorite] = useState(false);
@@ -37,18 +37,6 @@ const RecipeCard = ({ recipe, onFavoriteToggle }) => {
           className={css.image}
           loading="lazy"
         />
-        <button
-          type="button"
-          className={`${css.favoriteButton} ${isFavorite ? css.favoriteActive : ''}`}
-          onClick={handleFavoriteClick}
-          aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
-        >
-          <img
-            src={heartIcon}
-            alt="heart"
-            className={css.heartIcon}
-          />
-        </button>
       </div>
 
       <div className={css.content}>
@@ -74,17 +62,32 @@ const RecipeCard = ({ recipe, onFavoriteToggle }) => {
             </span>
           </button>
 
-          <Link
-            to={`/recipe/${recipe.id}`}
-            className={css.viewButton}
-            aria-label={`View ${recipe.title} recipe`}
-          >
-            <img
-              src={arrowIcon}
-              alt="arrow"
-              className={css.arrowIcon}
-            />
-          </Link>
+          <div className={css.buttonGroup}>
+            <button
+              type="button"
+              className={`${css.favoriteButton} ${isFavorite ? css.favoriteActive : ''}`}
+              onClick={handleFavoriteClick}
+              aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+            >
+              <img
+                src={heartIcon}
+                alt="heart"
+                className={css.heartIcon}
+              />
+            </button>
+
+            <Link
+              to={`/recipe/${recipe.id}`}
+              className={css.viewButton}
+              aria-label={`View ${recipe.title} recipe`}
+            >
+              <img
+                src={arrowIcon}
+                alt="arrow"
+                className={css.arrowIcon}
+              />
+            </Link>
+          </div>
         </div>
       </div>
     </div>
