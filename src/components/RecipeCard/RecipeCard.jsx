@@ -6,7 +6,7 @@ import css from './RecipeCard.module.css';
 
 import heartIcon from '../../assets/icons/favorites.svg';
 import arrowIcon from '../../assets/icons/arrow-up-right-black.svg';
-import noImagePlaceholder from '../../assets/images/no-image.webp';
+import noImagePlaceholder from '../../assets/images/no-image.png';
 
 const RecipeCard = ({ recipe, onFavoriteToggle, onAuthorClick, onRecipeClick }) => {
   const [isFavorite, setIsFavorite] = useState(false);
@@ -38,7 +38,7 @@ const RecipeCard = ({ recipe, onFavoriteToggle, onAuthorClick, onRecipeClick }) 
   const handleAuthorClick = useCallback((e) => {
     e.preventDefault();
     e.stopPropagation();
-    
+
     if (onAuthorClick) {
       onAuthorClick(recipe.owner);
     }
