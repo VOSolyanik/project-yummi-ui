@@ -8,6 +8,7 @@ import Header from '@components/Header/Header';
 import Loader from '@components/Loader/Loader';
 
 import './App.module.css';
+import { UserProfilePage } from './pages/UserProfilePage/UserProfilePage';
 
 // Lazy loading for pages
 const HomePage = lazy(() => import('@pages/HomePage/HomePage'));
@@ -28,6 +29,9 @@ const App = () => {
           <Routes>
             <Route path="/" element={
               <Suspense fallback={<Loader />}><HomePage /></Suspense>
+            } />
+            <Route path="/profile" element={
+              <Suspense fallback={<Loader />}><UserProfilePage /></Suspense>
             } />
             <Route path="*" element={
               <Suspense fallback={<Loader />}><NotFoundPage /></Suspense>

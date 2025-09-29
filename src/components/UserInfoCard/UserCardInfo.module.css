@@ -1,0 +1,106 @@
+.card {
+  align-items: center;
+  border: 1px solid;
+  border-color: #bfbebe;
+  border-radius: 30px;
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  gap: 16px;
+  padding: 30px 54px;
+  width: 343px;
+}
+
+.thumb {
+  height: 80px;
+  position: relative;
+  width: 80px;
+}
+
+.avatarWrapper {
+  width: 100%;
+  border-radius: 50%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.img {
+  width: 100%;
+  display: block;
+  height: 100%;
+  object-fit: cover;
+}
+
+.addBtn {
+  position: absolute;
+  top: 65px;
+  left: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25px;
+  height: 25px;
+  background-color: #050505;
+  border-radius: 50%;
+}
+
+.userName {
+  text-transform: uppercase;
+  color: #050505;
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.32;
+}
+
+.userInfoItem {
+  color: #bfbebe;
+  font-size: 12px;
+  font-weight: 500;
+  left: 0;
+  letter-spacing: -0.24px;
+  line-height: 1.18;
+  top: 1px;
+  white-space: nowrap;
+}
+
+.data {
+  color: #1a1a1a;
+  font-family: "Mulish-Bold", Helvetica;
+  font-size: 14px;
+  font-weight: 700;
+  left: 88px;
+  letter-spacing: -0.28px;
+  line-height: 20px;
+  top: 0;
+  white-space: nowrap;
+}
+
+@media screen and (min-width: 768px) {
+  .card {
+    width: 394px;
+  }
+
+  .thumb {
+    width: 120px;
+    height: 120px;
+  }
+
+  .addBtn {
+    top: 93px;
+    left: 40px;
+    width: 38px;
+    height: 38px;
+  }
+
+  .userName {
+    font-size: 20px;
+  }
+
+  .userInfoItem {
+    font-size: 14px;
+  }
+
+  .data {
+    font-size: 16px;
+  }
+}
