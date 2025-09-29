@@ -34,11 +34,10 @@ export async function getIngredients() {
   return data.map((i) => ({
     id: i.id,
     name: i.name,
-    image: i.image,
+    imgUrl: i.imgUrl,
   }));
 }
 
-// Create recipe via backend. Accepts FormData and returns created object
 export async function createRecipe(formData) {
   const res = await fetch(`${API_BASE}/recipes`, {
     method: 'POST',
@@ -48,6 +47,5 @@ export async function createRecipe(formData) {
     const text = await res.text().catch(() => '');
     throw toError(text || `Failed to create recipe: ${res.status}`, res.status);
   }
-  const json = await res.json().catch(() => ({}));
-  return json;
+  return await res.json().catch(() => ({}));
 }

@@ -202,7 +202,7 @@ const AddRecipeForm = () => {
                 onClick={() => setOpenSelect(openSelect === 'category' ? null : 'category')}
               >
                 {values.category ? categories.find(c => c.id === values.category)?.name : 'Select a category'}
-                <Icon name="chevron-down" width={18} height={18} />
+                <Icon name="chevron-down" src="/src/assets/icons/chevron-down.svg" width={18} height={18} />
               </button>
               {openSelect === 'category' && (
                 <div className={css.dropdown}>
@@ -234,7 +234,7 @@ const AddRecipeForm = () => {
                   className={css.iconBtn}
                   onClick={() => setFieldValue('time', Math.max(10, Number(values.time) - 10))}
                 >
-                  <Icon name="minus" width={16} height={16} />
+                  <Icon name="minus" src="/src/assets/icons/minus.svg" width={16} height={16} />
                 </button>
                 <span
                   onChange={e => setFieldValue('time',
@@ -246,7 +246,7 @@ const AddRecipeForm = () => {
                   className={css.iconBtn}
                   onClick={() => setFieldValue('time', Number(values.time) + 10)}
                 >
-                  <Icon name="plus" width={16} height={16}/>
+                  <Icon name="plus" src="/src/assets/icons/plus.svg" width={16} height={16} />
 
                 </button>
               </div>
@@ -262,7 +262,7 @@ const AddRecipeForm = () => {
                   onClick={() => setOpenSelect(openSelect === 'country' ? null : 'country')}
                 >
                   {values.country ? countries.find(c => c.code === values.country)?.name : 'Area'}
-                  <Icon name="chevron-down" width={18} height={18} />
+                  <Icon name="chevron-down" src="/src/assets/icons/chevron-down.svg" width={18} height={18} />
                 </button>
                 {openSelect === 'country' && (
                   <div className={css.dropdown}>
@@ -295,7 +295,7 @@ const AddRecipeForm = () => {
                   onClick={() => setOpenSelect(openSelect === 'ingredient' ? null : 'ingredient')}
                 >
                   {values.ingredientId ? ingredientMap[values.ingredientId]?.name : 'Add the ingredient'}
-                  <Icon name="chevron-down" width={18} height={18} />
+                  <Icon name="chevron-down" src="/src/assets/icons/chevron-down.svg" width={18} height={18} />
                 </button>
                 {openSelect === 'ingredient' && (
                   <div className={css.dropdown}>
@@ -351,7 +351,7 @@ const AddRecipeForm = () => {
                   id: ing.id,
                   name: ing.name,
                   amount: values.ingredientAmount,
-                  image: ing.image };
+                  imgUrl: ing.imgUrl };
                 setFieldValue('ingredients', [...values.ingredients.filter(i => i.id !== newItem.id), newItem]);
                 setFieldValue('ingredientId', '');
                 setFieldValue('ingredientAmount', '');
@@ -366,21 +366,32 @@ const AddRecipeForm = () => {
           <div className={css.ingredientList}>
             {values.ingredients.map(item => (
               <div key={item.id} className={css.ingredientCard}>
-                <img src={item.image} alt={item.name} className={css.thumb} />
-                <div>
-                  <div>{item.name}</div>
-                  <div className={css.counter}>Amount: {item.amount}</div>
+                <div className={css.thumbBox}>
+                  <img src={item.imgUrl} alt={item.name} className={css.thumb}/>
                 </div>
+
+                <div className={css.ingInfo}>
+                  <div className={css.ingName}>{item.name}</div>
+                  <div className={css.ingAmount}>{item.amount}</div>
+                </div>
+
                 <button
                   type="button"
-                  className={css.iconBtn}
-                  onClick={() => setFieldValue('ingredients', values.ingredients.filter(i => i.id !== item.id))}
+                  className={css.ingClose}
+                  title="Remove"
+                  onClick={() =>
+                    setFieldValue(
+                      'ingredients',
+                      values.ingredients.filter(i => i.id !== item.id),
+                    )
+                  }
                 >
-                  <Icon name="trash" width={16} height={16} />
+                  <Icon name="close" src="/src/assets/icons/close.svg" width={16} height={16} />
                 </button>
               </div>
             ))}
           </div>
+
 
           <div className={css.descriptionWrap}>
             <Field name="instructions">
@@ -421,7 +432,7 @@ const AddRecipeForm = () => {
                 resetForm({ values: initialValues });
               }}
             >
-              <Icon name="trash" width={16} height={16} />
+              <Icon name="trash" src="/src/assets/icons/trash.svg" width={20} height={20} className={css.icon} />
             </button>
             <Button type="submit" variant="primary" disabled={isSubmitting} className={css.publishBtn}>
               Publish

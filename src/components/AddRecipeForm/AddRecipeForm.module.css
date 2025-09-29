@@ -135,26 +135,45 @@
 }
 
 .ingredientList {
-  display: grid;
-  gap: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
 }
 
 .ingredientCard {
-  display: grid;
-  grid-template-columns: 56px 1fr auto;
+  position: relative;
+  display: inline-flex;
   align-items: center;
-  gap: 12px;
-  padding: 8px;
-  border: 1px solid var(--main-text-color);
+  gap: 10px;
+  background: var(--color-white);
+  width: 155px;
+  height: 75px;
+  flex: 0 0 auto;
+}
+
+.thumbBox {
+  width: 75px;
+  height: 75px;
+  border: 1px solid var(--gray-color);
   border-radius: 12px;
   background: var(--color-white);
+  display: grid;
+  place-items: center;
+  flex: 0 0 75px;
 }
 
 .thumb {
-  width: 56px;
-  height: 56px;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
   border-radius: 8px;
-  object-fit: cover;
+  padding: 10px;
+}
+
+.ingInfo {
+  display: grid;
+  gap: 2px;
+  flex: 1 1 auto;
 }
 
 .timeControl {
@@ -164,9 +183,37 @@
   min-width: 164px;
 }
 
+.ingName {
+  font-weight: 500;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ingAmount {
+  font-size: 14px;
+  color: var(--gray-color);
+}
+
+.ingClose {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: none;
+  background: transparent;
+  color: var(--main-text-color);
+  cursor: pointer;
+}
+.ingClose:hover,
+.ingClose:focus-visible {
+  opacity: 1;
+  outline: none;
+}
+
 .iconBtn {
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   display: inline-flex;
   align-items: center;
@@ -174,14 +221,18 @@
   border: 1px solid var(--gray-color);
   background: var(--color-white);
   color: var(--gray-color);
-  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  transition: background-color 0.2s ease,
+  border-color 0.2s ease,
+  color 0.2s ease,
+  box-shadow 0.2s ease;
 }
 
 .iconBtn:hover,
 .iconBtn:focus-visible {
   background: var(--color-white);
-  border-color: var(--main-text-color);
   color: var(--main-text-color);
+  transform: scale(1.1);
+  cursor: pointer;
 }
 
 .iconBtn:focus-visible {
@@ -326,9 +377,15 @@
 
 .publishBtn:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(5, 5, 5, 0.15);
 }
 
 .inactiveText {
   color: var(--gray-color);
+}
+
+.icon:hover,
+.icon:focus {
+  width: 20px;
+  height: 20px;
+  border: var(--gray-color);
 }
