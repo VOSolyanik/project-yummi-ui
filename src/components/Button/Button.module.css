@@ -17,7 +17,19 @@
 
 .primary:hover,
 .primary:focus {
-  background-color: var(--primary-active-bg-color);
+  background-color: var(--color-dark-gray);
+}
+
+.secondary {
+  background-color: var(--color-white);
+  color: var(--color-black);
+  border: var(--color-black) 1px solid;
+}
+
+.secondary:hover,
+.secondary:focus {
+  background-color: var(--color-black);
+  color: var(--color-white);
 }
 
 .button:disabled {

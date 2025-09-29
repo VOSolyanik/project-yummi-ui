@@ -45,7 +45,7 @@ const initialValues = {
   description: '',
   category: '',
   country: '',
-  time: 1,
+  time: 10,
   ingredientId: '',
   ingredientAmount: '',
   ingredients: [],
@@ -147,7 +147,7 @@ const AddRecipeForm = () => {
             <ErrorMessage name="photo" component="div" className={css.error} />
           </div>
 
-          {/* Name (placeholder only, no label, no border) */}
+          {/* Name  */}
           <Field name="title">
             {({ field }) => (
               <input
@@ -162,8 +162,8 @@ const AddRecipeForm = () => {
           <ErrorMessage name="title" component="div" className={css.error} />
 
 
-          {/* Description (multiline, wraps, auto-grow) */}
-          <div className={css.descWrap}>
+          {/* Description  */}
+          <div className={css.descriptionWrap}>
             <Field name="description">
               {({ field }) => (
                 <textarea
@@ -171,7 +171,7 @@ const AddRecipeForm = () => {
                   rows={1}
                   maxLength={200}
                   className={
-                    css.textareaUnderlined +
+                    css.textareaUnderlined + ' ' + css.descriptionTextarea +
                     (errors.description && touched.description ? ' ' + css.invalid : '')
                   }
                   placeholder="Enter a description of the dish"
@@ -182,20 +182,23 @@ const AddRecipeForm = () => {
                 />
               )}
             </Field>
-            <div className={css.counterInline}>
-              {values.description.length}/200
+            <div className={css.descriptionCounter}>
+              <span className={css.counterCurrent}>
+                {values.description.length}
+              </span>
+              <span className={css.counterMax}>/200</span>
             </div>
             <ErrorMessage name="description" component="div" className={css.error} />
           </div>
 
 
-          {/* Category — оставляем ниже отдельным блоком */}
+          {/* Category */}
           <div>
             <div className={css.label}>Category</div>
             <div className={css.select}>
               <button
                 type="button"
-                className={css.selectBtn}
+                className={css.selectBtn + (!values.category ? ' ' + css.inactiveText : '')}
                 onClick={() => setOpenSelect(openSelect === 'category' ? null : 'category')}
               >
                 {values.category ? categories.find(c => c.id === values.category)?.name : 'Select a category'}
@@ -229,25 +232,22 @@ const AddRecipeForm = () => {
                 <button
                   type="button"
                   className={css.iconBtn}
-                  onClick={() => setFieldValue('time', Math.max(1, Number(values.time) - 1))}
+                  onClick={() => setFieldValue('time', Math.max(10, Number(values.time) - 10))}
                 >
                   <Icon name="minus" width={16} height={16} />
                 </button>
-                <input
-                  type="number"
-                  min={1}
-                  value={values.time}
-                  onChange={e => setFieldValue('time', Math.max(1, Number(e.target.value || 0)))}
-                  className={css.input}
-                  style={{ width: 120 }}
-                />
-                <span>min</span>
+                <span
+                  onChange={e => setFieldValue('time',
+                    Math.max(10, Number(e.target.value || 0)))}
+                  className={css.textarea + (values.time === 10 ? ' ' + css.inactiveText : '')}
+                >{values.time} min</span>
                 <button
                   type="button"
                   className={css.iconBtn}
-                  onClick={() => setFieldValue('time', Number(values.time) + 1)}
+                  onClick={() => setFieldValue('time', Number(values.time) + 10)}
                 >
-                  <Icon name="plus" width={16} height={16} />
+                  <Icon name="plus" width={16} height={16}/>
+
                 </button>
               </div>
               <ErrorMessage name="time" component="div" className={css.error} />
@@ -258,7 +258,7 @@ const AddRecipeForm = () => {
               <div className={css.select}>
                 <button
                   type="button"
-                  className={css.selectBtn}
+                  className={css.selectBtn + (!values.country ? ' ' + css.inactiveText : '')}
                   onClick={() => setOpenSelect(openSelect === 'country' ? null : 'country')}
                 >
                   {values.country ? countries.find(c => c.code === values.country)?.name : 'Area'}
@@ -291,7 +291,7 @@ const AddRecipeForm = () => {
               <div className={css.select}>
                 <button
                   type="button"
-                  className={css.selectBtn}
+                  className={css.selectBtn + (!values.ingredientId ? ' ' + css.inactiveText : '')}
                   onClick={() => setOpenSelect(openSelect === 'ingredient' ? null : 'ingredient')}
                 >
                   {values.ingredientId ? ingredientMap[values.ingredientId]?.name : 'Add the ingredient'}
@@ -340,14 +340,15 @@ const AddRecipeForm = () => {
           <div>
             <Button
               type="button"
-              variant="primary"
+              variant="secondary"
               onClick={() => {
                 if (!values.ingredientId || !values.ingredientAmount) {
                   toast.error('Select ingredient and amount');
                   return;
                 }
                 const ing = ingredientMap[values.ingredientId];
-                const newItem = { id: ing.id,
+                const newItem = {
+                  id: ing.id,
                   name: ing.name,
                   amount: values.ingredientAmount,
                   image: ing.image };
@@ -357,7 +358,7 @@ const AddRecipeForm = () => {
                 setOpenSelect(null);
               }}
             >
-              Add ingredient +
+              ADD INGREDIENT +
             </Button>
             <ErrorMessage name="ingredients" component="div" className={css.error} />
           </div>
@@ -381,14 +382,15 @@ const AddRecipeForm = () => {
             ))}
           </div>
 
-          <div className={css.descWrap}>
+          <div className={css.descriptionWrap}>
             <Field name="instructions">
               {({ field }) => (
                 <textarea
                   {...field}
                   rows={1}
                   maxLength={1000}
-                  className={css.textareaUnderlined  + (errors.instructions && touched.instructions ? ' ' + css.invalid : '')}
+                  className={css.textareaUnderlined + ' ' + css.descriptionTextarea  +
+                    (errors.instructions && touched.instructions ? ' ' + css.invalid : '')}
                   placeholder="Enter recipe"
                   onInput={(e) => {
                     e.target.style.height = 'auto';
@@ -397,7 +399,12 @@ const AddRecipeForm = () => {
                 />
               )}
             </Field>
-            <div className={css.counter}>{values.instructions.length}/1000</div>
+            <div className={css.descriptionCounter}>
+              <span className={css.counterCurrent}>
+                {values.instructions.length}
+              </span>
+              <span className={css.counterMax}>/1000</span>
+            </div>
             <ErrorMessage name="ingredientAmount" component="div" className={css.error} />
           </div>
 

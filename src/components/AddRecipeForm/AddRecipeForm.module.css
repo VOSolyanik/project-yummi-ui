@@ -46,15 +46,13 @@
   font-size: 16px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--gray-color);
+  color: var(--main-text-color);
   margin-bottom: 6px;
 }
 
 .input,
 .textarea {
-  width: 100%;
-  padding: 12px 16px;
-  border: 1px solid var(--main-text-color);
+  border: 1px solid var(--gray-color);
   border-radius: 9999px;
   background: var(--color-white);
   color: var(--main-text-color);
@@ -72,10 +70,7 @@
 }
 
 .textarea {
-  min-height: 120px;
-  resize: vertical;
-  border-radius: 16px;
-  padding: 14px 16px;
+  border: none;
 }
 
 .error {
@@ -108,12 +103,13 @@
 .selectBtn {
   width: 100%;
   padding: 12px 16px;
-  border: 1px solid var(--main-text-color);
+  border: 1px solid var(--gray-color);
   border-radius: 9999px;
   background: var(--color-white);
   display: flex;
   align-items: center;
   justify-content: space-between;
+  color: var(--main-text-color);
 }
 
 .dropdown {
@@ -122,12 +118,11 @@
   left: 0;
   right: 0;
   background: var(--color-white);
-  border: 1px solid var(--main-text-color);
+  border: 1px solid var(--gray-color);
   border-radius: 8px;
   max-height: 220px;
   overflow: auto;
   z-index: 10;
-  box-shadow: 0 8px 24px rgba(17, 24, 39, 0.08);
 }
 
 .option {
@@ -165,7 +160,8 @@
 .timeControl {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
+  min-width: 164px;
 }
 
 .iconBtn {
@@ -175,7 +171,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(5, 5, 5, 0.2);
+  border: 1px solid var(--gray-color);
   background: var(--color-white);
   color: var(--gray-color);
   transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
@@ -190,7 +186,6 @@
 
 .iconBtn:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(5, 5, 5, 0.1);
 }
 
 .filePreview {
@@ -226,13 +221,12 @@
   cursor: pointer;
 }
 
-/* Header-style label (как в макете, капсом) */
 .fieldHeader {
   font-weight: 700;
   font-size: 12px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--gray-color);
+  color: var(--main-text-color);
   margin-bottom: 6px;
 }
 
@@ -240,31 +234,55 @@
   width: 100%;
   padding: 10px 0;
   border: 0;
-  border-bottom: 1px solid var(--gray-color); /* как в макете */
+  border-bottom: 1px solid var(--gray-color);
   background: transparent;
-  color: var(--gray-color);
-  resize: none;           /* без ручного ресайза, автоподбор выше */
-  overflow: hidden;       /* чтобы не появлялась прокрутка */
+  color: var(--main-text-color);
+  resize: none;
+  overflow: hidden;
   line-height: 1.5;
   min-height: 24px;
-  white-space: pre-wrap;  /* перенос и сохранение \n */
-  word-break: break-word; /* перенос длинных слов */
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 .textareaUnderlined::placeholder { color: var(--gray-color); }
 .textareaUnderlined:focus { outline: none; border-bottom-color: var(--focus); }
 
 
-/* Описание со счётчиком справа */
 .descWrap {
   position: relative;
   margin-top: 4px;
 }
-.counterInline {
-  position: absolute;
-  top: 0;
-  right: 0;
+.descriptionWrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 8px 16px;
+  margin-top: 4px;
+}
+
+.descriptionTextarea {
+  flex: 1 1 270px;
+  width: 100%;
+}
+
+.descriptionCounter {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
   font-size: 12px;
   color: var(--gray-color);
+}
+
+.counterCurrent {
+  color: var(--main-text-color);
+}
+
+.counterMax {
+  color: var(--gray-color);
+}
+
+.descriptionWrap .error {
+  flex-basis: 100%;
 }
 
 .inputBare {
@@ -273,8 +291,9 @@
   border: none;
   background: transparent;
   border-radius: 0;
-  color: var(--gray-color);
+  color: var(--main-text-color);
   font-size: 16px;
+  text-transform: uppercase;
 }
 .inputBare::placeholder {
   color: var(--gray-color);
@@ -308,4 +327,8 @@
 .publishBtn:focus-visible {
   outline: none;
   box-shadow: 0 0 0 3px rgba(5, 5, 5, 0.15);
+}
+
+.inactiveText {
+  color: var(--gray-color);
 }
