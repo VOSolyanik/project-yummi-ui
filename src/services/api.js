@@ -124,10 +124,16 @@ export const categoriesAPI = {
 };
 
 export const recipesAPI = {
-  getRecipesByCategory: async (categoryId, page = 1, limit = 12) => {
+  getRecipesByCategory: async (categoryId, page = 1, limit = 12, ingredient = null, area = null) => {
     const params = { page, limit };
     if (categoryId !== 'all') {
       params.category = categoryId;
+    }
+    if (ingredient) {
+      params.ingredient = ingredient;
+    }
+    if (area) {
+      params.area = area;
     }
 
     try {
@@ -143,6 +149,28 @@ export const recipesAPI = {
       return { data: transformedData, status: response.status };
     } catch (error) {
       console.error('Error fetching recipes:', error);
+      throw error;
+    }
+  },
+};
+
+export const filtersAPI = {
+  getIngredients: async () => {
+    try {
+      const response = await new ApiService(API_BASE_URL).get('/ingredients');
+      return { data: response.data };
+    } catch (error) {
+      console.error('Error fetching ingredients:', error);
+      throw error;
+    }
+  },
+
+  getAreas: async () => {
+    try {
+      const response = await new ApiService(API_BASE_URL).get('/areas');
+      return { data: response.data };
+    } catch (error) {
+      console.error('Error fetching areas:', error);
       throw error;
     }
   },

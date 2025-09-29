@@ -1,117 +1,174 @@
 .recipes {
-  padding: 2rem 0;
-}
-
-.container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0;
+  gap: 40px;
   max-width: 1280px;
   margin: 0 auto;
-  padding: 0 80px;
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0;
+  gap: 20px;
+  width: 100%;
+}
+
+.section {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 0;
+  gap: 40px;
+  width: 100%;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  gap: 60px;
+  flex: 1;
 }
 
 .backButton {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 24px;
-  margin-bottom: 2rem;
-  
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 0;
   background: transparent;
-  border: 1px solid #e5e5e5;
-  border-radius: 8px;
-  
-  font-size: 16px;
-  font-weight: 500;
-  color: #333;
+  border: none;
+  font-family: 'Mulish', sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: #050505;
   cursor: pointer;
-  
-  transition: all 0.2s ease;
+  transition: opacity 0.2s ease;
 }
 
 .backButton:hover {
-  background: #f8f8f8;
-  border-color: #d0d0d0;
+  opacity: 0.7;
 }
 
 .backButton:focus {
-  outline: 2px solid #007bff;
+  outline: 2px solid #050505;
   outline-offset: 2px;
 }
 
+.backIcon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
 .title {
-  margin-bottom: 1rem;
-  text-align: left;
+  font-family: 'Mulish', sans-serif;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 40px;
+  line-height: 44px;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: #050505;
 }
 
 .subtitle {
-  margin-bottom: 3rem;
-  text-align: left;
+  font-family: 'Mulish', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: -0.02em;
+  color: #1A1A1A;
+  white-space: pre-line;
 }
 
-.tempContent {
-  padding: 2rem;
-  background: #f8f9fa;
-  border-radius: 12px;
-  border: 1px solid #e9ecef;
-}
-
-.tempContent p {
-  margin-bottom: 0.5rem;
-  color: #6c757d;
-}
-
-.tempContent p:first-child {
-  font-weight: 600;
-  color: #495057;
-}
 
 @media screen and (max-width: 767px) {
   .recipes {
     padding: 2rem 0;
+    gap: 32px;
   }
-  
-  .container {
-    padding: 0 16px;
+
+  .header {
+    gap: 16px;
   }
-  
+
+  .section {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .content {
+    gap: 30px;
+  }
+
   .backButton {
-    padding: 10px 20px;
-    margin-bottom: 1.5rem;
-    font-size: 14px;
+    gap: 4px;
+    font-family: 'Mulish', sans-serif;
+    font-weight: 700;
+    font-style: bold;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
   }
-  
+
+  .backIcon {
+    width: 16px;
+    height: 16px;
+  }
+
   .title {
-    margin-bottom: 0.5rem;
+    font-family: 'Mulish', sans-serif;
+    font-weight: 800;
+    font-style: normal;
+    font-size: 28px;
+    line-height: 32px;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
   }
-  
+
   .subtitle {
-    margin-bottom: 2rem;
+    font-family: 'Mulish', sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: -0.02em;
+    color: #BFBEBE;
+    white-space: normal;
   }
-  
-  .tempContent {
-    padding: 1.5rem;
+}
+
+@media screen and (min-width: 375px) and (max-width: 767px) {
+  .recipes {
+    max-width: 343px;
   }
 }
 
 @media screen and (min-width: 768px) and (max-width: 1439px) {
   .recipes {
     padding: 4rem 0;
+    max-width: 704px;
   }
-  
+
+  .section {
+    flex-direction: column;
+  }
+
   .container {
     padding: 0 32px;
-  }
-  
-  .backButton {
-    padding: 12px 24px;
-    margin-bottom: 2rem;
-  }
-  
-  .title {
-    margin-bottom: 1rem;
-  }
-  
-  .subtitle {
-    margin-bottom: 3rem;
   }
 }
 
@@ -119,21 +176,8 @@
   .recipes {
     padding: 4rem 0;
   }
-  
+
   .container {
     padding: 0 80px;
-  }
-  
-  .backButton {
-    padding: 12px 24px;
-    margin-bottom: 2rem;
-  }
-  
-  .title {
-    margin-bottom: 1.25rem;
-  }
-  
-  .subtitle {
-    margin-bottom: 3rem;
   }
 }

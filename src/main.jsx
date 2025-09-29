@@ -12,11 +12,9 @@ import App from './App.jsx';
 import { store } from './redux/store.js';
 
 createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <HelmetProvider>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </HelmetProvider>
-  </React.StrictMode>,
+  <HelmetProvider>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </HelmetProvider>,
 );

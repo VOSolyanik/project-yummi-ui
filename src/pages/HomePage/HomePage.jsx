@@ -28,15 +28,13 @@ const HomePage = () => {
           <Helmet>
             <title>{BASE_TITLE} - {showRecipes ? 'Recipes' : 'Categories'}</title>
           </Helmet>
-          
-          {!showRecipes && (
-            <section className={css.hero}>
-              Home page
-            </section>
-          )}
+
+          <section className={css.hero}>
+            Home page
+          </section>
 
           {showRecipes ? (
-            <Recipes 
+            <Recipes
               categoryData={selectedCategory}
               onBackToCategories={handleBackToCategories}
             />
