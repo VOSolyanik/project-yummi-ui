@@ -1,0 +1,16 @@
+.pathInfo {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 18px;
+  letter-spacing: -2%;
+  text-transform: uppercase;
+}
+
+.homeLink {
+  text-decoration: none;
+  color: var(--color-gray);
+}
+
+.recipeTitle {
+  color: var(--main-text-color);
+}
