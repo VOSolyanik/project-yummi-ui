@@ -123,27 +123,27 @@
   .card {
     height: 250px !important;
   }
-  
+
   .card.wide {
     grid-column: span 1 !important;
   }
-  
+
   .overlay {
     padding: 20px 20px 20px 20px;
     gap: 4px;
   }
-  
+
   .categoryName {
     font-size: 16px;
     padding: 8px 12px;
   }
-  
+
   .arrowButton {
     width: 44px;
     height: 44px;
     padding: 13px;
   }
-  
+
   .arrowIcon {
     width: 18px;
     height: 18px;
@@ -154,27 +154,27 @@
   .card {
     height: 250px !important;
   }
-  
+
   .card.wide {
     grid-column: span 1 !important;
   }
-  
+
   .overlay {
     padding: 22px 22px 22px 22px;
     gap: 4px;
   }
-  
+
   .categoryName {
     font-size: 18px;
     padding: 9px 13px;
   }
-  
+
   .arrowButton {
     width: 44px;
     height: 44px;
     padding: 13px;
   }
-  
+
   .arrowIcon {
     width: 18px;
     height: 18px;
@@ -185,39 +185,39 @@
   .card {
     height: 369px !important;
   }
-  
+
   .card.normal {
     height: 369px !important;
   }
-  
+
   .card.wide {
     height: 369px !important;
     grid-column: span 2 !important;
   }
-  
-  .card.wide[data-category="Lamb"],
-  .card.wide[data-category="Side"],
-  .card.wide[data-category="Vegan"] {
+
+  .card.wide[data-category='Lamb'],
+  .card.wide[data-category='Side'],
+  .card.wide[data-category='Vegan'] {
     height: 369px !important;
     grid-column: span 1 !important;
   }
-  
+
   .overlay {
     padding: 24px 24px 24px 24px;
     gap: 4px;
   }
-  
+
   .categoryName {
     font-size: 20px;
     padding: 9px 14px;
   }
-  
+
   .arrowButton {
     width: 44px;
     height: 44px;
     padding: 13px;
   }
-  
+
   .arrowIcon {
     width: 18px;
     height: 18px;
@@ -229,11 +229,11 @@
     height: 369px;
     flex-shrink: 0;
   }
-  
+
   .card.normal {
     width: 325px;
   }
-  
+
   .card.wide {
     width: 590px;
   }

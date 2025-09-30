@@ -54,24 +54,33 @@ class ApiService {
 }
 
 const NAME_MAPPING = {
-  'Dessert': 'Desserts',
+  Dessert: 'Desserts',
 };
 
 const VEGETARIAN_CATEGORIES = [
-  'Vegetarian', 'Breakfast', 'Desserts', 'Vegan', 'Soup', 
-  'Miscellaneous', 'Pasta', 'Pork', 'Seafood', 'Side', 'Starter'
+  'Vegetarian',
+  'Breakfast',
+  'Desserts',
+  'Vegan',
+  'Soup',
+  'Miscellaneous',
+  'Pasta',
+  'Pork',
+  'Seafood',
+  'Side',
+  'Starter',
 ];
 
 const CATEGORY_MAPPINGS = {
-  'Beef': 'Vegetarian',
-  'Lamb': 'Vegan', 
-  'Goat': 'Soup'
+  Beef: 'Vegetarian',
+  Lamb: 'Vegan',
+  Goat: 'Soup',
 };
 
-const transformCategories = (categories) => {
+const transformCategories = categories => {
   return categories.map(category => ({
     _id: category.id,
-    name: NAME_MAPPING[category.name] || category.name
+    name: NAME_MAPPING[category.name] || category.name,
   }));
 };
 
@@ -80,9 +89,9 @@ const applyVegetarianMapping = (categories, originalData) => {
     const mappedName = CATEGORY_MAPPINGS[category.name];
     if (mappedName) {
       const targetCategory = originalData.find(cat => cat.name === mappedName);
-      return { 
-        _id: targetCategory?.id || category._id, 
-        name: mappedName 
+      return {
+        _id: targetCategory?.id || category._id,
+        name: mappedName,
       };
     }
     return category;
@@ -90,13 +99,11 @@ const applyVegetarianMapping = (categories, originalData) => {
 };
 
 const filterAndSortCategories = (categories, requiredCategories) => {
-  const filtered = categories.filter(category =>
-    requiredCategories.includes(category.name)
-  );
-  
+  const filtered = categories
+    .filter(category => requiredCategories.includes(category.name));
+
   return requiredCategories
-    .map(name => filtered.find(cat => cat.name === name))
-    .filter(Boolean);
+    .map(name => filtered.find(cat => cat.name === name)).filter(Boolean);
 };
 
 export const categoriesAPI = {
@@ -105,15 +112,21 @@ export const categoriesAPI = {
 
     try {
       const response = await new ApiService(API_BASE_URL).get('/categories');
-      
+
       let transformedCategories = transformCategories(response.data);
-      
+
       if (isVeg) {
-        transformedCategories = applyVegetarianMapping(transformedCategories, response.data);
+        transformedCategories = applyVegetarianMapping(
+          transformedCategories, response.data,
+        );
       }
 
-      const currentRequiredCategories = isVeg ? VEGETARIAN_CATEGORIES : requiredCategories;
-      const sortedCategories = filterAndSortCategories(transformedCategories, currentRequiredCategories);
+      const currentRequiredCategories = isVeg
+        ? VEGETARIAN_CATEGORIES
+        : requiredCategories;
+      const sortedCategories = filterAndSortCategories(
+        transformedCategories, currentRequiredCategories,
+      );
 
       return { data: sortedCategories };
     } catch (error) {
@@ -137,7 +150,7 @@ export const recipesAPI = {
         recipes: response.data.items || [],
         totalPages: Math.ceil((response.data.totalCount || 0) / limit),
         currentPage: page,
-        totalRecipes: response.data.totalCount || 0
+        totalRecipes: response.data.totalCount || 0,
       };
 
       return { data: transformedData, status: response.status };

@@ -1,10 +1,13 @@
 # Yummi UI
 
-A modern React frontend application for the Yummi recipe sharing platform. Built with React 19, Vite, and modern development tools, providing users with an intuitive interface to discover, share, and manage their favorite recipes. The project features a component-based architecture optimized for performance and developer experience.
+A modern React frontend application for the Yummi recipe sharing platform. Built with React 19, Vite, and modern
+development tools, providing users with an intuitive interface to discover, share, and manage their favorite recipes.
+The project features a component-based architecture optimized for performance and developer experience.
 
 ## 🚀 Features
 
 ### Core Functionality
+
 - **Recipe Discovery**: Browse and search through recipes
 - **User Authentication**: Sign up, login, and profile management
 - **Favorites Management**: Save and organize favorite recipes
@@ -12,6 +15,7 @@ A modern React frontend application for the Yummi recipe sharing platform. Built
 - **Responsive Design**: Mobile-first, cross-device compatibility
 
 ### Technical Features
+
 - **React 19** with latest features and optimizations
 - **Vite** for lightning-fast development and builds
 - **React Router** for client-side navigation with lazy loading
@@ -140,7 +144,7 @@ npm run prepare     # Setup Husky git hooks
   --color-neutral: #abd1c6;
   --color-background: #fffffe;
   --color-text: #004643;
-  
+
   --font-family-primary: 'Inter', sans-serif;
   --font-size-base: 1rem;
   --spacing-unit: 0.5rem;
@@ -171,6 +175,7 @@ import Button from '@components/Button/Button';
 ```
 
 Available aliases:
+
 - `@/` → `src/`
 - `@components/` → `src/components/`
 - `@pages/` → `src/pages/`
@@ -207,6 +212,7 @@ The project includes comprehensive ESLint rules for:
 4. **Export**: Add to component index if needed
 
 Example component structure:
+
 ```jsx
 // Button/Button.jsx
 import clsx from 'clsx';
@@ -214,10 +220,7 @@ import css from './Button.module.css';
 
 const Button = ({ variant = 'primary', children, className, ...props }) => {
   return (
-    <button 
-      className={clsx(css.button, css[variant], className)}
-      {...props}
-    >
+    <button className={clsx(css.button, css[variant], className)} {...props}>
       {children}
     </button>
   );
@@ -340,11 +343,11 @@ The `services/` folder is ready for API integration:
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api';
 
 export const api = {
-  get: async (endpoint) => {
+  get: async endpoint => {
     const response = await fetch(`${API_BASE_URL}${endpoint}`);
     return response.json();
   },
-  
+
   post: async (endpoint, data) => {
     const response = await fetch(`${API_BASE_URL}${endpoint}`, {
       method: 'POST',
@@ -388,6 +391,7 @@ VITE_APP_TITLE=Yummi - Recipe Sharing Platform
 ### Common Issues
 
 1. **Port Already in Use**
+
    ```bash
    # Change port in vite.config.js or use different port
    npm run dev -- --port 3001
@@ -455,6 +459,7 @@ This project is licensed under the MIT License - see the package.json file for d
 ---
 
 **Connected Projects:**
+
 - [Yummi API](../project-yummi-api) - Backend service for this application
 
 For questions or support, please refer to the project documentation or create an issue in the repository.
