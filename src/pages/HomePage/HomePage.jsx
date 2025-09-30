@@ -1,12 +1,12 @@
-import { Helmet } from 'react-helmet-async';
 import { useState } from 'react';
 
-import css from './HomePage.module.css';
+import { Helmet } from 'react-helmet-async';
+
+import Categories from '@components/Categories/Categories';
+import HeroBanner from '@components/HeroBanner/HeroBanner';
+import Recipes from '@components/Recipes/Recipes';
 
 import { BASE_TITLE } from '@constants/pages';
-import Categories from '@components/Categories/Categories';
-import Recipes from '@components/Recipes/Recipes';
-import HeroBanner from '@components/HeroBanner/HeroBanner';
 
 const HomePage = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -35,7 +35,10 @@ const HomePage = () => {
       {!showRecipes && <HeroBanner />}
 
       {showRecipes ? (
-        <Recipes categoryData={selectedCategory} onBackToCategories={handleBackToCategories} />
+        <Recipes
+          categoryData={selectedCategory}
+          onBackToCategories={handleBackToCategories}
+        />
       ) : (
         <Categories onCategorySelect={handleCategorySelect} />
       )}

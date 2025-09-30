@@ -23,8 +23,8 @@ const HeroBanner = () => {
       <div className={css.hero}>
         <h1 className={css.heading}>Improve Your Culinary Talents</h1>
         <p className={css.subheading}>
-          Amazing recipes for beginners in the world of cooking. Enveloping you in the aromas and tastes of various
-          cuisines.
+          Amazing recipes for beginners in the world of cooking.
+          Enveloping you in the aromas and tastes of various cuisines.
         </p>
         <Button
           className={css.heroButton}

@@ -8,7 +8,7 @@ const WIDE_CATEGORIES = ['Desserts', 'Lamb', 'Pork', 'Side', 'Vegan'];
 const MAX_DISPLAY_CATEGORIES = 11;
 
 const CategoryList = ({ categories, onCategoryClick, isLoading, error }) => {
-  const getCardSize = (categoryName) => {
+  const getCardSize = categoryName => {
     return WIDE_CATEGORIES.includes(categoryName) ? 'wide' : 'normal';
   };
 
@@ -41,7 +41,7 @@ const CategoryList = ({ categories, onCategoryClick, isLoading, error }) => {
 
   return (
     <div className={css.grid}>
-      {displayCategories.map((category) => (
+      {displayCategories.map(category => (
         <CategoryCard
           key={category._id}
           category={category}
@@ -49,7 +49,7 @@ const CategoryList = ({ categories, onCategoryClick, isLoading, error }) => {
           size={getCardSize(category.name)}
         />
       ))}
-      
+
       <CategoryCard
         isAllCategories={true}
         onClick={() => onCategoryClick({ _id: 'all', name: 'All Categories' })}

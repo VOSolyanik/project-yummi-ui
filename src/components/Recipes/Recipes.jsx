@@ -7,22 +7,17 @@ import Subtitle from '@components/Subtitle/Subtitle';
 
 const Recipes = ({ categoryData, onBackToCategories }) => {
   const isAllCategories = categoryData?.category?.name === 'All Categories';
-  
+
   const title = isAllCategories ? 'All categories' : categoryData?.category?.name || 'Recipes';
-  
-  const subtitle = isAllCategories 
+
+  const subtitle = isAllCategories
     ? 'Discover a limitless world of culinary possibilities and enjoy exquisite recipes that combine taste, style and the warm atmosphere of the kitchen.'
     : `Explore delicious ${categoryData?.category?.name?.toLowerCase() || 'recipes'} and discover new flavors that will delight your taste buds.`;
 
   return (
     <section className={css.recipes} aria-labelledby="recipes-heading">
       <div className={css.container}>
-        <button 
-          type="button" 
-          className={css.backButton}
-          onClick={onBackToCategories}
-          aria-label="Back to categories"
-        >
+        <button type="button" className={css.backButton} onClick={onBackToCategories} aria-label="Back to categories">
           ← Back
         </button>
 
@@ -30,9 +25,7 @@ const Recipes = ({ categoryData, onBackToCategories }) => {
           {title}
         </MainTitle>
 
-        <Subtitle className={css.subtitle}>
-          {subtitle}
-        </Subtitle>
+        <Subtitle className={css.subtitle}>{subtitle}</Subtitle>
 
         <div className={css.tempContent}>
           <p>Recipes component is under development...</p>
