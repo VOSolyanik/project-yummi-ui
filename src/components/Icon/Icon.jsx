@@ -17,7 +17,12 @@ export const Icon = ({ name, src, className, size = 24, ...props }) => {
   }
 
   return (
-    <svg className={clsx(css.icon, className)} width={size} height={size} {...props}>
+    <svg
+      className={clsx(css.icon, className)}
+      width={size}
+      height={size}
+      {...props}
+    >
       <use href={`/sprite.svg#icon-${name}`} />
     </svg>
   );

@@ -11,6 +11,7 @@ import './App.module.css';
 
 // Lazy loading for pages
 const HomePage = lazy(() => import('@pages/HomePage/HomePage'));
+const AddRecipePage = lazy(() => import('@pages/AddRecipePage/AddRecipePage'));
 const NotFoundPage = lazy(() => import('@pages/NotFoundPage/NotFoundPage'));
 
 const App = () => {
@@ -32,6 +33,14 @@ const App = () => {
               element={
                 <Suspense fallback={<Loader />}>
                   <HomePage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/add-recipe"
+              element={
+                <Suspense fallback={<Loader />}>
+                  <AddRecipePage />
                 </Suspense>
               }
             />

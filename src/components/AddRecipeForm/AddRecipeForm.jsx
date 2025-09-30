@@ -148,18 +148,20 @@ const AddRecipeForm = () => {
           </div>
 
           {/* Name  */}
-          <Field name="title">
-            {({ field }) => (
-              <input
-                {...field}
-                type="text"
-                maxLength={50}
-                className={css.inputBare + (errors.title && touched.title ? ' ' + css.invalid : '')}
-                placeholder="THE NAME OF THE RECIPE"
-              />
-            )}
-          </Field>
-          <ErrorMessage name="title" component="div" className={css.error} />
+          <div className={css.titleBlock}>
+            <Field name="title">
+              {({ field }) => (
+                <input
+                  {...field}
+                  type="text"
+                  maxLength={50}
+                  className={css.inputBare + (errors.title && touched.title ? ' ' + css.invalid : '')}
+                  placeholder="The name of the recipe"
+                />
+              )}
+            </Field>
+            <ErrorMessage name="title" component="div" className={css.error} />
+          </div>
 
 
           {/* Description  */}
@@ -183,49 +185,48 @@ const AddRecipeForm = () => {
               )}
             </Field>
             <div className={css.descriptionCounter}>
-              <span className={css.counterCurrent}>
+              <span className={css.counterCurrent + (!values.description.length ? ' ' + css.inactiveText : '')}>
                 {values.description.length}
               </span>
               <span className={css.counterMax}>/200</span>
             </div>
-            <ErrorMessage name="description" component="div" className={css.error} />
           </div>
 
 
           {/* Category */}
-          <div>
-            <div className={css.label}>Category</div>
-            <div className={css.select}>
-              <button
-                type="button"
-                className={css.selectBtn + (!values.category ? ' ' + css.inactiveText : '')}
-                onClick={() => setOpenSelect(openSelect === 'category' ? null : 'category')}
-              >
-                {values.category ? categories.find(c => c.id === values.category)?.name : 'Select a category'}
-                <Icon name="chevron-down" src="/src/assets/icons/chevron-down.svg" width={18} height={18} />
-              </button>
-              {openSelect === 'category' && (
-                <div className={css.dropdown}>
-                  {categories.map(c => (
-                    <div
-                      key={c.id}
-                      className={css.option}
-                      onClick={() => {
-                        setFieldValue('category', c.id);
-                        setOpenSelect(null);
-                      }}
-                    >
-                      {c.name}
-                    </div>
-                  ))}
-                </div>
-              )}
+          <div className={css.catIngBlock}>
+            <div>
+              <div className={css.label}>Category</div>
+              <div className={css.select}>
+                <button
+                  type="button"
+                  className={css.selectBtn + (!values.category ? ' ' + css.inactiveText : '')}
+                  onClick={() => setOpenSelect(openSelect === 'category' ? null : 'category')}
+                >
+                  {values.category ? categories.find(c => c.id === values.category)?.name : 'Select a category'}
+                  <Icon name="chevron-down" src="/src/assets/icons/chevron-down.svg" width={18} height={18} />
+                </button>
+                {openSelect === 'category' && (
+                  <div className={css.dropdown}>
+                    {categories.map(c => (
+                      <div
+                        key={c.id}
+                        className={css.option}
+                        onClick={() => {
+                          setFieldValue('category', c.id);
+                          setOpenSelect(null);
+                        }}
+                      >
+                        {c.name}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+              <ErrorMessage name="category" component="div" className={css.error} />
             </div>
-            <ErrorMessage name="category" component="div" className={css.error} />
-          </div>
 
 
-          <div className={css.row}>
             <div>
               <div className={css.label}>Cooking time</div>
               <div className={css.timeControl}>
@@ -283,9 +284,7 @@ const AddRecipeForm = () => {
               </div>
               <ErrorMessage name="country" component="div" className={css.error} />
             </div>
-          </div>
 
-          <div className={css.row}>
             <div>
               <div className={css.label}>Ingredients</div>
               <div className={css.select}>
@@ -317,7 +316,7 @@ const AddRecipeForm = () => {
               <ErrorMessage name="ingredientId" component="div" className={css.error} />
             </div>
 
-            <div className={css.descWrap}>
+            <div>
               <Field name="ingredientAmount">
                 {({ field }) => (
                   <input
@@ -333,66 +332,69 @@ const AddRecipeForm = () => {
                   />
                 )}
               </Field>
-              <ErrorMessage name="ingredientAmount" component="div" className={css.error} />
             </div>
           </div>
 
-          <div>
-            <Button
-              type="button"
-              variant="secondary"
-              onClick={() => {
-                if (!values.ingredientId || !values.ingredientAmount) {
-                  toast.error('Select ingredient and amount');
-                  return;
-                }
-                const ing = ingredientMap[values.ingredientId];
-                const newItem = {
-                  id: ing.id,
-                  name: ing.name,
-                  amount: values.ingredientAmount,
-                  imgUrl: ing.imgUrl };
-                setFieldValue('ingredients', [...values.ingredients.filter(i => i.id !== newItem.id), newItem]);
-                setFieldValue('ingredientId', '');
-                setFieldValue('ingredientAmount', '');
-                setOpenSelect(null);
-              }}
-            >
-              ADD INGREDIENT +
-            </Button>
-            <ErrorMessage name="ingredients" component="div" className={css.error} />
-          </div>
-
-          <div className={css.ingredientList}>
-            {values.ingredients.map(item => (
-              <div key={item.id} className={css.ingredientCard}>
-                <div className={css.thumbBox}>
-                  <img src={item.imgUrl} alt={item.name} className={css.thumb}/>
-                </div>
-
-                <div className={css.ingInfo}>
-                  <div className={css.ingName}>{item.name}</div>
-                  <div className={css.ingAmount}>{item.amount}</div>
-                </div>
-
-                <button
-                  type="button"
-                  className={css.ingClose}
-                  title="Remove"
-                  onClick={() =>
-                    setFieldValue(
-                      'ingredients',
-                      values.ingredients.filter(i => i.id !== item.id),
-                    )
+          <div className={css.addIngBlock}>
+            <div>
+              <Button
+                type="button"
+                variant="secondary"
+                className={css.addIngBtn}
+                onClick={() => {
+                  if (!values.ingredientId || !values.ingredientAmount) {
+                    toast.error('Select ingredient and amount');
+                    return;
                   }
-                >
-                  <Icon name="close" src="/src/assets/icons/close.svg" width={16} height={16} />
-                </button>
-              </div>
-            ))}
+                  const ing = ingredientMap[values.ingredientId];
+                  const newItem = {
+                    id: ing.id,
+                    name: ing.name,
+                    amount: values.ingredientAmount,
+                    imgUrl: ing.imgUrl };
+                  setFieldValue('ingredients', [...values.ingredients.filter(i => i.id !== newItem.id), newItem]);
+                  setFieldValue('ingredientId', '');
+                  setFieldValue('ingredientAmount', '');
+                  setOpenSelect(null);
+                }}
+              >
+              Add Ingredient
+                <Icon className={css.addIngBtnIcon} name="plus" src="/src/assets/icons/plus.svg" width={20} height={20} />
+              </Button>
+              <ErrorMessage name="ingredients" component="div" className={css.error} />
+            </div>
+
+            <div className={css.ingredientList + (values.ingredients.length !== 0 ? '' : ' ' + css.hidden)}>
+              {values.ingredients.map(item => (
+                <div key={item.id} className={css.ingredientCard}>
+                  <div className={css.thumbBox}>
+                    <img src={item.imgUrl} alt={item.name} className={css.thumb}/>
+                  </div>
+
+                  <div className={css.ingInfo}>
+                    <div className={css.ingName}>{item.name}</div>
+                    <div className={css.ingAmount}>{item.amount}</div>
+                  </div>
+
+                  <button
+                    type="button"
+                    className={css.ingClose}
+                    title="Remove"
+                    onClick={() =>
+                      setFieldValue(
+                        'ingredients',
+                        values.ingredients.filter(i => i.id !== item.id),
+                      )
+                    }
+                  >
+                    <Icon name="close" src="/src/assets/icons/close.svg" width={16} height={16} />
+                  </button>
+                </div>
+              ))}
+            </div>
           </div>
 
-
+          <div className={css.label}>Recipe Preparation</div>
           <div className={css.descriptionWrap}>
             <Field name="instructions">
               {({ field }) => (
@@ -416,7 +418,6 @@ const AddRecipeForm = () => {
               </span>
               <span className={css.counterMax}>/1000</span>
             </div>
-            <ErrorMessage name="ingredientAmount" component="div" className={css.error} />
           </div>
 
           <div className={css.actions}>

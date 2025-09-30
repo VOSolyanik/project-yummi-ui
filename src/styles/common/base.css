@@ -13,6 +13,9 @@
 
   --white-rgb: 255, 255, 255;
   --white-color: rgb(var(--white-rgb));
+
+  --red-error-rgb: 211, 47, 47;
+  --red-error-color: rgb(var(--red-error-rgb));
 }
 
 html {
