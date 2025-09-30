@@ -10,11 +10,7 @@ export default defineConfig([
   globalIgnores(['dist']),
   {
     files: ['**/*.{js,jsx}'],
-    extends: [
-      js.configs.recommended,
-      reactHooks.configs['recommended-latest'],
-      reactRefresh.configs.vite,
-    ],
+    extends: [js.configs.recommended, reactHooks.configs['recommended-latest'], reactRefresh.configs.vite],
     plugins: {
       react,
       import: importPlugin,
@@ -40,15 +36,12 @@ export default defineConfig([
       ...reactHooks.configs.recommended.rules,
       'react/prop-types': 0,
       'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
-      'react-refresh/only-export-components': [
-        'warn',
-        { allowConstantExport: true },
-      ],
+      'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
       'newline-per-chained-call': ['error', { ignoreChainWithDepth: 2 }],
       'max-len': [
         'error',
         {
-          code: 80,
+          code: 120,
           tabWidth: 2,
           ignoreStrings: true,
           ignoreTemplateLiterals: true,
@@ -57,9 +50,9 @@ export default defineConfig([
           ignoreComments: false,
         },
       ],
-      'indent': ['error', 2],
-      'semi': ['error', 'always'],
-      'quotes': ['error', 'single'],
+      indent: ['error', 2],
+      semi: ['error', 'always'],
+      quotes: ['error', 'single'],
       'comma-dangle': ['error', 'always-multiline'],
       'object-curly-spacing': ['error', 'always'],
       'array-bracket-spacing': ['error', 'never'],
@@ -67,26 +60,21 @@ export default defineConfig([
       'comma-spacing': ['error', { before: false, after: true }],
       'keyword-spacing': ['error', { before: true, after: true }],
       'space-before-blocks': ['error', 'always'],
-      'space-before-function-paren': ['error', {
-        anonymous: 'always',
-        named: 'never',
-        asyncArrow: 'always',
-      }],
+      'space-before-function-paren': [
+        'error',
+        {
+          anonymous: 'always',
+          named: 'never',
+          asyncArrow: 'always',
+        },
+      ],
       'space-in-parens': ['error', 'never'],
       'space-infix-ops': 'error',
       'arrow-spacing': ['error', { before: true, after: true }],
       'import/order': [
         'error',
         {
-          groups: [
-            'builtin',
-            'external',
-            'internal',
-            ['parent', 'sibling'],
-            'index',
-            'object',
-            'type',
-          ],
+          groups: ['builtin', 'external', 'internal', ['parent', 'sibling'], 'index', 'object', 'type'],
           pathGroups: [
             {
               pattern: 'react',

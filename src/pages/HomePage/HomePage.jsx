@@ -1,17 +1,18 @@
-import { Helmet } from 'react-helmet-async';
 import { useState } from 'react';
 
-import css from './HomePage.module.css';
+import { Helmet } from 'react-helmet-async';
+
+import Categories from '@components/Categories/Categories';
+import HeroBanner from '@components/HeroBanner/HeroBanner';
+import Recipes from '@components/Recipes/Recipes';
 
 import { BASE_TITLE } from '@constants/pages';
-import Categories from '@components/Categories/Categories';
-import Recipes from '@components/Recipes/Recipes';
 
 const HomePage = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [showRecipes, setShowRecipes] = useState(false);
 
-  const handleCategorySelect = (categoryData) => {
+  const handleCategorySelect = categoryData => {
     if (categoryData?.category && categoryData?.recipes) {
       setSelectedCategory(categoryData);
       setShowRecipes(true);
@@ -24,24 +25,24 @@ const HomePage = () => {
   };
 
   return (
-        <>
-          <Helmet>
-            <title>{BASE_TITLE} - {showRecipes ? 'Recipes' : 'Categories'}</title>
-          </Helmet>
+    <>
+      <Helmet>
+        <title>
+          {BASE_TITLE} - {showRecipes ? 'Recipes' : 'Categories'}
+        </title>
+      </Helmet>
 
-          <section className={css.hero}>
-            Home page
-          </section>
+      {!showRecipes && <HeroBanner />}
 
-          {showRecipes ? (
-            <Recipes
-              categoryData={selectedCategory}
-              onBackToCategories={handleBackToCategories}
-            />
-          ) : (
-            <Categories onCategorySelect={handleCategorySelect} />
-          )}
-        </>
+      {showRecipes ? (
+        <Recipes
+          categoryData={selectedCategory}
+          onBackToCategories={handleBackToCategories}
+        />
+      ) : (
+        <Categories onCategorySelect={handleCategorySelect} />
+      )}
+    </>
   );
 };
 

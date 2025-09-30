@@ -1,153 +1,37 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import toast from 'react-hot-toast';
+import React from 'react';
 
 import css from './Recipes.module.css';
-import arrowBackIcon from '../../assets/icons/arrow-back.svg';
 
 import MainTitle from '@components/MainTitle/MainTitle';
 import Subtitle from '@components/Subtitle/Subtitle';
-import RecipeFilters from '@components/RecipeFilters/RecipeFilters';
-import RecipeList from '@components/RecipeList/RecipeList';
-import RecipePagination from '@components/RecipePagination/RecipePagination';
-
-import {
-  fetchRecipes,
-  selectRecipes,
-  selectTotalPages,
-  selectCurrentPage,
-  selectTotalRecipes,
-  selectIsLoadingRecipes,
-  selectRecipesError,
-} from '@redux/recipes/recipesSlice';
-
-import {
-  selectSelectedIngredient,
-  selectSelectedArea,
-  clearFilters,
-} from '@redux/filters/filtersSlice';
-
-const MOBILE_BREAKPOINT = 767;
-const MOBILE_ITEMS_PER_PAGE = 8;
-const DESKTOP_ITEMS_PER_PAGE = 12;
 
 const Recipes = ({ categoryData, onBackToCategories }) => {
-  const dispatch = useDispatch();
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const recipes = useSelector(selectRecipes);
-  const totalPages = useSelector(selectTotalPages);
-  const totalRecipes = useSelector(selectTotalRecipes);
-  const isLoading = useSelector(selectIsLoadingRecipes);
-  const error = useSelector(selectRecipesError);
-  const selectedIngredient = useSelector(selectSelectedIngredient);
-  const selectedArea = useSelector(selectSelectedArea);
-
   const isAllCategories = categoryData?.category?.name === 'All Categories';
-  const categoryId = categoryData?.category?._id || 'all';
+
   const title = isAllCategories ? 'All categories' : categoryData?.category?.name || 'Recipes';
-  const subtitle = 'Go on a taste journey, where every sip is a sophisticated creative chord, and\n every dessert is an expression of the most refined gastronomic desires.';
 
-  const getItemsPerPage = useCallback(() => {
-    return typeof window !== 'undefined' && window.innerWidth <= MOBILE_BREAKPOINT 
-      ? MOBILE_ITEMS_PER_PAGE 
-      : DESKTOP_ITEMS_PER_PAGE;
-  }, []);
-
-  useEffect(() => {
-    if (categoryId) {
-      setCurrentPage(1);
-      dispatch(fetchRecipes({
-        categoryId,
-        page: 1,
-        limit: getItemsPerPage(),
-        ingredient: null,
-        area: null
-      }));
-    }
-  }, [dispatch, categoryId, getItemsPerPage]);
-
-  const handleFiltersChange = useCallback(({ ingredient, area }) => {
-    setCurrentPage(1);
-    const limit = getItemsPerPage();
-    dispatch(fetchRecipes({
-      categoryId,
-      page: 1,
-      limit,
-      ingredient,
-      area
-    }));
-  }, [dispatch, categoryId, getItemsPerPage]);
-
-  const handlePageChange = useCallback((page) => {
-    setCurrentPage(page);
-    const limit = getItemsPerPage();
-    dispatch(fetchRecipes({
-      categoryId,
-      page,
-      limit,
-      ingredient: selectedIngredient?.id || null,
-      area: selectedArea?.id || null
-    }));
-  }, [dispatch, categoryId, selectedIngredient?.id, selectedArea?.id, getItemsPerPage]);
-
-  const handleFavoriteToggle = useCallback(async (recipeId) => {
-    try {
-      toast.success('Recipe added to favorites!');
-    } catch (error) {
-      toast.error('Failed to update favorites');
-    }
-  }, []);
-
-  const handleBackClick = useCallback(() => {
-    dispatch(clearFilters());
-    onBackToCategories();
-  }, [dispatch, onBackToCategories]);
+  const subtitle = isAllCategories
+    ? 'Discover a limitless world of culinary possibilities and enjoy exquisite recipes that combine taste, style and the warm atmosphere of the kitchen.'
+    : `Explore delicious ${categoryData?.category?.name?.toLowerCase() || 'recipes'} and discover new flavors that will delight your taste buds.`;
 
   return (
     <section className={css.recipes} aria-labelledby="recipes-heading">
-      <div className={css.header}>
-        <button
-          type="button"
-          className={css.backButton}
-          onClick={handleBackClick}
-          aria-label="Back to categories"
-        >
-          <img
-            src={arrowBackIcon}
-            alt="Back arrow"
-            className={css.backIcon}
-          />
-          Back
+      <div className={css.container}>
+        <button type="button" className={css.backButton} onClick={onBackToCategories} aria-label="Back to categories">
+          ← Back
         </button>
 
         <MainTitle level={2} id="recipes-heading" className={css.title}>
           {title}
         </MainTitle>
 
-        <Subtitle className={css.subtitle}>
-          {subtitle}
-        </Subtitle>
-      </div>
+        <Subtitle className={css.subtitle}>{subtitle}</Subtitle>
 
-      <div className={css.section}>
-        <RecipeFilters onFiltersChange={handleFiltersChange} />
-
-        <div className={css.content}>
-          <RecipeList
-            recipes={recipes}
-            onFavoriteToggle={handleFavoriteToggle}
-            isLoading={isLoading}
-            error={error}
-          />
-
-          <RecipePagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
-            isLoading={isLoading}
-            totalRecipes={totalRecipes}
-          />
+        <div className={css.tempContent}>
+          <p>Recipes component is under development...</p>
+          <p>Category: {categoryData?.category?.name}</p>
+          <p>Recipes count: {categoryData?.recipes?.length || 0}</p>
+          <p>Total recipes: {categoryData?.totalRecipes || 0}</p>
         </div>
       </div>
     </section>

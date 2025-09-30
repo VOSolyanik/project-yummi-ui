@@ -6,12 +6,9 @@ import css from './MainTitle.module.css';
 
 const MainTitle = ({ children, className, level = 1, ...rest }) => {
   const Tag = `h${level}`;
-  
+
   return (
-    <Tag 
-      className={clsx(css.title, css[`level${level}`], className)}
-      {...rest}
-    >
+    <Tag className={clsx(css.title, css[`level${level}`], className)} {...rest}>
       {children}
     </Tag>
   );
