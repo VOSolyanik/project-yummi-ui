@@ -1,0 +1,93 @@
+/* Mobile-first: Desktop navigation hidden by default */
+.nav {
+  display: none;
+}
+
+.navList {
+  display: flex;
+  gap: 1rem;
+}
+
+.navLink {
+  display: block;
+  padding: 14px;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 1.5;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--black-color);
+  transition: all 0.2s ease;
+  border-radius: 30px;
+  background: transparent;
+}
+
+.navLink:hover,
+.navLink:focus {
+  box-shadow: inset 0 0 0 1px rgb(var(--primary-active-bg-color));
+}
+
+.navLink.activeLink {
+  box-shadow: inset 0 0 0 1px rgb(var(--gray-color));
+}
+
+/* Inverse mode for dark backgrounds */
+.inverseLink {
+  color: var(--white-color);
+}
+
+.inverseLink.activeLink {
+  box-shadow: inset 0 0 0 1px rgba(var(--white-rgb), 1);
+}
+
+.inverseLink:hover,
+.inverseLink:focus {
+  box-shadow: inset 0 0 0 1px rgba(var(--white-rgb), 1);
+}
+
+
+.burgerButton {
+  padding: 2px;
+  background: transparent;
+  border: none;
+  color: var(--white-color);
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* Tablet styles (768px+) - show desktop nav, hide mobile */
+@media screen and (min-width: 768px) {
+  .nav {
+    display: flex;
+    align-items: center;
+  }
+
+  .navList {
+    gap: 0.25rem;
+  }
+}
+
+/* Desktop styles (1440px+) - larger spacing */
+@media screen and (min-width: 1440px) {
+  .navList {
+    gap: 2.5rem;
+  }
+}
