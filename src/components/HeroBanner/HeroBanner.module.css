@@ -38,6 +38,12 @@
   margin-bottom: 32px;
 }
 
+.heroButton {
+  background-color: var(--black-color);
+  color: var(--white-color);
+  border: 1px solid var(--white-color) !important;
+}
+
 .mediaWrap {
   width: 100%;
   display: flex;

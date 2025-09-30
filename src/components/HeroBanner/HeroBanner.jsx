@@ -27,7 +27,7 @@ const HeroBanner = () => {
           cuisines.
         </p>
         <Button
-          variant="hero"
+          className={css.heroButton}
           onClick={() => {
             // TODO: Implement the functionality for adding a recipe (Guest/Logged in User)
           }}

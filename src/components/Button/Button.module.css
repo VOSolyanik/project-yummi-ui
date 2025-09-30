@@ -23,12 +23,6 @@
   background-color: var(--primary-active-bg-color);
 }
 
-.hero {
-  background-color: transparent;
-  color: var(--white-color);
-  border: 1px solid var(--white-color);
-}
-
 .button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
