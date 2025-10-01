@@ -131,7 +131,7 @@
 }
 
 .error {
-  color: var(--red-error-color);
+  color: var(--red-color);
   font-size: var(--fz-small);
 }
 
@@ -552,13 +552,13 @@
 }
 
 .invalid {
-  border-color: var(--red-error-color);
-  color: var(--red-error-color);
+  border-color: var(--red-color);
+  color: var(--red-color);
   outline: none;
 }
 
 .invalid::placeholder {
-  color: var(--red-error-color);
+  color: var(--red-color);
 }
 
 /* ---------------- Upload / Photo ---------------- */
