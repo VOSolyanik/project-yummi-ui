@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 
-import { validateToken } from '../../redux/auth/authSlice.js';
+import { validateToken } from '@redux/auth/authSlice.js';
 
 const AppBootstrap = ({ children }) => {
   const dispatch = useDispatch();

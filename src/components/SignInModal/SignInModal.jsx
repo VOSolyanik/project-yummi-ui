@@ -2,7 +2,8 @@ import { useNavigate } from 'react-router-dom';
 
 import css from './SignInModal.module.css';
 
-import { useAuth } from '../../hooks/useAuth.js';
+import { useAuth } from '@hooks/useAuth.js';
+
 import Button from '../Button/Button';
 import Modal from '../Modal/Modal';
 import SignInForm from '../SignInForm/SignInForm';
