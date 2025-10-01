@@ -5,40 +5,40 @@ import clsx from 'clsx';
 import css from './Tabs.module.css';
 
 const Tabs = () => {
-  const [activeTab, setActiveTab] = useState('tab1');
+  const [activeTab, setActiveTab] = useState('recipes');
 
   return (
     <div className={css.tabsContainer}>
       <div className={css.tabList}>
         <button
           className={clsx(css.tabBtn, {
-            [css.active]: activeTab === 'tab1',
+            [css.active]: activeTab === 'recipes',
           })}
-          onClick={() => setActiveTab('tab1')}
+          onClick={() => setActiveTab('recipes')}
         >
           My recipes
         </button>
         <button
           className={clsx(css.tabBtn, {
-            [css.active]: activeTab === 'tab2',
+            [css.active]: activeTab === 'favorites',
           })}
-          onClick={() => setActiveTab('tab2')}
+          onClick={() => setActiveTab('favorites')}
         >
           My favorites
         </button>
         <button
           className={clsx(css.tabBtn, {
-            [css.active]: activeTab === 'tab3',
+            [css.active]: activeTab === 'followers',
           })}
-          onClick={() => setActiveTab('tab3')}
+          onClick={() => setActiveTab('followers')}
         >
           Followers
         </button>
         <button
           className={clsx(css.tabBtn, {
-            [css.active]: activeTab === 'tab4',
+            [css.active]: activeTab === 'following',
           })}
-          onClick={() => setActiveTab('tab4')}
+          onClick={() => setActiveTab('following')}
         >
           Following
         </button>
@@ -46,10 +46,10 @@ const Tabs = () => {
 
       {/* Tab Content */}
       <div className={css.tabContent}>
-        {activeTab === 'tab1' && <p>Content for Tab 1</p>}
-        {activeTab === 'tab2' && <p>Content for Tab 2</p>}
-        {activeTab === 'tab3' && <p>Content for Tab 3</p>}
-        {activeTab === 'tab4' && <p>Content for Tab 4</p>}
+        {activeTab === 'recipes' && <p>Content for recipes</p>}
+        {activeTab === 'favorites' && <p>Content for favorites</p>}
+        {activeTab === 'followers' && <p>Content for followers</p>}
+        {activeTab === 'following' && <p>Content for following</p>}
       </div>
     </div>
   );
