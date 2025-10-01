@@ -4,7 +4,7 @@ import css from './UserCardInfo.module.css';
 
 import { Icon } from '../Icon/Icon';
 
-export const UserInfoCard = () => {
+const UserInfoCard = () => {
   return (
     <div className={css.card}>
       <div className={css.thumb}>
@@ -44,3 +44,5 @@ export const UserInfoCard = () => {
     </div>
   );
 };
+
+export default UserInfoCard;

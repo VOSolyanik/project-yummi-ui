@@ -8,11 +8,11 @@ import Header from '@components/Header/Header';
 import Loader from '@components/Loader/Loader';
 
 import './App.module.css';
-import { UserProfilePage } from './pages/UserProfilePage/UserProfilePage';
 
 // Lazy loading for pages
 const HomePage = lazy(() => import('@pages/HomePage/HomePage'));
 const NotFoundPage = lazy(() => import('@pages/NotFoundPage/NotFoundPage'));
+const UserProfilePage = lazy(() => import('@pages/UserProfilePage/UserProfilePage'));
 
 
 const App = () => {

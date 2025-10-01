@@ -2,17 +2,33 @@ import React from 'react';
 
 import css from './UserProfilePage.module.css';
 
+import MainTitle from '@components/MainTitle/MainTitle';
+import Subtitle from '@components/Subtitle/Subtitle';
+
 import Button from '@/components/Button/Button';
-import { UserInfoCard } from '@/components/UserInfoCard/UserInfoCard';
+import Tabs from '@/components/Tabs/Tabs';
+import UserInfoCard  from '@/components/UserInfoCard/UserInfoCard';
 
-
-export const UserProfilePage = () => {
+const UserProfilePage = () => {
   return (
     <>
-      <div>
-        <UserInfoCard />
-        <Button className={css.btn}>LOG OUT</Button>
+      <MainTitle MainTitle level={2} id="recipes-heading" className={css.title}>
+        Profile
+      </MainTitle>
+
+      <Subtitle className={css.subtitle}>
+        Reveal your culinary art, 
+        share your favorite recipe and create gastronomic masterpieces with us.
+      </Subtitle>
+      <div className={css.sectionWrapper}>
+        <div>
+          <UserInfoCard />
+          <Button className={css.btn}>LOG OUT</Button>
+        </div>
+        <Tabs />
       </div>
     </>
   );
 };
+
+export default UserProfilePage;

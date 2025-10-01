@@ -1,0 +1,19 @@
+.btn {
+  display: block;
+  width: 343px;
+  margin-bottom: 64px;
+}
+
+@media screen and (min-width: 768px) {
+  .btn {
+    margin: 0 auto 80px auto;
+    width: 394px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .sectionWrapper {
+    display: flex;
+    gap: 40px;
+  }
+}
