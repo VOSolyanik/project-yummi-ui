@@ -18,8 +18,8 @@
 .loadingSpinner {
   width: 3rem;
   height: 3rem;
-  border: 3px solid var(--color-gray);
-  border-top: 3px solid var(--primary-bg-color);
+  border: 3px solid var(--gray-color);
+  border-top: 3px solid var(--primary-active-bg-color);
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin-bottom: 1rem;
