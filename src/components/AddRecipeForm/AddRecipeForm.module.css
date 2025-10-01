@@ -1,3 +1,25 @@
+/* ---------- Typography variables  ---------- */
+:root {
+  /* Base text sizes */
+  --fz-base: 14px;
+  --fz-small: 12px;
+  --fz-label: 16px;
+  --fz-h3: 18px;
+  --fz-button: 14px;
+}
+
+/* Tablet & Desktop breakpoint: */
+@media (min-width: 768px) {
+  :root {
+    --fz-base: 16px;
+    --fz-small: 14px;
+    --fz-h3: 24px;
+    --fz-button: 16px;
+    --fz-label: 20px;
+  }
+}
+
+/* ---------------- Layout ---------------- */
 .form {
   display: grid;
   max-width: 1160px;
@@ -5,37 +27,42 @@
   color: var(--black-color);
 }
 
+/* Tablet */
+@media (min-width: 768px) {
+  .form {
+  }
+}
+
+/* Desktop */
 @media (min-width: 1440px) {
   .form {
     grid-template-columns: 1fr 1fr;
-    column-gap: 48px;
+    column-gap: 80px;
     row-gap: 20px;
   }
-
   .form > div:first-child {
     grid-row: span 5;
   }
 }
 
-/*.row {*/
-/*  display: grid;*/
-/*  grid-template-columns: 1fr;*/
-/*  gap: 12px;*/
-/*}*/
-
-@media (min-width: 768px) {
-  .row {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
+/* ---------------- Labels & Inputs ---------------- */
 .label {
-  font-weight: 700;
-  font-size: 16px;
-  letter-spacing: 0.06em;
+  font-size: var(--fz-label);
+  font-weight: 800;
+  line-height: 24px;
+  letter-spacing: -0.4px;
   text-transform: uppercase;
   color: var(--black-color);
   margin-bottom: 8px;
+}
+
+@media (min-width: 768px) {
+  .label {
+    margin-bottom: 16px;
+  }
+  .preparation {
+    margin-bottom: 40px;
+  }
 }
 
 .input,
@@ -44,7 +71,7 @@
   border-radius: 9999px;
   background: var(--white-color);
   color: var(--black-color);
-  font-size: 14px;
+  font-size: var(--fz-base);
 }
 
 .input::placeholder,
@@ -58,36 +85,64 @@
   border-color: var(--black-color);
 }
 
+@media (min-width: 768px) {
+  .input,
+  .textarea {
+  }
+}
+@media (min-width: 1440px) {
+  .input,
+  .textarea {
+  }
+}
+
 .textarea {
   border: none;
 }
 
+.inputBare {
+  width: 100%;
+  border: none;
+  background: transparent;
+  color: var(--black-color);
+  text-transform: uppercase;
+  font-size: var(--fz-h3);
+  font-weight: 800;
+  line-height: 24px;
+  letter-spacing: -0.36px;
+}
+
+.inputBare::placeholder {
+  color: var(--gray-color);
+  text-transform: uppercase;
+}
+
+.inputBare:focus {
+  outline: none;
+}
+
+@media (min-width: 768px) {
+  .inputBare {
+  }
+}
+@media (min-width: 1440px) {
+  .inputBare {
+  }
+}
+
 .error {
   color: var(--red-error-color);
-  font-size: 12px;
+  font-size: var(--fz-small);
 }
 
-
-
-.actions {
-  display: flex;
-  gap: 12px;
-  justify-content: flex-start;
-}
-
-.counter {
-  font-size: 12px;
-  color: var(--gray-color);
-  text-align: right;
-}
-
+/* ---------------- Select / Dropdown ---------------- */
 .select {
   position: relative;
 }
 
 .selectBtn {
   width: 100%;
-  padding: 12px 16px;
+  padding: 14px;
   border: 1px solid var(--gray-color);
   border-radius: 9999px;
   background: var(--white-color);
@@ -95,7 +150,13 @@
   align-items: center;
   justify-content: space-between;
   color: var(--black-color);
-  font-size: 14px;
+  font-size: var(--fz-base);
+}
+
+@media (min-width: 768px) {
+  .selectBtn {
+    padding: 16px 18px;
+  }
 }
 
 .dropdown {
@@ -115,11 +176,11 @@
   padding: 10px 12px;
   cursor: pointer;
 }
-
 .option:hover {
   background: var(--white-color);
 }
 
+/* ---------------- Ingredients ---------------- */
 .ingredientList {
   display: flex;
   flex-wrap: wrap;
@@ -141,7 +202,7 @@
   width: 75px;
   height: 75px;
   border: 1px solid var(--gray-color);
-  border-radius: 12px;
+  border-radius: 15px;
   background: var(--white-color);
   display: grid;
   place-items: center;
@@ -162,23 +223,32 @@
   flex: 1 1 auto;
 }
 
-.timeControl {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  min-width: 164px;
-}
-
 .ingName {
   font-weight: 500;
-  font-size: 14px;
+  font-size: var(--fz-base);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
+@media (min-width: 768px) {
+  .ingredientCard {
+    gap: 14px;
+    width: 178px;
+    height: 90px;
+  }
+  .ingredientList {
+    gap: 28px;
+  }
+  .thumbBox {
+    width: 90px;
+    height: 90px;
+    flex: 0 0 90px;
+  }
+}
+
 .ingAmount {
-  font-size: 14px;
+  font-size: var(--fz-base);
   color: var(--gray-color);
 }
 
@@ -191,12 +261,36 @@
   color: var(--black-color);
   cursor: pointer;
 }
+
 .ingClose:hover,
 .ingClose:focus-visible {
   opacity: 1;
   outline: none;
 }
 
+/* ---------------- Time ---------------- */
+
+.timeValue {
+  display: inline-block;
+  text-align: center;
+  position: relative;
+  font-size: var(--fz-base);
+}
+
+.timeControl {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .timeControl {
+    gap: 16px;
+  }
+}
+
+/* ---------------- Buttons & Icons ---------------- */
 .iconBtn {
   width: 48px;
   height: 48px;
@@ -207,10 +301,11 @@
   border: 1px solid var(--gray-color);
   background: var(--white-color);
   color: var(--gray-color);
-  transition: background-color 0.2s ease,
-  border-color 0.2s ease,
-  color 0.2s ease,
-  box-shadow 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .iconBtn:hover,
@@ -225,133 +320,32 @@
   outline: none;
 }
 
-.filePreview {
-  width: 100%;
-  max-height: 260px;
-  object-fit: cover;
-  border-radius: 16px;
-  border: 1px solid var(--black-color);
-  margin-bottom: 12px;
+.icon {
+  width: 16px;
+  height: 16px;
 }
 
-.fileInput {
-  width: 100%;
-  min-height: 260px;
-  display: grid;
-  place-content: center;
-  text-align: center;
-  padding: 24px;
-  border: 2px dashed var(--gray-color);
-  border-radius: 16px;
-  background: var(--white-color);
-  color: var(--gray-color);
+.icon:hover,
+.icon:focus {
+  stroke: var(--gray-color);
 }
 
-.fileInput::file-selector-button,
-.fileInput::-ms-browse {
-  font: inherit;
-  padding: 8px 14px;
-  border-radius: 9999px;
-  border: 1px solid var(--black-color);
-  background: var(--white-color);
-  margin-right: 12px;
-  cursor: pointer;
-}
-
-.fieldHeader {
-  font-weight: 700;
-  font-size: 12px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--black-color);
-  margin-bottom: 6px;
-}
-
-.textareaUnderlined {
-  width: 100%;
-  padding-bottom: 16px;
-  border: 0;
-  /*border-bottom: 1px solid var(--gray-color);*/
-  background: transparent;
-  color: var(--black-color);
-  resize: none;
-  overflow: hidden;
-  line-height: 1.5;
-  min-height: 24px;
-  white-space: pre-wrap;
-  word-break: break-word;
-  font-size: 14px;
-}
-
-.textareaUnderlined::placeholder { color: var(--gray-color); }
-.textareaUnderlined:focus { outline: none; border-bottom-color: var(--gray-color); }
-
-
-.descriptionWrap {
-  position: relative;
+.addIngBtn {
   display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  gap: 8px 16px;
-  margin-bottom: 32px;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
 }
 
-.descriptionWrap::after {
-    content: "";
-    display: block;
-    width: 100%;
-    height: 1px;
-    background-color: var(--gray-color);
-    margin-top: -16px;
+.addIngBtnIcon {
+  color: currentColor;
+  width: 20px;
+  height: 20px;
 }
 
-.descriptionTextarea {
-  flex: 1 1 270px;
-  width: 100%;
-}
-
-.descriptionCounter {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 4px;
-  font-size: 12px;
-  color: var(--gray-color);
-}
-
-.counterCurrent {
-  color: var(--black-color);
-}
-
-.counterMax {
-  color: var(--gray-color);
-}
-
-.descriptionWrap .error {
-  flex-basis: 100%;
-}
-
-.inputBare {
-  width: 100%;
-  border: none;
-  background: transparent;
-  color: var(--black-color);
-  text-transform: uppercase;
-  font-size: 18px;
-  font-style: normal;
-  font-weight: 800;
-  line-height: 24px;
-  letter-spacing: -0.36px;
-}
-
-.inputBare::placeholder {
-  color: var(--gray-color);
-  text-transform: uppercase;
-}
-
-.inputBare:focus { outline: none; }
-
-.titleBlock {
-  margin-bottom: 32px;
+.addIngBtnIcon:hover,
+.addIngBtnIcon:focus {
+  color: var(--white-color);
 }
 
 .publishBtn {
@@ -368,7 +362,10 @@
   text-transform: uppercase;
   background: var(--black-color);
   color: var(--white-color);
-  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+  font-size: var(--fz-button);
 }
 
 .publishBtn:hover,
@@ -380,32 +377,129 @@
   outline: none;
 }
 
-.inactiveText {
+@media (min-width: 768px) {
+  .iconBtn {
+    width: 56px;
+    height: 56px;
+  }
+  .icon {
+    width: 24px;
+    height: 24px;
+  }
+  .addIngBtnIcon {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+/* ---------------- Textareas & Description ---------------- */
+.textareaUnderlined {
+  width: 100%;
+  padding-bottom: 16px;
+  border: 0;
+  background: transparent;
+  color: var(--black-color);
+  resize: none;
+  overflow: hidden;
+  line-height: 1.5;
+  min-height: 24px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-size: var(--fz-base);
+}
+
+.textareaUnderlined::placeholder {
   color: var(--gray-color);
 }
 
-.icon:hover,
-.icon:focus {
-  width: 20px;
-  height: 20px;
-  border: var(--gray-color);
+.textareaUnderlined:focus {
+  outline: none;
+  border-bottom-color: var(--gray-color);
 }
 
-.addIngBtn {
+.descriptionWrap {
+  position: relative;
+  margin-bottom: 32px;
   display: flex;
-  gap: 8px;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 8px 16px;
 }
 
-.addIngBtnIcon:hover,
-.addIngBtnIcon:focus {
-  fill: var(--white-color);
+.descriptionWrap::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background-color: var(--gray-color);
+}
+@media (min-width: 768px) {
+  .descriptionWrap:last-child {
+    margin-bottom: 0;
+    width: 100%;
+  }
+  .instructionWrap {
+    margin-bottom: 80px;
+  }
 }
 
+.descriptionTextarea {
+  flex: 1 1 270px;
+  width: 100%;
+}
+
+.descriptionCounter {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  font-size: var(--fz-base);
+  color: var(--gray-color);
+  line-height: 1;
+}
+
+.descriptionTextarea {
+  flex: 1 1 270px;
+  width: 100%;
+  padding-right: 72px;
+}
+
+.counterCurrent {
+  color: var(--black-color);
+}
+.counterMax {
+  color: var(--gray-color);
+}
+
+.descriptionWrap .error {
+  flex-basis: 100%;
+}
+
+/* ---------------- Title & Actions ---------------- */
+.titleBlock {
+  margin-bottom: 32px;
+}
+@media (min-width: 768px) {
+  .titleBlock {
+    margin-bottom: 40px;
+  }
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-start;
+}
+
+/* ---------------- Blocks ---------------- */
 .catIngBlock {
   display: flex;
   gap: 20px;
   flex-direction: column;
-  margin-bottom: 32px;
 }
 
 .addIngBlock {
@@ -415,6 +509,44 @@
   margin-bottom: 64px;
 }
 
+.catBlock {
+  margin-bottom: 20px;
+}
+
+@media (min-width: 768px) {
+  .catTimeBlock {
+    display: flex;
+    gap: 20px;
+  }
+  .catTimeBlock:last-child {
+    margin-bottom: 40px;
+  }
+  .areaBlock {
+    max-width: 330px;
+  }
+  .addIngBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    margin-bottom: 80px;
+  }
+  .catBlock {
+    width: 315px;
+    flex-shrink: 0;
+    margin-bottom: 0;
+  }
+}
+
+@media (min-width: 1440px) {
+  .mainBlock {
+    display: block;
+  }
+}
+
+/* ---------------- States ---------------- */
+.inactiveText {
+  color: var(--gray-color);
+}
 .hidden {
   display: none;
 }
@@ -427,4 +559,106 @@
 
 .invalid::placeholder {
   color: var(--red-error-color);
+}
+
+/* ---------------- Upload / Photo ---------------- */
+.photoPreviewBlock {
+  margin-bottom: 32px;
+}
+
+@media (min-width: 768px) {
+  .photoPreviewBlock {
+    margin-bottom: 80px;
+  }
+}
+@media (min-width: 1440px) {
+  .photoPreviewBlock {
+  }
+}
+
+.filePreview {
+  width: 100%;
+  object-fit: cover;
+  border-radius: 38px;
+  overflow: hidden;
+  border: none;
+  margin-bottom: 12px;
+}
+
+.fileInputHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.uploadInner {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.uploadText {
+  font-size: var(--fz-base);
+  text-decoration: underline;
+  color: var(--black-color);
+}
+
+.uploadBox {
+  position: relative;
+  width: 100%;
+  min-height: 318px;
+  border: 1px dashed var(--gray-color);
+  border-radius: 30px;
+  background: var(--white-color);
+  color: var(--gray-color);
+  display: grid;
+  place-items: center;
+  text-align: center;
+  cursor: pointer;
+}
+
+.uploadBox:hover,
+.uploadBox:focus-visible {
+  outline: none;
+}
+
+@media (min-width: 768px) {
+  .uploadBox {
+    min-height: 400px;
+  }
+}
+
+.hasPreview {
+  border: none;
+  overflow: hidden;
+}
+
+.uploadImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
+
+.uploadLink {
+  display: block;
+  margin-top: 10px;
+  text-align: center;
+  font-size: var(--fz-base);
+  color: var(--black-color);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.filePreview {
+  display: none;
 }
