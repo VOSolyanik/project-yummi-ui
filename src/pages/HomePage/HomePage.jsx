@@ -7,8 +7,6 @@ import HeroBanner from '@components/HeroBanner/HeroBanner';
 import Recipes from '@components/Recipes/Recipes';
 
 import { BASE_TITLE } from '@constants/pages';
-import RecipesPreview from '@components/RecipesPreview/index.js';
-import { image } from 'ansi-escapes';
 
 const HomePage = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -35,12 +33,7 @@ const HomePage = () => {
       </Helmet>
 
       {!showRecipes && <HeroBanner />}
-      <RecipesPreview
-        title={'Recipes Preview'}
-        description={'description'}
-        image={'https://picsum.photos/536/354'}
 
-      />
       {showRecipes ? (
         <Recipes
           categoryData={selectedCategory}

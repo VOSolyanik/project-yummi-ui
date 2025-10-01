@@ -1,9 +1,3 @@
-.arrowIcon {
-  width: 18px;
-  height: 18px;
-  filter: brightness(0) invert(1);
-}
-
 .card {
   display: flex;
   flex-direction: row;
@@ -102,9 +96,19 @@
 }
 
 .iconButton:hover {
-  border-color: #999;
-  background: #f8f8f8;
+  border-color: var(--black-color);
+  background: var(--black-color);
 }
+
+.icon {
+  width: 16px;
+  height: 16px;
+}
+
+.iconButton:hover .icon {
+  filter: brightness(0) invert(1);
+}
+
 
 /* Tablet */
 @media screen and (min-width: 768px) and (max-width: 1439px) {
@@ -161,6 +165,11 @@
     padding: 12px;
     font-size: 18px;
     border-radius: 30px;
+  }
+
+  .icon {
+    width: 18px;
+    height: 18px;
   }
 }
 
@@ -219,5 +228,10 @@
     padding: 12px;
     font-size: 18px;
     border-radius: 30px;
+  }
+
+  .icon {
+    width: 18px;
+    height: 18px;
   }
 }
