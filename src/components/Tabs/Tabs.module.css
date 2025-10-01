@@ -60,6 +60,7 @@
 @media screen and (min-width: 768px) {
   .tabsContainer {
     max-width: 704px;
+    margin-top: 40px;
   }
 
   .tabList {

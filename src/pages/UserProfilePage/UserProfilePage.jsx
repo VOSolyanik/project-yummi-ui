@@ -11,8 +11,11 @@ import UserInfoCard  from '@/components/UserInfoCard/UserInfoCard';
 
 const UserProfilePage = () => {
   return (
-    <>
-      <MainTitle MainTitle level={2} id="recipes-heading" className={css.title}>
+    <div className='container'>
+      <div className={css.breadcrumb}>
+        Home / <span>Profile</span>
+      </div>
+      <MainTitle level={2} id="profile-heading" className={css.title}>
         Profile
       </MainTitle>
 
@@ -23,11 +26,11 @@ const UserProfilePage = () => {
       <div className={css.sectionWrapper}>
         <div>
           <UserInfoCard />
-          <Button className={css.btn}>LOG OUT</Button>
+          <Button className={css.btn} variant="primary">LOG OUT</Button>
         </div>
         <Tabs />
       </div>
-    </>
+    </div>
   );
 };
 

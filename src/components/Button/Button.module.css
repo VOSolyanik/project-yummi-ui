@@ -20,7 +20,7 @@
 
 .primary:hover,
 .primary:focus {
-  background-color: var(--primary-active-bg-color);
+  background-color: #BFBEBE;
 }
 
 .button:disabled {

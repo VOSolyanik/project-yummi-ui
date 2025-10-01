@@ -9,7 +9,6 @@ const Tabs = () => {
 
   return (
     <div className={css.tabsContainer}>
-      {/* Tab List */}
       <div className={css.tabList}>
         <button
           className={clsx(css.tabBtn, {
