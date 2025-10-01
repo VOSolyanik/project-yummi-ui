@@ -1,4 +1,8 @@
 .icon {
   display: inline-block;
-  fill: currentColor;
+  vertical-align: middle;
+  flex-shrink: 0;
+  color: currentColor;
+  fill: none;
+  transition: color 0.2s ease;
 }

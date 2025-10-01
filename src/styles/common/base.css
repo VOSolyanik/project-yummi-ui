@@ -11,8 +11,26 @@
   --gray-rgb: 191, 190, 190;
   --gray-color: rgb(var(--gray-rgb));
 
+  --light-gray-rgb: 232, 232, 232;
+  --light-gray-color: rgb(var(--light-gray-rgb));
+
   --white-rgb: 255, 255, 255;
   --white-color: rgb(var(--white-rgb));
+
+  --red-rgb: 174, 0, 0;
+  --red-color: rgb(var(--red-rgb));
+
+  --main-bg-color: var(--white-color);
+  --main-text-color: var(--black-color);
+
+  --primary-bg-color: var(--charcoal-color);
+  --primary-active-bg-color: var(--black-color);
+  --primary-text-color: var(--white-color);
+
+  --secondary-text-color: var(--gray-color);
+
+  --border-color: var(--light-gray-color);
+  --error-color: var(--red-color);
 }
 
 html {
@@ -30,11 +48,11 @@ body {
   min-height: 100vh;
   margin: 0;
 
-  background-color: var(--primary-bg-color);
+  background-color: var(--main-bg-color);
   font-size: 16px;
   font-family: var(--primary-font);
   line-height: 1.5;
-  color: var(--primary-text-color);
+  color: var(--main-text-color);
 }
 
 main {

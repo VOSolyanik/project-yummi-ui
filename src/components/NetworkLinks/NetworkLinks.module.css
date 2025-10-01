@@ -1,0 +1,17 @@
+/* Mobile-first base styles */
+.networkLinks {
+  display: flex;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Tablet styles (768px+) */
+@media screen and (min-width: 768px) {
+  .networkLinks {
+    gap: 1rem;
+  }
+}
+
+/* Desktop styles (1440px+) - same as tablet for this component */
