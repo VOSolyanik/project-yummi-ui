@@ -1,3 +1,7 @@
+.container {
+  padding-top: 64px;
+}
+
 .breadcrumb {
   font-size: 12px;
   color: #bfbebe;
@@ -34,6 +38,9 @@
 }
 
 @media screen and (min-width: 1440px) {
+  .container {
+    padding-top: 80px;
+  }
   .sectionWrapper {
     display: flex;
     gap: 40px;

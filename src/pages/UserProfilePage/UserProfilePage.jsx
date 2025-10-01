@@ -1,5 +1,7 @@
 import React from 'react';
 
+import clsx from 'clsx';
+
 import css from './UserProfilePage.module.css';
 
 import MainTitle from '@components/MainTitle/MainTitle';
@@ -11,7 +13,7 @@ import UserInfoCard  from '@/components/UserInfoCard/UserInfoCard';
 
 const UserProfilePage = () => {
   return (
-    <div className='container'>
+    <div className={clsx('container', css.container)}>
       <div className={css.breadcrumb}>
         Home / <span>Profile</span>
       </div>

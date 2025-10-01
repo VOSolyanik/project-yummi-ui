@@ -1,6 +1,6 @@
 import React from 'react';
 
-import css from './UserCardInfo.module.css';
+import css from './UserInfoCard.module.css';
 
 import { Icon } from '../Icon/Icon';
 
@@ -12,8 +12,7 @@ const UserInfoCard = () => {
           <img className={css.img} src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Phoenicopterus_ruber_in_S%C3%A3o_Paulo_Zoo.jpg" alt="" />
         </div>
         <div className={css.addBtn}>
-          <Icon name={'plus'} className={css.icon} size={16}></Icon>
-
+          <Icon name={'plus'} size={18} className={css.icon}></Icon>
         </div>
       </div>
       <div className={css.userName}>

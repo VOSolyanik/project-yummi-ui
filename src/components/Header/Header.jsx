@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
+import { useNavigate } from 'react-router-dom';
+
 import clsx from 'clsx';
 
 import css from './Header.module.css';
@@ -14,6 +16,7 @@ const Header = ({ inverse = false }) => {
   const [isAuthenticated] = useState(true);
   const [user] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const checkIsMobile = () => {
@@ -39,8 +42,7 @@ const Header = ({ inverse = false }) => {
   };
 
   const handleProfileClick = () => {
-    // TODO: Navigate to UserPage
-    console.log('Navigate to Profile');
+    navigate('/profile');
   };
 
   const handleLogoutClick = () => {
