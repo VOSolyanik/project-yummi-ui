@@ -1,17 +1,18 @@
 import { Navigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthContext';
+
+import { useAuth } from '@hooks/useAuth.js';
 
 /**
- * Компонент для публічних маршрутів (логін, реєстрація)
- * Перенаправляє автентифікованих користувачів на головну сторінку
+ * Component for public routes (login, registration)
+ * Redirects authenticated users to main page
  */
 const PublicRoute = ({ children, restricted = false }) => {
   const { isAuthenticated } = useAuth();
   const location = useLocation();
 
-  // Якщо маршрут обмежений (restricted) і користувач автентифікований
+  // If route is restricted and user is authenticated
   if (restricted && isAuthenticated) {
-    // Перенаправляємо на сторінку, з якої прийшов користувач, або на головну
+    // Redirect to the page user came from, or to home page
     const from = location.state?.from?.pathname || '/';
     return <Navigate to={from} replace />;
   }

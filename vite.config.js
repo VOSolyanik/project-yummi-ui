@@ -4,14 +4,13 @@ import { fileURLToPath } from 'url';
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 
-
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
   build: {
-    sourcemap: true,
+    sourcemap: true
   },
   resolve: {
     alias: {
@@ -24,7 +23,7 @@ export default defineConfig({
       '@utils': path.resolve(__dirname, './src/utils'),
       '@hooks': path.resolve(__dirname, './src/hooks'),
       '@contexts': path.resolve(__dirname, './src/contexts'),
-      '@services': path.resolve(__dirname, './src/services'),
-    },
-  },
+      '@services': path.resolve(__dirname, './src/services')
+    }
+  }
 });

@@ -4,29 +4,38 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "svg": "node create-svg-sprite.js",
+    "predev": "npm run svg",
+    "prebuild": "npm run svg",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier .",
+    "format:fix": "prettier --write .",
     "preview": "vite preview",
     "prepare": "husky"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.9.0",
     "axios": "^1.12.2",
     "clsx": "^2.1.1",
     "formik": "^2.4.6",
     "modern-normalize": "^3.0.1",
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "react-helmet-async": "^2.0.5",
     "react-hot-toast": "^2.6.0",
+    "react-redux": "^9.2.0",
     "react-router-dom": "^7.9.1",
     "react-spinners": "^0.17.0",
+    "redux-persist": "^6.0.0",
     "yup": "^1.7.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",
-    "@types/react": "^19.1.13",
-    "@types/react-dom": "^19.1.9",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.3",
     "@vitejs/plugin-react": "^5.0.3",
     "eslint": "^9.36.0",
     "eslint-config-prettier": "^10.1.8",
@@ -41,6 +50,7 @@
     "husky": "^9.1.7",
     "lint-staged": "^16.2.0",
     "prettier": "^3.6.2",
+    "svgstore": "^3.0.1",
     "vite": "^7.1.7"
   }
 }

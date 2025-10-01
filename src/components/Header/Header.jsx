@@ -1,93 +1,90 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import clsx from 'clsx';
 
-import { useAuth } from '@contexts/AuthContext';
-import Button from '@components/Button/Button';
-import LoginForm from '@components/LoginForm/LoginForm';
-import RegisterForm from '@components/RegisterForm/RegisterForm';
-import LogoutModal from '@components/LogoutModal/LogoutModal';
-
 import css from './Header.module.css';
 
-import logoSvg from '@assets/images/logo.svg';
+import { useAuth } from '@hooks/useAuth.js';
+import { useAuthModal } from '@hooks/useAuthModal.js';
 
-const Header = () => {
-  const { isAuthenticated, user } = useAuth();
-  const [showLoginModal, setShowLoginModal] = useState(false);
-  const [showRegisterModal, setShowRegisterModal] = useState(false);
-  const [showLogoutModal, setShowLogoutModal] = useState(false);
+import AuthBar from '../AuthBar/AuthBar';
+import Logo from '../Logo/Logo';
+import NavBar from '../NavBar/NavBar';
+import UserBar from '../UserBar/UserBar';
+
+const Header = ({ inverse = false }) => {
+  const { isAuthenticated, isLoading, user } = useAuth();
+  const { openSignInModal, openSignUpModal, openLogoutModal } = useAuthModal();
+  const navigate = useNavigate();
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkIsMobile();
+    window.addEventListener('resize', checkIsMobile);
+
+    return () => {
+      window.removeEventListener('resize', checkIsMobile);
+    };
+  }, []);
+
+  const handleSignInClick = () => {
+    openSignInModal();
+  };
+
+  const handleSignUpClick = () => {
+    openSignUpModal();
+  };
+
+  const handleProfileClick = () => {
+    navigate('/user/me');
+  };
+
+  const handleLogoutClick = () => {
+    openLogoutModal();
+  };
 
   return (
-    <>
-      <header className={css.header}>
-        <div className={clsx('container', css.container)}>
-          <Link to="/" className={css.logo}>
-            <img src={logoSvg} alt="Yummi" />
-          </Link>
-          
-          <div className={css.authSection}>
-            {isAuthenticated ? (
-              <div className={css.authenticatedUser}>
-                <span className={css.welcomeText}>
-                  Welcome, {user?.name || 'User'}!
-                </span>
-                <Button
-                  onClick={() => setShowLogoutModal(true)}
-                  className={css.logoutButton}
-                >
-                  Log out
-                </Button>
-              </div>
-            ) : (
-              <div className={css.authButtons}>
-                <Button
-                  onClick={() => setShowLoginModal(true)}
-                  variant="secondary"
-                  className={css.loginButton}
-                >
-                  Sign in
-                </Button>
-                <Button
-                  onClick={() => setShowRegisterModal(true)}
-                  className={css.registerButton}
-                >
-                  Sign up
-                </Button>
-              </div>
-            )}
-          </div>
-        </div>
-      </header>
+    <header className={clsx(css.header, inverse && css.inverse)}>
+      <div className={clsx('container', css.container)}>
+        <Logo className={css.logo} inverse={inverse} />
 
-      {/* Модальні вікна */}
-      {showLoginModal && (
-        <LoginForm 
-          onClose={() => setShowLoginModal(false)}
-          onSwitchToRegister={() => {
-            setShowLoginModal(false);
-            setShowRegisterModal(true);
-          }}
-        />
-      )}
-      
-      {showRegisterModal && (
-        <RegisterForm 
-          onClose={() => setShowRegisterModal(false)}
-          onSwitchToLogin={() => {
-            setShowRegisterModal(false);
-            setShowLoginModal(true);
-          }}
-        />
-      )}
-      
-      <LogoutModal 
-        isOpen={showLogoutModal}
-        onClose={() => setShowLogoutModal(false)}
-      />
-    </>
+        <div className={css.authWrapper}>
+          {isLoading ? (
+            null
+          ) : isAuthenticated ? (
+            <UserBar
+              user={user}
+              onProfileClick={handleProfileClick}
+              onLogoutClick={handleLogoutClick}
+              inverse={inverse}
+            />
+          ) : (
+            <AuthBar
+              onSignInClick={handleSignInClick}
+              onSignUpClick={handleSignUpClick}
+              inverse={inverse}
+            />
+          )}
+        </div>
+
+        {(isAuthenticated || !isMobile) && (
+          <div className={css.navWrapper}>
+            {/* Always show Nav for development */}
+            <NavBar
+              isAuthenticated={isAuthenticated}
+              isMobile={isMobile}
+              inverse={inverse}
+            />
+          </div>
+        )}
+      </div>
+    </header>
   );
 };
 
