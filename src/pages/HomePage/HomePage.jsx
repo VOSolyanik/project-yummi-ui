@@ -35,10 +35,7 @@ const HomePage = () => {
       <HeroBanner />
 
       {showRecipes ? (
-        <Recipes
-          categoryData={selectedCategory}
-          onBackToCategories={handleBackToCategories}
-        />
+        <Recipes categoryData={selectedCategory} onBackToCategories={handleBackToCategories} />
       ) : (
         <Categories onCategorySelect={handleCategorySelect} />
       )}

@@ -13,7 +13,7 @@ export default defineConfig([
     extends: [js.configs.recommended, reactHooks.configs['recommended-latest'], reactRefresh.configs.vite],
     plugins: {
       react,
-      import: importPlugin,
+      import: importPlugin
     },
     languageOptions: {
       ecmaVersion: 2020,
@@ -21,13 +21,13 @@ export default defineConfig([
       parserOptions: {
         ecmaVersion: 'latest',
         ecmaFeatures: { jsx: true },
-        sourceType: 'module',
-      },
+        sourceType: 'module'
+      }
     },
     settings: {
       react: {
-        version: 'detect',
-      },
+        version: 'detect'
+      }
     },
     rules: {
       ...js.configs.recommended.rules,
@@ -47,13 +47,13 @@ export default defineConfig([
           ignoreTemplateLiterals: true,
           ignoreRegExpLiterals: true,
           ignoreUrls: true,
-          ignoreComments: false,
-        },
+          ignoreComments: false
+        }
       ],
       indent: ['error', 2],
       semi: ['error', 'always'],
       quotes: ['error', 'single'],
-      'comma-dangle': ['error', 'always-multiline'],
+      'comma-dangle': ['error', 'never'],
       'object-curly-spacing': ['error', 'always'],
       'array-bracket-spacing': ['error', 'never'],
       'computed-property-spacing': ['error', 'never'],
@@ -65,8 +65,8 @@ export default defineConfig([
         {
           anonymous: 'always',
           named: 'never',
-          asyncArrow: 'always',
-        },
+          asyncArrow: 'always'
+        }
       ],
       'space-in-parens': ['error', 'never'],
       'space-infix-ops': 'error',
@@ -79,72 +79,77 @@ export default defineConfig([
             {
               pattern: 'react',
               group: 'external',
-              position: 'before',
+              position: 'before'
             },
             {
               pattern: 'react-**',
               group: 'external',
-              position: 'before',
+              position: 'before'
             },
             {
               pattern: 'redux-**',
               group: 'external',
-              position: 'before',
+              position: 'before'
             },
             {
               pattern: './**/*.module.css',
               group: 'internal',
-              position: 'before',
+              position: 'before'
             },
             {
               pattern: '@redux/**',
               group: 'internal',
-              position: 'before',
+              position: 'before'
             },
             {
               pattern: '@pages/**',
               group: 'internal',
-              position: 'before',
+              position: 'before'
             },
             {
               pattern: '@components/**',
               group: 'internal',
-              position: 'before',
+              position: 'before'
             },
             {
               pattern: '@constants/**',
               group: 'internal',
-              position: 'before',
+              position: 'before'
             },
             {
               pattern: '@assets/**',
               group: 'internal',
-              position: 'before',
+              position: 'before'
             },
             {
               pattern: '@styles/**',
               group: 'internal',
-              position: 'before',
+              position: 'before'
             },
             {
               pattern: '@utils/**',
               group: 'internal',
-              position: 'before',
+              position: 'before'
             },
             {
               pattern: '@hooks/**',
               group: 'internal',
-              position: 'before',
+              position: 'before'
             },
+            {
+              pattern: '@contexts/**',
+              group: 'internal',
+              position: 'before'
+            }
           ],
           pathGroupsExcludedImportTypes: ['react'],
           alphabetize: {
             order: 'asc',
-            caseInsensitive: true,
+            caseInsensitive: true
           },
-          'newlines-between': 'always',
-        },
-      ],
-    },
-  },
+          'newlines-between': 'always'
+        }
+      ]
+    }
+  }
 ]);

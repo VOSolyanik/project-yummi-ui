@@ -4,7 +4,7 @@ import clsx from 'clsx';
 
 import css from './Button.module.css';
 
-import { Icon } from '../Icon/Icon';
+import Icon from '../Icon/Icon';
 
 const Button = ({
   children,
@@ -38,7 +38,7 @@ const Button = ({
         css[`btn-${variant}`],
         css[`btn-${size}`],
         iconOnly && css['btn-icon'],
-        className,
+        className
       )}
       {...rest}
     >

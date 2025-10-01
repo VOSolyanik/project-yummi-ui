@@ -3,30 +3,30 @@ import React from 'react';
 import css from './NetworkLinks.module.css';
 
 import Button from '../Button/Button';
-import { Icon } from '../Icon/Icon';
+import Icon from '../Icon/Icon';
 
 const NetworkLinks = () => {
   const socialLinks = [
     {
       name: 'Facebook',
       url: 'https://www.facebook.com/goITclub/',
-      icon: 'facebook',
+      icon: 'facebook'
     },
     {
       name: 'Instagram',
       url: 'https://www.instagram.com/goitclub/',
-      icon: 'instagram',
+      icon: 'instagram'
     },
     {
       name: 'YouTube',
       url: 'https://www.youtube.com/c/GoIT',
-      icon: 'youtube',
-    },
+      icon: 'youtube'
+    }
   ];
 
   return (
     <ul className={css.networkLinks}>
-      {socialLinks.map((link) => (
+      {socialLinks.map(link => (
         <li key={link.name}>
           <Button
             as="a"
