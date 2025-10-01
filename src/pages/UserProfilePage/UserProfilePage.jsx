@@ -14,17 +14,19 @@ import UserInfoCard  from '@/components/UserInfoCard/UserInfoCard';
 const UserProfilePage = () => {
   return (
     <div className={clsx('container', css.container)}>
-      <div className={css.breadcrumb}>
-        Home / <span>Profile</span>
-      </div>
-      <MainTitle level={2} id="profile-heading" className={css.title}>
-        Profile
-      </MainTitle>
+      <div className={css.titlesContainer}>
+        <div className={css.breadcrumb}>
+          Home / <span>Profile</span>
+        </div>
+        <MainTitle level={2} id="profile-heading" className={css.title}>
+          Profile
+        </MainTitle>
 
-      <Subtitle className={css.subtitle}>
-        Reveal your culinary art, 
-        share your favorite recipe and create gastronomic masterpieces with us.
-      </Subtitle>
+        <Subtitle className={css.subtitle}>
+          Reveal your culinary art, 
+          share your favorite recipe and create gastronomic masterpieces with us.
+        </Subtitle>
+      </div>
       <div className={css.sectionWrapper}>
         <div>
           <UserInfoCard />

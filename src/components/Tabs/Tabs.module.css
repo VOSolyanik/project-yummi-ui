@@ -1,8 +1,6 @@
 .tabsContainer {
   width: 100%;
   max-width: 343px;
-  /* margin: 20px auto; */
-  /* font-family: sans-serif; */
 }
 
 .tabList {
@@ -45,16 +43,12 @@
 }
 
 .tabBtn.active {
-  border-bottom: 1px solid #050505; /* custom border color */
-  /* font-weight: bold; */
+  border-bottom: 1px solid #050505; 
   color: #050505;
 }
 
 .tabContent {
   padding-top: 32px;
-  /* border: 1px solid #ddd; */
-  /* border-top: none; */
-  /* background: #fff; */
 }
 
 @media screen and (min-width: 768px) {

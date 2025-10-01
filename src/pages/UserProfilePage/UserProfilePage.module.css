@@ -2,6 +2,11 @@
   padding-top: 64px;
 }
 
+.titlesContainer {
+  display: flex;
+  flex-direction: column;
+}
+
 .breadcrumb {
   font-size: 12px;
   color: #bfbebe;
@@ -29,6 +34,10 @@
 @media screen and (min-width: 768px) {
   .breadcrumb {
     margin-bottom: 40px;
+  }
+
+  .titlesContainer {
+    width: 443px;
   }
 
   .btn {
