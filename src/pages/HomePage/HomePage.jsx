@@ -32,7 +32,7 @@ const HomePage = () => {
         </title>
       </Helmet>
 
-      {!showRecipes && <HeroBanner />}
+      <HeroBanner />
 
       {showRecipes ? (
         <Recipes

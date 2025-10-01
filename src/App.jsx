@@ -4,15 +4,18 @@ import { Helmet } from 'react-helmet-async';
 import { Toaster } from 'react-hot-toast';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
-import Header from '@components/Header/Header';
 import Loader from '@components/Loader/Loader';
+import SharedLayout from '@components/SharedLayout/SharedLayout';
 
 import './App.module.css';
+
+const isUIKitEnabled = import.meta.env.VITE_SHOW_UI_KIT === 'true';
 
 // Lazy loading for pages
 const HomePage = lazy(() => import('@pages/HomePage/HomePage'));
 const AddRecipePage = lazy(() => import('@pages/AddRecipePage/AddRecipePage'));
 const NotFoundPage = lazy(() => import('@pages/NotFoundPage/NotFoundPage'));
+const UIKitPage = lazy(() => import('@pages/UIKitPage/UIKitPage'));
 
 const App = () => {
   return (
@@ -24,34 +27,41 @@ const App = () => {
         />
       </Helmet>
       <BrowserRouter>
-        <Header />
         <Toaster position="top-right" />
         <Suspense fallback={<Loader />}>
           <Routes>
-            <Route
-              path="/"
-              element={
-                <Suspense fallback={<Loader />}>
-                  <HomePage />
-                </Suspense>
+            <Route path="/" element={<SharedLayout />}>
+              <Route
+                index
+                element={
+                  <Suspense fallback={<Loader />}>
+                    <HomePage />
+                  </Suspense>
+                }
+              />
+              {isUIKitEnabled && <Route
+                path="/uikit"
+                element={
+                  <Suspense fallback={<Loader />}>
+                    <UIKitPage />
+                  </Suspense>
+                }
+              />
               }
-            />
-            <Route
-              path="/add-recipe"
-              element={
-                <Suspense fallback={<Loader />}>
-                  <AddRecipePage />
-                </Suspense>
-              }
-            />
-            <Route
-              path="*"
-              element={
-                <Suspense fallback={<Loader />}>
-                  <NotFoundPage />
-                </Suspense>
-              }
-            />
+              {/* TODO: Add route for AddRecipePage when created */}
+              {/* <Route path="/add" element={<AddRecipePage />} /> */}
+              <Route
+                path="/add-recipe"
+                element={
+                  <Suspense fallback={<Loader />}>
+                    <AddRecipePage />
+                  </Suspense>
+                }
+              />
+              {/* TODO: Add route for UserPage when created */}
+              {/* <Route path="/user" element={<UserPage />} /> */}
+            </Route>
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Suspense>
       </BrowserRouter>

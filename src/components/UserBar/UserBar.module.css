@@ -1,0 +1,131 @@
+/* Mobile-first base styles */
+.userBar {
+  position: relative;
+  display: inline-block;
+}
+
+.userButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--primary-bg-color);
+  border: none;
+  border-radius: 9999px;
+  padding: 0 0.5rem 0 0;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.userButton:hover,
+.userButton:focus {
+  transform: scale(1.02);
+}
+
+.userAvatar, .userInitial {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.userInitial {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--gray-color);
+  color: var(--white-color);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.userName {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--white-color);
+  text-transform: uppercase;
+  /* max-width: 80px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; */
+}
+
+.userDropdownIcon {
+  color: var(--white-color);
+  transition: transform 0.2s ease;
+}
+
+.userDropdownIcon.rotated {
+  transform: rotate(180deg);
+}
+
+/* Dropdown Menu */
+.userDropdown {
+  position: absolute;
+  top: calc(100% + 1rem);
+  right: 0;
+  z-index: 50;
+  animation: dropdownFadeIn 0.2s ease;
+}
+
+.userDropdownMenu {
+  background-color: var(--black-color);
+  border: 1px solid var(--white-color);
+  border-radius: 1rem;
+  padding: 1rem 0;
+  min-width: 148px;
+}
+
+/* Menu Items */
+.menuItem {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  width: 100%;
+  padding: 2px 1rem;
+  background: transparent;
+  border: none;
+  color: var(--white-color);
+  font-weight: 700;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  letter-spacing: -0.02em;
+  text-align: left;
+  transition: background-color 0.2s;
+}
+
+.menuItem:hover,
+.menuItem:focus {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Tablet styles (768px+) */
+@media screen and (min-width: 768px) {
+  .userButton {
+    margin: -2px 0;
+  }
+
+  .userAvatar, .userInitial {
+    width: 3.125rem;
+    height: 3.125rem;
+  }
+
+  .userName {
+    display: block;
+    max-width: 120px;
+  }
+}
+
+/* Desktop styles (1440px+) - same as tablet for this component */

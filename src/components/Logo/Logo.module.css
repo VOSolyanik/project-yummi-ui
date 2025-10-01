@@ -1,0 +1,38 @@
+/* Mobile-first base styles */
+.logo {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+  cursor: pointer;
+}
+
+.logo:hover,
+.logo:focus {
+  opacity: 0.8;
+}
+
+.logoText {
+  font-family: var(--primary-font);
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  text-transform: lowercase;
+  color: var(--black-color);
+}
+
+/* Inverse mode for dark backgrounds */
+.inverse .logoText {
+  color: var(--white-color);
+}
+
+/* Tablet styles (768px+) */
+@media screen and (min-width: 768px) {
+  .logoText {
+    font-size: 24px;
+    line-height: 1.17;
+  }
+}
+
+/* Desktop styles (1440px+) - same as tablet for this component */
