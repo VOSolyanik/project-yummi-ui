@@ -10,6 +10,7 @@ import Subtitle from '@components/Subtitle/Subtitle';
 import RecipeFilters from '@components/RecipeFilters/RecipeFilters';
 import RecipeList from '@components/RecipeList/RecipeList';
 import RecipePagination from '@components/RecipePagination/RecipePagination';
+import ErrorBoundary from '@components/ErrorBoundary/ErrorBoundary';
 
 import {
   fetchRecipes,
@@ -49,8 +50,8 @@ const Recipes = ({ categoryData, onBackToCategories }) => {
   const subtitle = 'Go on a taste journey, where every sip is a sophisticated creative chord, and\n every dessert is an expression of the most refined gastronomic desires.';
 
   const getItemsPerPage = useCallback(() => {
-    return typeof window !== 'undefined' && window.innerWidth <= MOBILE_BREAKPOINT 
-      ? MOBILE_ITEMS_PER_PAGE 
+    return typeof window !== 'undefined' && window.innerWidth <= MOBILE_BREAKPOINT
+      ? MOBILE_ITEMS_PER_PAGE
       : DESKTOP_ITEMS_PER_PAGE;
   }, []);
 
@@ -131,23 +132,29 @@ const Recipes = ({ categoryData, onBackToCategories }) => {
       </div>
 
       <div className={css.section}>
-        <RecipeFilters onFiltersChange={handleFiltersChange} />
+        <ErrorBoundary>
+          <RecipeFilters onFiltersChange={handleFiltersChange} />
+        </ErrorBoundary>
 
         <div className={css.content}>
-          <RecipeList
-            recipes={recipes}
-            onFavoriteToggle={handleFavoriteToggle}
-            isLoading={isLoading}
-            error={error}
-          />
+          <ErrorBoundary>
+            <RecipeList
+              recipes={recipes}
+              onFavoriteToggle={handleFavoriteToggle}
+              isLoading={isLoading}
+              error={error}
+            />
+          </ErrorBoundary>
 
-          <RecipePagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
-            isLoading={isLoading}
-            totalRecipes={totalRecipes}
-          />
+          <ErrorBoundary>
+            <RecipePagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+              isLoading={isLoading}
+              totalRecipes={totalRecipes}
+            />
+          </ErrorBoundary>
         </div>
       </div>
     </section>

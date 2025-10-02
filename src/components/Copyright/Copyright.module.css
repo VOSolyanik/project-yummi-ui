@@ -1,0 +1,16 @@
+.copyright {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.43;
+  letter-spacing: -0.02em;
+  color: var(--charcoal-color);
+  text-align: center;
+}
+
+@media screen and (min-width: 768px) {
+  .copyright {
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+}

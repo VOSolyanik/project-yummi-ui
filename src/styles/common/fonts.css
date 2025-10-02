@@ -1,0 +1,17 @@
+/* Mulish Variable Font - Normal */
+@font-face {
+  font-family: 'Mulish';
+  src: url('../../assets/fonts/Mulish-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Mulish Variable Font - Italic */
+@font-face {
+  font-family: 'Mulish';
+  src: url('../../assets/fonts/Mulish-Italic-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}

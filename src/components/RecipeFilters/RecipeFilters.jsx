@@ -30,31 +30,31 @@ const RecipeFilters = ({ onFiltersChange }) => {
 
   useEffect(() => {
     if (!initialFetchDone.current) {
-      if (ingredients.length === 0) {
+      if (!ingredients || ingredients.length === 0) {
         dispatch(fetchIngredients());
       }
-      if (areas.length === 0) {
+      if (!areas || areas.length === 0) {
         dispatch(fetchAreas());
       }
       initialFetchDone.current = true;
     }
-  }, [dispatch, ingredients.length, areas.length]);
+  }, [dispatch, ingredients, areas]);
 
   const handleIngredientChange = useCallback((value) => {
-    const ingredient = value ? ingredients.find(ing => ing.id === value) : null;
+    const ingredient = value && ingredients ? ingredients.find(ing => ing.id === value) : null;
     dispatch(setSelectedIngredient(ingredient));
     onFiltersChange({ ingredient: value, area: selectedArea?.id || null });
   }, [dispatch, ingredients, selectedArea?.id, onFiltersChange]);
 
   const handleAreaChange = useCallback((value) => {
-    const area = value ? areas.find(area => area.id === value) : null;
+    const area = value && areas ? areas.find(area => area.id === value) : null;
     dispatch(setSelectedArea(area));
     onFiltersChange({ ingredient: selectedIngredient?.id || null, area: value });
   }, [dispatch, areas, selectedIngredient?.id, onFiltersChange]);
 
   const ingredientOptions = useMemo(() => [
     { value: '', label: 'Ingredients' },
-    ...ingredients.map(ingredient => ({
+    ...(ingredients || []).map(ingredient => ({
       value: ingredient.id,
       label: ingredient.name
     }))
@@ -62,11 +62,15 @@ const RecipeFilters = ({ onFiltersChange }) => {
 
   const areaOptions = useMemo(() => [
     { value: '', label: 'Area' },
-    ...areas.map(area => ({
+    ...(areas || []).map(area => ({
       value: area.id,
       label: area.name
     }))
   ], [areas]);
+
+  if (!ingredients && !areas) {
+    return null;
+  }
 
   return (
     <div className={css.filters}>
@@ -78,7 +82,7 @@ const RecipeFilters = ({ onFiltersChange }) => {
           placeholder="Ingredients"
           disabled={isLoadingIngredients}
         />
-        
+
         <CustomDropdown
           options={areaOptions}
           value={selectedArea?.id || ''}

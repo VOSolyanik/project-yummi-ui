@@ -10,14 +10,10 @@ export default defineConfig([
   globalIgnores(['dist']),
   {
     files: ['**/*.{js,jsx}'],
-    extends: [
-      js.configs.recommended,
-      reactHooks.configs['recommended-latest'],
-      reactRefresh.configs.vite,
-    ],
+    extends: [js.configs.recommended, reactHooks.configs['recommended-latest'], reactRefresh.configs.vite],
     plugins: {
       react,
-      import: importPlugin,
+      import: importPlugin
     },
     languageOptions: {
       ecmaVersion: 2020,
@@ -25,13 +21,13 @@ export default defineConfig([
       parserOptions: {
         ecmaVersion: 'latest',
         ecmaFeatures: { jsx: true },
-        sourceType: 'module',
-      },
+        sourceType: 'module'
+      }
     },
     settings: {
       react: {
-        version: 'detect',
-      },
+        version: 'detect'
+      }
     },
     rules: {
       ...js.configs.recommended.rules,
@@ -40,123 +36,120 @@ export default defineConfig([
       ...reactHooks.configs.recommended.rules,
       'react/prop-types': 0,
       'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
-      'react-refresh/only-export-components': [
-        'warn',
-        { allowConstantExport: true },
-      ],
+      'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
       'newline-per-chained-call': ['error', { ignoreChainWithDepth: 2 }],
       'max-len': [
         'error',
         {
-          code: 80,
+          code: 120,
           tabWidth: 2,
           ignoreStrings: true,
           ignoreTemplateLiterals: true,
           ignoreRegExpLiterals: true,
           ignoreUrls: true,
-          ignoreComments: false,
-        },
+          ignoreComments: false
+        }
       ],
-      'indent': ['error', 2],
-      'semi': ['error', 'always'],
-      'quotes': ['error', 'single'],
-      'comma-dangle': ['error', 'always-multiline'],
+      indent: ['error', 2],
+      semi: ['error', 'always'],
+      quotes: ['error', 'single'],
+      'comma-dangle': ['error', 'never'],
       'object-curly-spacing': ['error', 'always'],
       'array-bracket-spacing': ['error', 'never'],
       'computed-property-spacing': ['error', 'never'],
       'comma-spacing': ['error', { before: false, after: true }],
       'keyword-spacing': ['error', { before: true, after: true }],
       'space-before-blocks': ['error', 'always'],
-      'space-before-function-paren': ['error', {
-        anonymous: 'always',
-        named: 'never',
-        asyncArrow: 'always',
-      }],
+      'space-before-function-paren': [
+        'error',
+        {
+          anonymous: 'always',
+          named: 'never',
+          asyncArrow: 'always'
+        }
+      ],
       'space-in-parens': ['error', 'never'],
       'space-infix-ops': 'error',
       'arrow-spacing': ['error', { before: true, after: true }],
       'import/order': [
         'error',
         {
-          groups: [
-            'builtin',
-            'external',
-            'internal',
-            ['parent', 'sibling'],
-            'index',
-            'object',
-            'type',
-          ],
+          groups: ['builtin', 'external', 'internal', ['parent', 'sibling'], 'index', 'object', 'type'],
           pathGroups: [
             {
               pattern: 'react',
               group: 'external',
-              position: 'before',
+              position: 'before'
             },
             {
               pattern: 'react-**',
               group: 'external',
-              position: 'before',
+              position: 'before'
             },
             {
               pattern: 'redux-**',
               group: 'external',
-              position: 'before',
+              position: 'before'
             },
             {
               pattern: './**/*.module.css',
               group: 'internal',
-              position: 'before',
+              position: 'before'
             },
             {
               pattern: '@redux/**',
               group: 'internal',
-              position: 'before',
+              position: 'before'
             },
             {
               pattern: '@pages/**',
               group: 'internal',
-              position: 'before',
+              position: 'before'
             },
             {
               pattern: '@components/**',
               group: 'internal',
-              position: 'before',
+              position: 'before'
             },
             {
               pattern: '@constants/**',
               group: 'internal',
-              position: 'before',
+              position: 'before'
             },
             {
               pattern: '@assets/**',
               group: 'internal',
-              position: 'before',
+              position: 'before'
             },
             {
               pattern: '@styles/**',
               group: 'internal',
-              position: 'before',
+              position: 'before'
             },
             {
               pattern: '@utils/**',
               group: 'internal',
-              position: 'before',
+              position: 'before'
             },
             {
               pattern: '@hooks/**',
               group: 'internal',
-              position: 'before',
+              position: 'before'
             },
+            {
+              pattern: '@contexts/**',
+              group: 'internal',
+              position: 'before'
+            }
           ],
           pathGroupsExcludedImportTypes: ['react'],
           alphabetize: {
             order: 'asc',
-            caseInsensitive: true,
+            caseInsensitive: true
           },
-          'newlines-between': 'always',
-        },
-      ],
-    },
-  },
+          'newlines-between': 'always'
+        }
+      ]
+    }
+  }
 ]);

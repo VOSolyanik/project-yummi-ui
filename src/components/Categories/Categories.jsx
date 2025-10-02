@@ -1,24 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+
 import toast from 'react-hot-toast';
+import { useDispatch, useSelector } from 'react-redux';
 
 import css from './Categories.module.css';
 
+import { fetchCategories, selectCategories, selectIsLoading, selectError } from '@redux/categories/categoriesSlice';
+
+import CategoryList from '@components/CategoryList/CategoryList';
 import MainTitle from '@components/MainTitle/MainTitle';
 import Subtitle from '@components/Subtitle/Subtitle';
-import CategoryList from '@components/CategoryList/CategoryList';
-
-import {
-  fetchCategories,
-  selectCategories,
-  selectIsLoading,
-  selectError,
-} from '@redux/categories/categoriesSlice';
-
 
 const Categories = ({ onCategorySelect }) => {
   const dispatch = useDispatch();
-
   const categories = useSelector(selectCategories);
   const isLoading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
@@ -28,7 +22,6 @@ const Categories = ({ onCategorySelect }) => {
       dispatch(fetchCategories());
     }
   }, [dispatch, categories.length, isLoading]);
-
 
   const handleCategoryClick = async (category) => {
     // Just pass the category data to parent - Recipes component will fetch the recipes
@@ -52,7 +45,9 @@ const Categories = ({ onCategorySelect }) => {
         </MainTitle>
 
         <Subtitle className={css.subtitle}>
-          {"Discover a limitless world of culinary possibilities and enjoy exquisite \nrecipes that combine taste, style and the warm atmosphere of the kitchen."}
+          {
+            'Discover a limitless world of culinary possibilities and enjoy exquisite \nrecipes that combine taste, style and the warm atmosphere of the kitchen.'
+          }
         </Subtitle>
 
         <CategoryList

@@ -1,0 +1,71 @@
+/* AuthBar container matching Figma btns design */
+.authBar {
+  display: flex;
+  background-color: var(--white-color);
+  border-radius: 30px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.authBar.inverse {
+  background-color: var(--white-color);
+}
+
+.signButton {
+  padding: 10px 16px;
+  height: 38px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: -0.02em;
+  border-radius: 30px;
+  border: none;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+/* Sign In button - mobile-first styles */
+.signInButton {
+  background-color: var(--white-color);
+  color: var(--black-color);
+}
+
+.signInButton:hover,
+.signInButton:focus {
+  background-color: var(--primary-active-bg-color);
+  color: var(--primary-text-color);
+  box-shadow: inset 0 0 0 1px var(--gray-color);
+}
+
+.signInButton:hover + .signUpButton,
+.signInButton:focus + .signUpButton {
+  background-color: var(--white-color);
+  color: var(--black-color);
+  box-shadow: inset 0 0 0 1px var(--white-color);
+}
+
+/* Sign Up button - mobile-first styles */
+.signUpButton {
+  background-color: var(--primary-bg-color);
+  color: var(--primary-text-color);
+  box-shadow: inset 0 0 0 1px var(--gray-color);
+}
+
+.signUpButton:hover,
+.signUpButton:focus {
+  background-color: var(--primary-active-bg-color);
+}
+
+/* Mobile-first base styles are already applied above */
+
+/* Tablet styles (768px+) */
+@media screen and (min-width: 768px) {
+  .signButton {
+    height: 46px;
+    padding: 14px 28px;
+  }
+}
+
+/* Desktop styles (1440px+) - same as tablet for this component */
