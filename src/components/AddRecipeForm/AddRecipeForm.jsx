@@ -1,170 +1,49 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 
 import toast from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
 
-import { createRecipe, getCategories, getCountries, getIngredients } from '@services/apiAddRecipe.js';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
 
 import css from './AddRecipeForm.module.css';
 
 import Button from '@components/Button/Button';
-import { Icon } from '@components/Icon/Icon';
+import Icon from '@components/Icon/Icon';
+import PhotoUpload from '@components/PhotoUpload/PhotoUpload.jsx';
 
-const validationSchema = Yup.object({
-  photo: Yup.mixed().required('Photo is required'),
-  title: Yup.string().trim()
-    .required('Title is required'),
-  description: Yup.string().trim()
-    .max(200, 'Max 200 characters')
-    .required('Description is required'),
-  category: Yup.string().required('Category is required'),
-  country: Yup.string().required('Country is required'),
-  time: Yup.number().min(1, 'Min 1 minute')
-    .required('Time is required'),
-  ingredientId: Yup.string().required('Ingredient is required'),
-  ingredientAmount: Yup.string().trim()
-    .required('Amount is required'),
-  instructions: Yup.string().trim()
-    .max(1000, 'Max 1000 characters')
-    .required('Instructions are required'),
-  ingredients: Yup.array()
-    .of(
-      Yup.object({
-        id: Yup.string().required(),
-        name: Yup.string().required(),
-        amount: Yup.string().required(),
-      }),
-    )
-    .min(1, 'Add at least 1 ingredient')
-    .required(),
-});
+import { validationSchema } from '@/schemas/addRecipeFormValidation.js';
 
-const initialValues = {
-  photo: null,
-  title: '',
-  description: '',
-  category: '',
-  country: '',
-  time: 10,
-  ingredientId: '',
-  ingredientAmount: '',
-  ingredients: [],
-  instructions: '',
-};
-
-const AddRecipeForm = () => {
-  const navigate = useNavigate();
-  const [categories, setCategories] = useState([]);
-  const [countries, setCountries] = useState([]);
-  const [ingredients, setIngredients] = useState([]);
+const AddRecipeForm = ({
+  categories = [],
+  countries = [],
+  ingredients = [],
+  initialValues,
+  onSubmit
+}) => {
   const [openSelect, setOpenSelect] = useState(null);
-  const [photoPreview, setPhotoPreview] = useState(null);
   const fileUrlRef = useRef(null);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const [cats, cnts, ings] = await Promise.all([getCategories(), getCountries(), getIngredients()]);
-        setCategories(cats);
-        setCountries(cnts);
-        setIngredients(ings);
-      } catch {
-        toast.error('Failed to load form data');
-      }
-    })();
-  }, []);
 
   useEffect(
     () => () => {
       if (fileUrlRef.current) URL.revokeObjectURL(fileUrlRef.current);
     },
-    [],
+    []
   );
 
-  const ingredientMap = useMemo(() => Object.fromEntries(ingredients.map(i => [i.id, i])), [ingredients]);
-
-  const handleSubmit = async (values, { setSubmitting }) => {
-    try {
-      const formData = new FormData();
-      formData.append('photo', values.photo);
-      formData.append('title', values.title.trim());
-      formData.append('description', values.description.trim());
-      formData.append('category', values.category);
-      formData.append('country', values.country);
-      formData.append('time', String(values.time));
-      formData.append('instructions', values.instructions.trim());
-      formData.append(
-        'ingredients',
-        JSON.stringify(values.ingredients.map(i => ({ id: i.id, amount: i.amount }))),
-      );
-
-      const created = await createRecipe(formData);
-      toast.success('Recipe created');
-      navigate(`/recipe/${created.id}`);
-    } catch (e) {
-      toast.error(e?.message || 'Failed to publish recipe');
-    } finally {
-      setSubmitting(false);
-    }
-  };
+  const ingredientMap = useMemo(
+    () => Object.fromEntries(ingredients.map(i => [i.id, i])),
+    [ingredients]
+  );
 
   return (
-    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
+    <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={onSubmit}
+    >
       {({ values, setFieldValue, isSubmitting, resetForm, errors, touched }) => (
         <Form className={css.form}>
-          {/* Photo upload */}
-          <div className={css.photoPreviewBlock}>
-            {/* hidden input */}
-            <input
-              id="photo"
-              type="file"
-              accept="image/*"
-              className={css.fileInputHidden}
-              onChange={e => {
-                const file = e.currentTarget.files?.[0] || null;
-                setFieldValue('photo', file);
-                if (fileUrlRef.current) URL.revokeObjectURL(fileUrlRef.current);
-                if (file) {
-                  const url = URL.createObjectURL(file);
-                  fileUrlRef.current = url;
-                  setPhotoPreview(url);
-                } else {
-                  setPhotoPreview(null);
-                }
-              }}
-            />
 
-            {/* If preview exists: show same-sized box with image */}
-            {photoPreview ? (
-              <>
-                <div className={`${css.uploadBox} ${css.hasPreview}`} aria-label="Selected photo preview">
-                  <img className={css.uploadImg} src={photoPreview} alt="Preview" />
-                </div>
-                <label htmlFor="photo" className={css.uploadLink}>
-                  Upload another photo
-                </label>
-                <ErrorMessage name="photo" component="div" className={css.error} />
-              </>
-            ) : (
-              /* Otherwise: show empty dropzone-style box */
-              <>
-                <label
-                  htmlFor="photo"
-                  className={`${css.uploadBox} ${errors.photo && touched.photo ? css.invalid : ''}`}
-                  role="button"
-                >
-                  <span className={css.uploadInner}>
-                    <Icon className={css.icon} name="camera" src="/src/assets/icons/camera.svg" width={40} height={40} />
-                    <span className={css.uploadText}>Upload a photo</span>
-                  </span>
-                </label>
-                <ErrorMessage name="photo" component="div" className={css.error} />
-              </>
-            )}
-          </div>
-
+          <PhotoUpload name="photo" css={css} />
 
           {/* Name */}
           <div className={css.mainBlock}>
@@ -229,7 +108,7 @@ const AddRecipeForm = () => {
                       onClick={() => setOpenSelect(openSelect === 'category' ? null : 'category')}
                     >
                       {values.category ? categories.find(c => c.id === values.category)?.name : 'Select a category'}
-                      <Icon name="chevron-down" src="/src/assets/icons/chevron-down.svg" width={18} height={18} />
+                      <Icon name="chevron-down" width={18} height={18} />
                     </button>
                     {openSelect === 'category' && (
                       <div className={css.dropdown}>
@@ -381,11 +260,11 @@ const AddRecipeForm = () => {
                       id: ing.id,
                       name: ing.name,
                       amount: values.ingredientAmount,
-                      imgUrl: ing.imgUrl,
+                      imgUrl: ing.imgUrl
                     };
                     setFieldValue('ingredients', [
                       ...values.ingredients.filter(i => i.id !== newItem.id),
-                      newItem,
+                      newItem
                     ]);
                     setFieldValue('ingredientId', '');
                     setFieldValue('ingredientAmount', '');
@@ -465,9 +344,6 @@ const AddRecipeForm = () => {
                 className={css.iconBtn}
                 title="Reset"
                 onClick={() => {
-                  if (fileUrlRef.current) URL.revokeObjectURL(fileUrlRef.current);
-                  fileUrlRef.current = null;
-                  setPhotoPreview(null);
                   setOpenSelect(null);
                   resetForm({ values: initialValues });
                 }}

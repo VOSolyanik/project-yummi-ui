@@ -1,4 +1,8 @@
+import { useEffect, useState } from 'react';
+
 import { Helmet } from 'react-helmet-async';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 import css from './AddRecipePage.module.css';
 
@@ -6,19 +10,94 @@ import AddRecipeForm from '@components/AddRecipeForm/AddRecipeForm';
 
 import { BASE_TITLE } from '@constants/pages';
 
+import { recipesAPI } from '@/services/index.js';
+const { createRecipe, getCategories, getCountries, getIngredients } = recipesAPI;
+
+const initialValues = {
+  photo: null,
+  title: '',
+  description: '',
+  category: '',
+  country: '',
+  time: 10,
+  ingredientId: '',
+  ingredientAmount: '',
+  ingredients: [],
+  instructions: ''
+};
+
 const AddRecipePage = () => {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
+  const [lists, setLists] = useState({ categories: [], countries: [], ingredients: [] });
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const [cats, cnts, ings] = await Promise.all([
+          getCategories(),
+          getCountries(),
+          getIngredients()
+        ]);
+        setLists({ categories: cats, countries: cnts, ingredients: ings });
+        // eslint-disable-next-line no-unused-vars
+      } catch (e) {
+        toast.error('Failed to load form data');
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, []);
+
+  const handleSubmit = async (values, { setSubmitting }) => {
+    try {
+      const formData = new FormData();
+      formData.append('photo', values.photo);
+      formData.append('title', values.title.trim());
+      formData.append('description', values.description.trim());
+      formData.append('category', values.category);
+      formData.append('country', values.country);
+      formData.append('time', String(values.time));
+      formData.append('instructions', values.instructions.trim());
+      formData.append(
+        'ingredients',
+        JSON.stringify(values.ingredients.map(i => ({ id: i.id, amount: i.amount })))
+      );
+
+      const created = await createRecipe(formData);
+      toast.success('Recipe created');
+      navigate(`/recipe/${created.id}`);
+    } catch (e) {
+      toast.error(e?.message || 'Failed to publish recipe');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   return (
     <>
       <Helmet>
         <title>{BASE_TITLE} - Add Recipe</title>
       </Helmet>
+
       <section className={css.container}>
         <h2 className={css.title}>Add Recipe</h2>
         <p className={css.text}>
           Reveal your culinary art, share your favorite recipe
           and create gastronomic masterpieces with us.
         </p>
-        <AddRecipeForm />
+
+        {loading ? (
+          <div className={css.loading}>Loading…</div>
+        ) : (
+          <AddRecipeForm
+            categories={lists.categories}
+            countries={lists.countries}
+            ingredients={lists.ingredients}
+            initialValues={initialValues}
+            onSubmit={handleSubmit}
+          />
+        )}
       </section>
     </>
   );
