@@ -19,14 +19,14 @@
   align-items: center;
   justify-content: center;
   
-  font-family: 'Mulish', sans-serif;
+  font-family: var(--primary-font);
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
   line-height: 143%;
   text-align: center;
   letter-spacing: 0.17px;
-  color: #1A1A1A;
+  color: var(--main-text-color);
 }
 
 .pageButton:hover:not(:disabled) {
@@ -39,9 +39,9 @@
 }
 
 .pageButton.active {
-  border: 1px solid #BFBEBE;
+  border: 1px solid var(--border-color);
   background: transparent;
-  color: #050505;
+  color: var(--black-color);
 }
 
 .navButton {
@@ -55,14 +55,14 @@
   align-items: center;
   justify-content: center;
   
-  font-family: 'Mulish', sans-serif;
+  font-family: var(--primary-font);
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
   line-height: 143%;
   text-align: center;
   letter-spacing: 0.17px;
-  color: #1A1A1A;
+  color: var(--main-text-color);
 }
 
 .navButton:hover:not(:disabled) {
@@ -81,14 +81,14 @@
   align-items: center;
   justify-content: center;
   
-  font-family: 'Mulish', sans-serif;
+  font-family: var(--primary-font);
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
   line-height: 143%;
   text-align: center;
   letter-spacing: 0.17px;
-  color: #1A1A1A;
+  color: var(--main-text-color);
 }
 
 .pageNumbers {
@@ -104,7 +104,7 @@
   .pageButton {
     width: 40px;
     height: 40px;
-    font-family: 'Mulish', sans-serif;
+    font-family: var(--primary-font);
     font-weight: 400;
     font-size: 14px;
     line-height: 143%;
@@ -113,13 +113,13 @@
   }
 
   .pageButton.active {
-    border: 1px solid #050505;
+    border: 1px solid var(--black-color);
   }
   
   .ellipsis {
     width: 40px;
     height: 40px;
-    font-family: 'Mulish', sans-serif;
+    font-family: var(--primary-font);
     font-weight: 400;
     font-size: 14px;
     line-height: 143%;

@@ -1,15 +1,21 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import css from './RecipeList.module.css';
 
 import RecipeCard from '@components/RecipeCard/RecipeCard';
+import RecipeCardSkeleton from '@components/RecipeCardSkeleton/RecipeCardSkeleton';
 
 const RecipeList = ({ recipes, onFavoriteToggle, isLoading, error }) => {
+  // Memoize the recipes list to prevent unnecessary re-renders
+  const memoizedRecipes = useMemo(() => {
+    return recipes || [];
+  }, [recipes]);
   if (isLoading) {
     return (
-      <div className={css.loading}>
-        <div className={css.loadingSpinner}></div>
-        <p>Loading recipes...</p>
+      <div className={css.grid}>
+        {Array.from({ length: 6 }).map((_, index) => (
+          <RecipeCardSkeleton key={index} />
+        ))}
       </div>
     );
   }
@@ -22,7 +28,7 @@ const RecipeList = ({ recipes, onFavoriteToggle, isLoading, error }) => {
     );
   }
 
-  if (!recipes || recipes.length === 0) {
+  if (!memoizedRecipes || memoizedRecipes.length === 0) {
     return (
       <div className={css.empty}>
         <p>No recipes found.</p>
@@ -32,7 +38,7 @@ const RecipeList = ({ recipes, onFavoriteToggle, isLoading, error }) => {
 
   return (
     <div className={css.grid}>
-      {recipes.map((recipe) => (
+      {memoizedRecipes.map((recipe) => (
         <RecipeCard
           key={recipe.id}
           recipe={recipe}

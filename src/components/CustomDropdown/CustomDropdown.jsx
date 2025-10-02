@@ -43,8 +43,6 @@ const CustomDropdown = ({
     if (selectedOption?.value !== option.value) {
       setSelectedOption(option);
       onChange(option.value);
-    } else {
-      setSelectedOption(option);
     }
     setIsOpen(false);
   }, [selectedOption?.value, onChange]);
@@ -58,6 +56,9 @@ const CustomDropdown = ({
         className={`${css.select} ${isOpen ? css.open : ''} ${disabled ? css.disabled : ''} ${isPlaceholder ? css.placeholder : ''}`}
         onClick={handleToggle}
         disabled={disabled}
+        aria-expanded={isOpen}
+        aria-haspopup="listbox"
+        aria-label={placeholder}
       >
         <span className={css.selectedText}>
           {selectedOption ? selectedOption.label : placeholder}
@@ -70,7 +71,7 @@ const CustomDropdown = ({
       </button>
 
       {isOpen && (
-        <div className={css.dropdownList}>
+        <div className={css.dropdownList} role="listbox" aria-label="Dropdown options">
           {options.map((option) => (
             <button
               key={option.value}
@@ -79,6 +80,8 @@ const CustomDropdown = ({
                 selectedOption?.value === option.value ? css.selected : ''
               }`}
               onClick={() => handleOptionClick(option)}
+              role="option"
+              aria-selected={selectedOption?.value === option.value}
             >
               {option.label}
             </button>
