@@ -1,3 +1,4 @@
+/* Grid layout for categories */
 .grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -6,15 +7,22 @@
   margin: 0 auto;
 }
 
-.loading {
+/* Common state container styles */
+.loading,
+.error,
+.empty {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 4rem 2rem;
   text-align: center;
 }
 
+.loading {
+  flex-direction: column;
+}
+
+/* Loading spinner styles */
 .loadingSpinner {
   width: 3rem;
   height: 3rem;
@@ -25,6 +33,7 @@
   margin-bottom: 1rem;
 }
 
+/* Loading spinner animation */
 @keyframes spin {
   0% {
     transform: rotate(0deg);
@@ -34,19 +43,14 @@
   }
 }
 
+/* Loading text styles */
 .loading p {
   color: var(--secondary-text-color);
   font-size: 1.125rem;
 }
 
-.error {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 4rem 2rem;
-  text-align: center;
-}
 
+/* Error text styles */
 .error p {
   color: var(--error-text-color);
   font-size: 1.125rem;
@@ -56,14 +60,8 @@
   border: 1px solid var(--error-border-color);
 }
 
-.empty {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 4rem 2rem;
-  text-align: center;
-}
 
+/* Empty text styles */
 .empty p {
   color: var(--secondary-text-color);
   font-size: 1.125rem;
@@ -73,20 +71,15 @@
   border: 1px solid var(--empty-border-color);
 }
 
-@media screen and (max-width: 374px) {
+/* Mobile styles (up to 767px) */
+@media screen and (max-width: 767px) {
   .grid {
     grid-template-columns: 1fr;
     gap: 16px;
   }
 }
 
-@media screen and (min-width: 375px) and (max-width: 767px) {
-  .grid {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-}
-
+/* Tablet styles (768px - 1439px) */
 @media screen and (min-width: 768px) and (max-width: 1439px) {
   .grid {
     grid-template-columns: repeat(2, 1fr);
@@ -94,6 +87,7 @@
   }
 }
 
+/* Desktop styles (1440px+) */
 @media screen and (min-width: 1440px) {
   .grid {
     display: flex;
