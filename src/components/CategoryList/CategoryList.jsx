@@ -1,15 +1,38 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import css from './CategoryList.module.css';
 
 import CategoryCard from '@components/CategoryCard/CategoryCard';
 
 const WIDE_CATEGORIES = ['Desserts', 'Lamb', 'Pork', 'Side', 'Vegan'];
-const MAX_DISPLAY_CATEGORIES = 11;
+const INITIAL_DISPLAY_CATEGORIES_DESKTOP = 11;
+const INITIAL_DISPLAY_CATEGORIES_MOBILE = 8;
 
 const CategoryList = ({ categories, onCategoryClick, isLoading, error }) => {
+  const [showAllCategories, setShowAllCategories] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkIsMobile();
+    window.addEventListener('resize', checkIsMobile);
+
+    return () => window.removeEventListener('resize', checkIsMobile);
+  }, []);
+
   const getCardSize = categoryName => {
     return WIDE_CATEGORIES.includes(categoryName) ? 'wide' : 'normal';
+  };
+
+  const handleAllCategoriesClick = () => {
+    if (!showAllCategories) {
+      setShowAllCategories(true);
+    } else {
+      onCategoryClick({ _id: 'all', name: 'All Categories' });
+    }
   };
 
   if (isLoading) {
@@ -37,7 +60,8 @@ const CategoryList = ({ categories, onCategoryClick, isLoading, error }) => {
     );
   }
 
-  const displayCategories = categories.slice(0, MAX_DISPLAY_CATEGORIES);
+  const initialCategoriesCount = isMobile ? INITIAL_DISPLAY_CATEGORIES_MOBILE : INITIAL_DISPLAY_CATEGORIES_DESKTOP;
+  const displayCategories = showAllCategories ? categories : categories.slice(0, initialCategoriesCount);
 
   return (
     <div className={css.grid}>
@@ -52,8 +76,9 @@ const CategoryList = ({ categories, onCategoryClick, isLoading, error }) => {
 
       <CategoryCard
         isAllCategories={true}
-        onClick={() => onCategoryClick({ _id: 'all', name: 'All Categories' })}
+        onClick={handleAllCategoriesClick}
         size="normal"
+        buttonText={showAllCategories ? "VIEW ALL RECIPES" : "ALL CATEGORIES"}
       />
     </div>
   );
