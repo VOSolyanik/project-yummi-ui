@@ -36,12 +36,6 @@ const HomePage = () => {
 
       <HeroBanner />
 
-      <RecipesPreview
-        title={'Recipes Preview'}
-        description={'Recipes Preview'}
-        image={'https://picsum.photos/536/354'}
-      />
-
       {showRecipes ? (
         <Recipes categoryData={selectedCategory} onBackToCategories={handleBackToCategories} />
       ) : (
