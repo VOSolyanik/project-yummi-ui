@@ -48,12 +48,12 @@
 }
 
 .error p {
-  color: #e74c3c;
+  color: var(--error-text-color);
   font-size: 1.125rem;
-  background-color: #fdf2f2;
+  background-color: var(--error-bg-color);
   padding: 1rem 2rem;
   border-radius: 0.5rem;
-  border: 1px solid #fecaca;
+  border: 1px solid var(--error-border-color);
 }
 
 .empty {
@@ -67,10 +67,10 @@
 .empty p {
   color: var(--secondary-text-color);
   font-size: 1.125rem;
-  background-color: #f8f9fa;
+  background-color: var(--empty-bg-color);
   padding: 1rem 2rem;
   border-radius: 0.5rem;
-  border: 1px solid #e9ecef;
+  border: 1px solid var(--empty-border-color);
 }
 
 @media screen and (max-width: 374px) {

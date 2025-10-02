@@ -38,6 +38,13 @@
   --white-overlay-light: rgba(255, 255, 255, 0.2);
   --white-overlay-lighter: rgba(255, 255, 255, 0.1);
   --all-categories-hover-bg: #333;
+
+  /* Category List specific colors */
+  --error-text-color: #e74c3c;
+  --error-bg-color: #fdf2f2;
+  --error-border-color: #fecaca;
+  --empty-bg-color: #f8f9fa;
+  --empty-border-color: #e9ecef;
 }
 
 html {
