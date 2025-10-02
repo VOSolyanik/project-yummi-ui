@@ -2,12 +2,11 @@ import clsx from 'clsx';
 
 import css from './Icon.module.css';
 
-export const Icon = ({
+const Icon = ({
   name,
   src,
   className,
   size = 24,
-  color = 'currentColor',
   ...props
 }) => {
   if (src) {
@@ -28,10 +27,11 @@ export const Icon = ({
       className={clsx(css.icon, className)}
       width={size}
       height={size}
-      fill={color}
       {...props}
     >
       <use href={`/sprite.svg#${name}`} />
     </svg>
   );
 };
+
+export default Icon;

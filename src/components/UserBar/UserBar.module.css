@@ -21,7 +21,8 @@
   transform: scale(1.02);
 }
 
-.userAvatar, .userInitial {
+.userAvatar,
+.userInitial {
   width: 2rem;
   height: 2rem;
   border-radius: 50%;
@@ -117,7 +118,8 @@
     margin: -2px 0;
   }
 
-  .userAvatar, .userInitial {
+  .userAvatar,
+  .userInitial {
     width: 3.125rem;
     height: 3.125rem;
   }

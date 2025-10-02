@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import css from './UserBar.module.css';
 
 import Button from '../Button/Button';
-import { Icon } from '../Icon/Icon';
+import Icon from '../Icon/Icon';
 
 const UserBar = ({ user, onProfileClick, onLogoutClick, inverse = false }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -99,7 +99,7 @@ const UserBar = ({ user, onProfileClick, onLogoutClick, inverse = false }) => {
           name="arrow-down"
           size={16}
           className={clsx(css.userDropdownIcon, {
-            [css.rotated]: isDropdownOpen,
+            [css.rotated]: isDropdownOpen
           })}
           aria-hidden="true"
         />

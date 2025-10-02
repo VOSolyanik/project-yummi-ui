@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-import { categoriesAPI } from '../../services/api';
+import { categoriesAPI } from '../../services/categoriesApi.js';
 
 // Async thunk to get categories
 export const fetchCategories = createAsyncThunk('categories/fetchCategories', async (_, { rejectWithValue }) => {
@@ -15,7 +15,7 @@ export const fetchCategories = createAsyncThunk('categories/fetchCategories', as
 const initialState = {
   items: [],
   isLoading: false,
-  error: null,
+  error: null
 };
 
 const categoriesSlice = createSlice({
@@ -24,7 +24,7 @@ const categoriesSlice = createSlice({
   reducers: {
     clearError: state => {
       state.error = null;
-    },
+    }
   },
   extraReducers: builder => {
     builder
@@ -40,7 +40,7 @@ const categoriesSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       });
-  },
+  }
 });
 
 export const { clearError } = categoriesSlice.actions;

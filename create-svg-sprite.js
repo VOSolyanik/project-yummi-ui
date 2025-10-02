@@ -5,7 +5,7 @@ import svgStore from 'svgstore';
 const SOURCE_FOLDER_PATH = './src/assets/icons';
 const OUT_DIR_PATH = './public';
 
-const createSvgPack = (sprite) => {
+const createSvgPack = sprite => {
   const pathToFile = `${SOURCE_FOLDER_PATH}`;
 
   const fileNames = fs.readdirSync(pathToFile);
@@ -32,7 +32,7 @@ const createSvgPack = (sprite) => {
 const run = async () => {
   const sprites = svgStore({
     // Add file name as a prefix to defs content id to prevent ids duplicates
-    renameDefs: true,
+    renameDefs: true
   });
 
   createSvgPack(sprites);
