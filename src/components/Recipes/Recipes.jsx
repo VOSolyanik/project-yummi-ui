@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
 
 import css from './Recipes.module.css';
-import arrowBackIcon from '../../assets/icons/arrow-back.svg';
 
 import MainTitle from '@components/MainTitle/MainTitle';
 import Subtitle from '@components/Subtitle/Subtitle';
@@ -11,6 +10,7 @@ import RecipeFilters from '@components/RecipeFilters/RecipeFilters';
 import RecipeList from '@components/RecipeList/RecipeList';
 import RecipePagination from '@components/RecipePagination/RecipePagination';
 import ErrorBoundary from '@components/ErrorBoundary/ErrorBoundary';
+import Icon from '../Icon/Icon';
 
 import {
   fetchRecipes,
@@ -47,7 +47,7 @@ const Recipes = ({ categoryData, onBackToCategories }) => {
   const error = useSelector(selectRecipesError);
   const selectedIngredient = useSelector(selectSelectedIngredient);
   const selectedArea = useSelector(selectSelectedArea);
-  
+
   const { user, isAuthenticated } = useAuth();
 
   const isAllCategories = categoryData?.category?.name === 'All Categories';
@@ -81,10 +81,10 @@ const Recipes = ({ categoryData, onBackToCategories }) => {
         try {
           // Get IDs of currently displayed recipes
           const currentRecipeIds = recipes.map(recipe => recipe.id);
-          
+
           // Check which of these recipes are favorites
           const favoritesStatus = await checkRecipesFavorites(user.id, currentRecipeIds);
-          
+
           // Create Set of favorite recipe IDs from current page
           const favoriteIds = new Set();
           Object.entries(favoritesStatus).forEach(([recipeId, isFavorite]) => {
@@ -92,8 +92,8 @@ const Recipes = ({ categoryData, onBackToCategories }) => {
               favoriteIds.add(recipeId);
             }
           });
-          
-          
+
+
           setFavoriteRecipeIds(favoriteIds);
         } catch (error) {
           console.error('Error checking current recipes favorites:', error);
@@ -159,11 +159,7 @@ const Recipes = ({ categoryData, onBackToCategories }) => {
           onClick={handleBackClick}
           aria-label="Back to categories"
         >
-          <img
-            src={arrowBackIcon}
-            alt="Back arrow"
-            className={css.backIcon}
-          />
+          <Icon name="arrow-back" size={18} className={css.backIcon} />
           Back
         </button>
 

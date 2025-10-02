@@ -4,8 +4,7 @@ import PropTypes from 'prop-types';
 
 import css from './RecipeCard.module.css';
 
-import heartIcon from '../../assets/icons/favorites.svg';
-import arrowIcon from '../../assets/icons/arrow-up-right-black.svg';
+import Icon from '../Icon/Icon';
 import noImagePlaceholder from '../../assets/images/no-image.png';
 
 import { useAuth } from '../../hooks/useAuth';
@@ -179,10 +178,10 @@ const RecipeCard = ({
                   disabled={isUpdatingFavorite}
                   aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
                 >
-              <img
-                src={heartIcon}
-                alt="heart"
-                className={css.heartIcon}
+              <Icon 
+                name="favorites" 
+                size={18} 
+                className={css.heartIcon} 
               />
             </button>
 
@@ -200,10 +199,10 @@ const RecipeCard = ({
               }}
               aria-label={`View ${recipe.title} recipe`}
             >
-              <img
-                src={arrowIcon}
-                alt="arrow"
-                className={css.arrowIcon}
+              <Icon 
+                name="arrow-up-right-black" 
+                size={18} 
+                className={css.arrowIcon} 
               />
             </button>
           </div>

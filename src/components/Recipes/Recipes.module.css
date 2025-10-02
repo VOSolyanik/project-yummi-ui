@@ -61,14 +61,14 @@
 }
 
 .backButton:focus {
-  outline: 2px solid var(--black-color);
-  outline-offset: 2px;
+  outline: none;
 }
 
 .backIcon {
   width: 18px;
   height: 18px;
   flex-shrink: 0;
+  color: var(--black-color);
 }
 
 .title {

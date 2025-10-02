@@ -65,6 +65,7 @@
   height: 18px;
   flex-shrink: 0;
   transition: transform 0.2s ease;
+  color: var(--black-color);
 }
 
 .chevron.rotated {

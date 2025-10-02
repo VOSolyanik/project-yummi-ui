@@ -2,7 +2,7 @@ import React from 'react';
 
 import css from './CategoryCard.module.css';
 
-import arrowUpRightIcon from '../../assets/icons/arrow-up-right.svg';
+import Icon from '../Icon/Icon';
 
 const CategoryCard = ({ category, onClick, isAllCategories = false, size = 'normal', buttonText = 'ALL CATEGORIES' }) => {
   const handleClick = () => {
@@ -49,7 +49,7 @@ const CategoryCard = ({ category, onClick, isAllCategories = false, size = 'norm
     <div className={css.overlay}>
       <span className={css.categoryName}>{category.name}</span>
       <button type="button" className={css.arrowButton} aria-label={`View ${category.name} recipes`}>
-        <img src={arrowUpRightIcon} alt="arrow" className={css.arrowIcon} />
+        <Icon name="arrow-up-right" size={18} className={css.arrowIcon} />
       </button>
     </div>
   );
