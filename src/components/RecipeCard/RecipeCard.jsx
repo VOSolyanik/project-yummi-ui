@@ -25,7 +25,7 @@ const RecipeCard = ({
   const [isUpdatingFavorite, setIsUpdatingFavorite] = useState(false);
   const navigate = useNavigate();
   const { user, isAuthenticated } = useAuth();
-  const { openAuthModal } = useAuthModal();
+  const { openSignInModal } = useAuthModal();
 
   // Calculate isFavorite from favoriteRecipeIds instead of local state
   const isFavorite = isAuthenticated && favoriteRecipeIds ? favoriteRecipeIds.has(recipe.id) : false;
@@ -50,7 +50,7 @@ const RecipeCard = ({
     e.stopPropagation();
 
     if (!isAuthenticated) {
-      openAuthModal();
+      openSignInModal();
       return;
     }
 
@@ -105,14 +105,14 @@ const RecipeCard = ({
     } finally {
       setIsUpdatingFavorite(false);
     }
-  }, [isAuthenticated, openAuthModal, user?.id, recipe.id, isFavorite, isUpdatingFavorite]);
+  }, [isAuthenticated, openSignInModal, user?.id, recipe.id, isFavorite, isUpdatingFavorite, onFavoriteChange]);
 
   const handleAuthorClick = useCallback((e) => {
     e.preventDefault();
     e.stopPropagation();
 
     if (!isAuthenticated) {
-      openAuthModal();
+      openSignInModal();
       return;
     }
 
@@ -124,7 +124,7 @@ const RecipeCard = ({
         navigate(`/user/${recipe.owner.id}`);
       }
     }
-  }, [navigate, isAuthenticated, openAuthModal, onAuthorClick, recipe.owner]);
+  }, [navigate, isAuthenticated, openSignInModal, onAuthorClick, recipe.owner]);
 
   const handleRecipeClick = useCallback(() => {
     if (onRecipeClick) {
