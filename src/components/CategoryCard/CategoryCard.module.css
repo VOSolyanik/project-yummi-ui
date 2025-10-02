@@ -68,12 +68,12 @@
   background: var(--white-overlay-light);
   border: 1px solid var(--white-overlay-light);
   border-radius: 30px;
-  padding: 9px 14px;
+  padding: 8px 12px;
   color: var(--main-bg-color);
   font-family: 'Mulish', sans-serif;
   font-weight: 700;
   font-style: normal;
-  font-size: 20px;
+  font-size: 16px;
   line-height: 24px;
   letter-spacing: -0.02em;
   display: inline-block;
@@ -136,41 +136,14 @@
   }
 
   .overlay {
+    padding: 16px;
     gap: 4px;
   }
 
-  .arrowButton,
-  .arrowIcon {
-    width: 44px;
-    height: 44px;
-    padding: 13px;
-  }
-
-  .arrowIcon {
-    width: 18px;
-    height: 18px;
-  }
-}
-
-@media screen and (max-width: 374px) {
-  .overlay {
-    padding: 20px;
-  }
-
-  .categoryName {
-    font-size: 16px;
-    padding: 8px 12px;
-  }
-}
-
-@media screen and (min-width: 375px) and (max-width: 767px) {
-  .overlay {
-    padding: 22px;
-  }
-
-  .categoryName {
-    font-size: 18px;
-    padding: 9px 13px;
+  .arrowButton {
+    width: 40px;
+    height: 40px;
+    padding: 11px;
   }
 }
 
@@ -192,26 +165,9 @@
     grid-column: span 1;
   }
 
-  .overlay {
-    padding: 24px;
-    gap: 4px;
-  }
-
   .categoryName {
     font-size: 20px;
-    padding: 9px 14px;
-  }
-
-  .arrowButton,
-  .arrowIcon {
-    width: 44px;
-    height: 44px;
-    padding: 13px;
-  }
-
-  .arrowIcon {
-    width: 18px;
-    height: 18px;
+    padding: 10px 14px;
   }
 }
 
@@ -228,5 +184,10 @@
 
   .card.wide {
     width: 590px;
+  }
+
+  .categoryName {
+    font-size: 20px;
+    padding: 10px 14px;
   }
 }
