@@ -4,7 +4,7 @@ import css from './CategoryCard.module.css';
 
 import arrowUpRightIcon from '../../assets/icons/arrow-up-right.svg';
 
-const CategoryCard = ({ category, onClick, isAllCategories = false, size = 'normal' }) => {
+const CategoryCard = ({ category, onClick, isAllCategories = false, size = 'normal', buttonText = 'ALL CATEGORIES' }) => {
   const handleClick = () => {
     if (onClick) {
       onClick(category);
@@ -37,7 +37,7 @@ const CategoryCard = ({ category, onClick, isAllCategories = false, size = 'norm
   if (isAllCategories) {
     return (
       <div className={`${css.card} ${css[size]}`} onClick={handleClick}>
-        <div className={css.allCategoriesButton}>ALL CATEGORIES</div>
+        <div className={css.allCategoriesButton}>{buttonText}</div>
       </div>
     );
   }
