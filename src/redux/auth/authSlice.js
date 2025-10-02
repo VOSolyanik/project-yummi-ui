@@ -59,6 +59,24 @@ export const getCurrentUser = createAsyncThunk('auth/getCurrentUser', async (_, 
   }
 });
 
+export const uploadAvatar = createAsyncThunk(
+  'auth/uploadAvatar',
+  async (file, { rejectWithValue }) => {
+    try {
+      const formData = new FormData();
+      formData.append('avatar', file);
+
+      const response = await authAPI.uploadUserAvatar(formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response?.data || 'Upload failed');
+    }
+  }
+);
+
 export const logoutUser = createAsyncThunk('auth/logout', async (_, { dispatch }) => {
   try {
     await authAPI.logout();

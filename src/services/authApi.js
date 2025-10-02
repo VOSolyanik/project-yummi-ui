@@ -43,5 +43,15 @@ export const authAPI = {
       const message = error.response?.data?.message || 'Error getting user data';
       throw new Error(message);
     }
+  },
+
+  uploadUserAvatar: async (formData, headers) => {
+    try {
+      const response = await api.patch('users/avatar', formData, headers);
+      return response.data;
+    } catch (error) {
+      const message = error.response?.data?.message || 'Error getting user data';
+      throw new Error(message);
+    }
   }
 };

@@ -21,7 +21,7 @@ const HomePage = lazy(() => import('@pages/HomePage/HomePage'));
 const NotFoundPage = lazy(() => import('@pages/NotFoundPage/NotFoundPage'));
 const AddRecipePage = lazy(() => import('@pages/AddRecipePage/AddRecipePage'));
 const UIKitPage = lazy(() => import('@pages/UIKitPage/UIKitPage'));
-const UserProfilePage = lazy(() => import('@pages/UserProfilePage/UserProfilePage'));
+const UserProfilePage = lazy(() => import('@/pages/UserPage/UserPage'));
 
 
 const App = () => {

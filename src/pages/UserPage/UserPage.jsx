@@ -1,17 +1,27 @@
 import React from 'react';
 
+
 import clsx from 'clsx';
 
-import css from './UserProfilePage.module.css';
+import css from './UserPage.module.css';
 
 import MainTitle from '@components/MainTitle/MainTitle';
 import Subtitle from '@components/Subtitle/Subtitle';
+
+import { useAuthModal } from '@hooks/useAuthModal.js';
 
 import Button from '@/components/Button/Button';
 import Tabs from '@/components/Tabs/Tabs';
 import UserInfoCard  from '@/components/UserInfoCard/UserInfoCard';
 
+
 const UserProfilePage = () => {
+  const { openLogoutModal } = useAuthModal();
+
+  const handleLogout = () => {
+    openLogoutModal();
+  };
+
   return (
     <div className={clsx('container', css.container)}>
       <div className={css.titlesContainer}>
@@ -29,8 +39,8 @@ const UserProfilePage = () => {
       </div>
       <div className={css.sectionWrapper}>
         <div>
-          <UserInfoCard />
-          <Button className={css.btn} variant="primary">LOG OUT</Button>
+          <UserInfoCard/>
+          <Button className={css.btn} variant="primary" onClick={handleLogout}>LOG OUT</Button>
         </div>
         <Tabs />
       </div>
