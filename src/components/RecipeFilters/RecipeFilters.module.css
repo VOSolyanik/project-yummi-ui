@@ -41,7 +41,7 @@
   }
 }
 
-@media screen and (max-width: 374px) {
+@media screen and (min-width: 375px) and (max-width: 767px) {
   .filters {
     flex-direction: column;
     gap: 16px;

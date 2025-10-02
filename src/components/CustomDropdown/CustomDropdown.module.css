@@ -116,7 +116,7 @@
 }
 
 .option:hover {
-  background-color: #F8F8F8;
+  background-color: var(--light-gray-color);
 }
 
 .option.selected {

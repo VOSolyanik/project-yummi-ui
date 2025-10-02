@@ -51,7 +51,7 @@
   line-height: 18px;
   letter-spacing: -0.02em;
   text-transform: uppercase;
-  color: #050505;
+  color: var(--black-color);
   cursor: pointer;
   transition: opacity 0.2s ease;
 }
@@ -61,7 +61,7 @@
 }
 
 .backButton:focus {
-  outline: 2px solid #050505;
+  outline: 2px solid var(--black-color);
   outline-offset: 2px;
 }
 
@@ -79,7 +79,7 @@
   line-height: 44px;
   letter-spacing: -0.02em;
   text-transform: uppercase;
-  color: #050505;
+  color: var(--black-color);
 }
 
 .subtitle {
@@ -89,7 +89,7 @@
   font-size: 16px;
   line-height: 24px;
   letter-spacing: -0.02em;
-  color: #1A1A1A;
+  color: var(--main-text-color);
   white-space: pre-line;
 }
 
