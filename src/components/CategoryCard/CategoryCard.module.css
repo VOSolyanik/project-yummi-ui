@@ -51,7 +51,7 @@
   left: 0;
   right: 0;
   background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
-  padding: 24px 24px 24px 24px;
+  padding: 24px;
   display: flex;
   align-items: flex-end;
   justify-content: flex-start;
@@ -203,7 +203,7 @@
   }
 
   .overlay {
-    padding: 24px 24px 24px 24px;
+    padding: 24px;
     gap: 4px;
   }
 
