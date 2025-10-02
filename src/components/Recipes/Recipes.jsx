@@ -131,13 +131,6 @@ const Recipes = ({ categoryData, onBackToCategories }) => {
     }));
   }, [dispatch, categoryId, selectedIngredient?.id, selectedArea?.id, getItemsPerPage]);
 
-  const handleFavoriteToggle = useCallback(async (recipeId) => {
-    try {
-      toast.success('Recipe added to favorites!');
-    } catch (error) {
-      toast.error('Failed to update favorites');
-    }
-  }, []);
 
   // Handle favorite changes from RecipeCard
   const handleFavoriteChange = useCallback((recipeId, isFavorite) => {
@@ -192,7 +185,6 @@ const Recipes = ({ categoryData, onBackToCategories }) => {
           <ErrorBoundary>
             <RecipeList
               recipes={recipes}
-              onFavoriteToggle={handleFavoriteToggle}
               isLoading={isLoading}
               error={error}
               favoriteRecipeIds={favoriteRecipeIds}

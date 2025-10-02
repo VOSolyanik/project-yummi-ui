@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -10,12 +10,11 @@ import noImagePlaceholder from '../../assets/images/no-image.png';
 
 import { useAuth } from '../../hooks/useAuth';
 import { useAuthModal } from '../../hooks/useAuthModal';
-import { addToFavorites, removeFromFavorites, checkIfRecipeIsFavorite, clearFavoritesCache } from '../../services/favoritesApi';
+import { addToFavorites, removeFromFavorites, clearFavoritesCache } from '../../services/favoritesApi';
 import toast from 'react-hot-toast';
 
 const RecipeCard = ({ 
   recipe, 
-  onFavoriteToggle = null, 
   onAuthorClick = null, 
   onRecipeClick = null, 
   favoriteRecipeIds = null, 
@@ -193,7 +192,11 @@ const RecipeCard = ({
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                navigate(`/recipe/${recipe.id}`);
+                if (onRecipeClick) {
+                  onRecipeClick(recipe);
+                } else {
+                  navigate(`/recipe/${recipe.id}`);
+                }
               }}
               aria-label={`View ${recipe.title} recipe`}
             >
@@ -222,7 +225,6 @@ RecipeCard.propTypes = {
       avatarUrl: PropTypes.string,
     }),
   }).isRequired,
-  onFavoriteToggle: PropTypes.func,
   onAuthorClick: PropTypes.func,
   onRecipeClick: PropTypes.func,
   favoriteRecipeIds: PropTypes.instanceOf(Set),
