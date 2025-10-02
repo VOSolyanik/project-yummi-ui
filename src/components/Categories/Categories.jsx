@@ -11,12 +11,8 @@ import CategoryList from '@components/CategoryList/CategoryList';
 import MainTitle from '@components/MainTitle/MainTitle';
 import Subtitle from '@components/Subtitle/Subtitle';
 
-import { recipesAPI } from '../../services/recipesApi.js';
-
 const Categories = ({ onCategorySelect }) => {
   const dispatch = useDispatch();
-  const [isLoadingRecipes, setIsLoadingRecipes] = useState(false);
-
   const categories = useSelector(selectCategories);
   const isLoading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
@@ -26,30 +22,6 @@ const Categories = ({ onCategorySelect }) => {
       dispatch(fetchCategories());
     }
   }, [dispatch, categories.length, isLoading]);
-
-  const handleCategoryClick = async category => {
-    setIsLoadingRecipes(true);
-    try {
-      const response = await recipesAPI.getRecipesByCategory(category._id);
-
-      if (response.data.recipes.length > 0) {
-        if (onCategorySelect) {
-          const categoryData = {
-            category,
-            recipes: response.data.recipes,
-            totalPages: response.data.totalPages,
-            currentPage: response.data.currentPage,
-            totalRecipes: response.data.totalRecipes
-          };
-          onCategorySelect(categoryData);
-        }
-      } else {
-        toast.info(`No recipes found for category: ${category.name}`);
-      }
-    } catch (error) {
-      toast.error(`Error loading recipes for ${category.name}: ${error.message}`);
-    } finally {
-      setIsLoadingRecipes(false);
 
   const handleCategoryClick = async (category) => {
     // Just pass the category data to parent - Recipes component will fetch the recipes
@@ -81,7 +53,7 @@ const Categories = ({ onCategorySelect }) => {
         <CategoryList
           categories={categories}
           onCategoryClick={handleCategoryClick}
-          isLoading={isLoading || isLoadingRecipes}
+          isLoading={isLoading}
           error={error}
         />
       </div>
