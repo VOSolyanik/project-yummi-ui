@@ -65,14 +65,18 @@ const AddRecipePage = () => {
       );
 
       const created = await createRecipe(formData);
-      toast.success('Recipe created');
-      navigate(`/recipe/${created.id}`);
+
+      const recipeId = created?.id ?? created?.recipe?.id;
+      toast.success('Recipe successfully added');
+      navigate(`/recipe/${recipeId}`);
     } catch (e) {
-      toast.error(e?.message || 'Failed to publish recipe');
+      toast.error(e?.response?.data?.message || e?.message || 'Recipe was not added');
     } finally {
       setSubmitting(false);
     }
   };
+
+  if (loading) return <div>Loading…</div>;
 
   return (
     <>

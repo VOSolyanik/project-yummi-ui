@@ -108,7 +108,7 @@ const AddRecipeForm = ({
                       onClick={() => setOpenSelect(openSelect === 'category' ? null : 'category')}
                     >
                       {values.category ? categories.find(c => c.id === values.category)?.name : 'Select a category'}
-                      <Icon name="chevron-down" width={18} height={18} />
+                      <Icon name="arrow-down" size={18} />
                     </button>
                     {openSelect === 'category' && (
                       <div className={css.dropdown}>
@@ -138,7 +138,7 @@ const AddRecipeForm = ({
                       className={css.iconBtn}
                       onClick={() => setFieldValue('time', Math.max(10, Number(values.time) - 10))}
                     >
-                      <Icon className={css.icon} name="minus" src="/src/assets/icons/minus.svg"/>
+                      <Icon name="minus"/>
                     </button>
 
                     <span
@@ -155,7 +155,7 @@ const AddRecipeForm = ({
                       className={css.iconBtn}
                       onClick={() => setFieldValue('time', Number(values.time) + 10)}
                     >
-                      <Icon className={css.icon} name="plus" src="/src/assets/icons/plus.svg"  />
+                      <Icon name="plus"  />
                     </button>
                   </div>
                   <ErrorMessage name="time" component="div" className={css.error} />
@@ -170,17 +170,17 @@ const AddRecipeForm = ({
                     className={css.selectBtn + (!values.country ? ' ' + css.inactiveText : '')}
                     onClick={() => setOpenSelect(openSelect === 'country' ? null : 'country')}
                   >
-                    {values.country ? countries.find(c => c.code === values.country)?.name : 'Area'}
-                    <Icon name="chevron-down" src="/src/assets/icons/chevron-down.svg" width={18} height={18} />
+                    {values.country ? countries.find(c => c.id === values.country)?.name : 'Area'}
+                    <Icon name="arrow-down" size={18} />
                   </button>
                   {openSelect === 'country' && (
                     <div className={css.dropdown}>
                       {countries.map(c => (
                         <div
-                          key={c.code}
+                          key={c.id}
                           className={css.option}
                           onClick={() => {
-                            setFieldValue('country', c.code);
+                            setFieldValue('country', c.id);
                             setOpenSelect(null);
                           }}
                         >
@@ -203,7 +203,7 @@ const AddRecipeForm = ({
                       onClick={() => setOpenSelect(openSelect === 'ingredient' ? null : 'ingredient')}
                     >
                       {values.ingredientId ? ingredientMap[values.ingredientId]?.name : 'Add the ingredient'}
-                      <Icon name="chevron-down" src="/src/assets/icons/chevron-down.svg" width={18} height={18} />
+                      <Icon name="arrow-down" size={18} />
                     </button>
                     {openSelect === 'ingredient' && (
                       <div className={css.dropdown}>
@@ -222,7 +222,7 @@ const AddRecipeForm = ({
                       </div>
                     )}
                   </div>
-                  <ErrorMessage name="ingredientId" component="div" className={css.error} />
+
                 </div>
 
                 <div className={css.descriptionWrap}>
@@ -248,8 +248,8 @@ const AddRecipeForm = ({
               <div>
                 <Button
                   type="button"
-                  variant="secondary"
-                  className={css.addIngBtn}
+                  variant="outline"
+                  size='large'
                   onClick={() => {
                     if (!values.ingredientId || !values.ingredientAmount) {
                       toast.error('Select ingredient and amount');
@@ -272,7 +272,7 @@ const AddRecipeForm = ({
                   }}
                 >
                   Add Ingredient
-                  <Icon className={css.addIngBtnIcon} name="plus" src="/src/assets/icons/plus.svg"/>
+                  <Icon name="plus"/>
                 </Button>
                 <ErrorMessage name="ingredients" component="div" className={css.error} />
               </div>
@@ -297,7 +297,7 @@ const AddRecipeForm = ({
                         setFieldValue('ingredients', values.ingredients.filter(i => i.id !== item.id))
                       }
                     >
-                      <Icon name="close" src="/src/assets/icons/close.svg" width={16} height={16} />
+                      <Icon name="close" />
                     </button>
                   </div>
                 ))}
@@ -348,9 +348,9 @@ const AddRecipeForm = ({
                   resetForm({ values: initialValues });
                 }}
               >
-                <Icon name="trash" src="/src/assets/icons/trash.svg" width={20} height={20} className={css.icon} />
+                <Icon name="trash" />
               </button>
-              <Button type="submit" variant="primary" disabled={isSubmitting} className={css.publishBtn}>
+              <Button type="submit" variant="primary" size='large' disabled={isSubmitting}>
                 Publish
               </Button>
             </div>

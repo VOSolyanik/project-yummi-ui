@@ -98,7 +98,7 @@ function EmptyUploadBox({ css, inputId, invalid }) {
       role="button"
     >
       <span className={css.uploadInner}>
-        <Icon className={css.icon} name="camera" src="/src/assets/icons/camera.svg" width={40} height={40} />
+        <Icon name="camera" className={css.cameraIcon}/>
         <span className={css.uploadText}>Upload a photo</span>
       </span>
     </label>

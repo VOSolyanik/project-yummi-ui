@@ -348,33 +348,12 @@
   color: var(--white-color);
 }
 
-.publishBtn {
-  min-width: 124px;
-  padding: 14px 32px;
-  border-radius: 9999px;
-  border: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  background: var(--black-color);
-  color: var(--white-color);
-  transition:
-    background-color 0.2s ease,
-    box-shadow 0.2s ease;
-  font-size: var(--fz-button);
-}
-
-.publishBtn:hover,
-.publishBtn:focus-visible {
-  background: var(--charcoal-color);
-}
-
-.publishBtn:focus-visible {
-  outline: none;
+.cameraIcon {
+  fill: var(--gray-color);
+  color: var(--gray-color);
+  stroke: var(--gray-color);
+  width: 38px;
+  height: 38px;
 }
 
 @media (min-width: 768px) {
@@ -389,6 +368,10 @@
   .addIngBtnIcon {
     width: 22px;
     height: 22px;
+  }
+  .cameraIcon {
+    width: 48px;
+    height: 48px;
   }
 }
 

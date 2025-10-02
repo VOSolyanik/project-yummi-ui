@@ -11,20 +11,19 @@ export const validationSchema = Yup.object({
   country: Yup.string().required('Country is required'),
   time: Yup.number().min(1, 'Min 1 minute')
     .required('Time is required'),
-  ingredientId: Yup.string().required('Ingredient is required'),
+  // make input helper fields non-blocking for submit:
+  ingredientId: Yup.string().nullable(),
   ingredientAmount: Yup.string().trim()
-    .required('Amount is required'),
+    .nullable(),
   instructions: Yup.string().trim()
     .max(1000, 'Max 1000 characters')
     .required('Instructions are required'),
   ingredients: Yup.array()
-    .of(
-      Yup.object({
-        id: Yup.string().required(),
-        name: Yup.string().required(),
-        amount: Yup.string().required()
-      })
-    )
+    .of(Yup.object({
+      id: Yup.string().required(),
+      name: Yup.string().required(),
+      amount: Yup.string().required()
+    }))
     .min(1, 'Add at least 1 ingredient')
-    .required()
+    .required('Add at least 1 ingredient')
 });

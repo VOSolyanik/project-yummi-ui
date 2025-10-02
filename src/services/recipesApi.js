@@ -39,12 +39,10 @@ export const recipesAPI = {
   getCountries: async () => {
     try {
       const { data } = await api.get('/areas');
-      const list = Array.isArray(data) ? data : (data?.areas || []);
-      return list.map(item => {
-        const code = String(item.id).slice(0, 2)
-          .toUpperCase();
-        return { code, name: item.name };
-      });
+      return (data || []).map(c => ({
+        id: c.id,
+        name: c.name
+      }));
     } catch (error) {
       console.error('Failed to load areas:', error);
       throw error;
