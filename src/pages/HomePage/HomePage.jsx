@@ -7,8 +7,6 @@ import HeroBanner from '@components/HeroBanner/HeroBanner';
 import Recipes from '@components/Recipes/Recipes';
 
 import { BASE_TITLE } from '@constants/pages';
-import RecipesPreview from '@components/RecipesPreview/index.js';
-import { image } from 'ansi-escapes';
 
 const HomePage = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
