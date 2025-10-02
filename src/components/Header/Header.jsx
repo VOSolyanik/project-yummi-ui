@@ -19,7 +19,6 @@ const Header = ({ inverse = false }) => {
   const { openSignInModal, openSignUpModal, openLogoutModal } = useAuthModal();
   const navigate = useNavigate();
   const [isMobile, setIsMobile] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const checkIsMobile = () => {
