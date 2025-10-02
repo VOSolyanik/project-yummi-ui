@@ -1,23 +1,51 @@
-import { Helmet } from 'react-helmet-async';
-import { useParams } from 'react-router-dom';
+import React from 'react';
 
-// import css from './UserPage.module.css';
 
-import { BASE_TITLE } from '@constants/pages';
+import clsx from 'clsx';
 
-const UserPage = () => {
-  const { userId } = useParams();
-  const isCurrentUser = userId === 'me'; // Assuming 'me' represents the current user
+import css from './UserPage.module.css';
+
+import MainTitle from '@components/MainTitle/MainTitle';
+import Subtitle from '@components/Subtitle/Subtitle';
+
+import { useAuthModal } from '@hooks/useAuthModal.js';
+
+import Button from '@/components/Button/Button';
+import Tabs from '@/components/Tabs/Tabs';
+import UserInfoCard  from '@/components/UserInfoCard/UserInfoCard';
+
+
+const UserProfilePage = () => {
+  const { openLogoutModal } = useAuthModal();
+
+  const handleLogout = () => {
+    openLogoutModal();
+  };
+
   return (
-    <>
-      <Helmet>
-        <title>
-          {BASE_TITLE} - {isCurrentUser ? 'My Profile' : 'User Profile'}
-        </title>
-      </Helmet>
-      <h1>{isCurrentUser ? 'My Profile' : 'User Profile'}</h1>
-    </>
+    <div className={clsx('container', css.container)}>
+      <div className={css.titlesContainer}>
+        <div className={css.breadcrumb}>
+          Home / <span>Profile</span>
+        </div>
+        <MainTitle level={2} id="profile-heading" className={css.title}>
+          Profile
+        </MainTitle>
+
+        <Subtitle className={css.subtitle}>
+          Reveal your culinary art, 
+          share your favorite recipe and create gastronomic masterpieces with us.
+        </Subtitle>
+      </div>
+      <div className={css.sectionWrapper}>
+        <div>
+          <UserInfoCard/>
+          <Button className={css.btn} variant="primary" onClick={handleLogout}>LOG OUT</Button>
+        </div>
+        <Tabs />
+      </div>
+    </div>
   );
 };
 
-export default UserPage;
+export default UserProfilePage;

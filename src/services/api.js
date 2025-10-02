@@ -5,7 +5,7 @@ import axios from 'axios';
 import { getAuthToken, dispatchLogout } from '../redux/storeUtils.js';
 
 // Base URL configuration
-const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
+const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
 
 // Create axios instance with base configuration
 const api = axios.create({

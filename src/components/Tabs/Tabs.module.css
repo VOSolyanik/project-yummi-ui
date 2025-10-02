@@ -1,0 +1,77 @@
+.tabsContainer {
+  width: 100%;
+  max-width: 343px;
+}
+
+.tabList {
+  display: flex;
+  gap: 30px;
+  border-bottom: 1px solid #BFBEBE;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+.tabList::-webkit-scrollbar {
+  height: 6px;
+}
+
+.tabList::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 3px;
+}
+
+.tabBtn {
+  flex: 0 0 auto;
+  padding-bottom: 14px;
+  color: #BFBEBE;
+  background: none;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid transparent;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.24;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+.tabBtn:hover {
+  color: #050505;
+}
+
+.tabBtn.active {
+  border-bottom: 1px solid #050505; 
+  color: #050505;
+}
+
+.tabContent {
+  padding-top: 32px;
+}
+
+@media screen and (min-width: 768px) {
+  .tabsContainer {
+    max-width: 704px;
+    margin-top: 40px;
+  }
+
+  .tabList {
+    gap: 40px;
+  }
+
+  .tabBtn {
+    font-size: 20px;
+  }
+
+  .tabContent {
+    padding-top: 40px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .tabContainer {
+    max-width: 846px;
+  }
+}
