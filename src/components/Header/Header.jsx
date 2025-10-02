@@ -6,15 +6,18 @@ import clsx from 'clsx';
 
 import css from './Header.module.css';
 
+import { useAuth } from '@hooks/useAuth.js';
+import { useAuthModal } from '@hooks/useAuthModal.js';
+
 import AuthBar from '../AuthBar/AuthBar';
 import Logo from '../Logo/Logo';
 import NavBar from '../NavBar/NavBar';
 import UserBar from '../UserBar/UserBar';
 
 const Header = ({ inverse = false }) => {
-  // TODO: Replace with actual authentication logic
-  const [isAuthenticated] = useState(true);
-  const [user] = useState(null);
+  const { isAuthenticated, isLoading, user } = useAuth();
+  const { openSignInModal, openSignUpModal, openLogoutModal } = useAuthModal();
+  const navigate = useNavigate();
   const [isMobile, setIsMobile] = useState(false);
   const navigate = useNavigate();
 
@@ -32,22 +35,19 @@ const Header = ({ inverse = false }) => {
   }, []);
 
   const handleSignInClick = () => {
-    // TODO: Open SignInModal
-    console.log('Open SignIn Modal');
+    openSignInModal();
   };
 
   const handleSignUpClick = () => {
-    // TODO: Open SignUpModal
-    console.log('Open SignUp Modal');
+    openSignUpModal();
   };
 
   const handleProfileClick = () => {
-    navigate('/profile');
+    navigate('/user/me');
   };
 
   const handleLogoutClick = () => {
-    // TODO: Open LogOutModal
-    console.log('Open Logout Modal');
+    openLogoutModal();
   };
 
   return (
@@ -56,7 +56,9 @@ const Header = ({ inverse = false }) => {
         <Logo className={css.logo} inverse={inverse} />
 
         <div className={css.authWrapper}>
-          {isAuthenticated ? (
+          {isLoading ? (
+            null
+          ) : isAuthenticated ? (
             <UserBar
               user={user}
               onProfileClick={handleProfileClick}

@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { Link } from 'react-router-dom';
+
 import css from './HeroBanner.module.css';
 
 import Button from '@components/Button/Button';
@@ -28,9 +30,8 @@ const HeroBanner = () => {
         </p>
         <Button
           className={css.heroButton}
-          onClick={() => {
-            // TODO: Implement the functionality for adding a recipe (Guest/Logged in User)
-          }}
+          as={Link}
+          to="/recipe/add"
         >
           Add Recipe
         </Button>

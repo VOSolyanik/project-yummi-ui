@@ -20,7 +20,10 @@
   letter-spacing: -0.02em;
   border-radius: 30px;
   border: none;
-  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
 }
 
 /* Sign In button - mobile-first styles */

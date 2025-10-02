@@ -4,19 +4,19 @@ import css from './UIKitPage.module.css';
 
 import Button from '../../components/Button/Button';
 import CheckBox from '../../components/CheckBox/CheckBox';
-import { Icon } from '../../components/Icon/Icon';
+import Icon from '../../components/Icon/Icon';
 
 const UIKitPage = () => {
   const [checkboxStates, setCheckboxStates] = useState({
     checkbox1: false,
     checkbox2: true,
-    checkbox3: false,
+    checkbox3: false
   });
 
-  const handleCheckboxChange = (name) => {
+  const handleCheckboxChange = name => {
     setCheckboxStates(prev => ({
       ...prev,
-      [name]: !prev[name],
+      [name]: !prev[name]
     }));
   };
 
@@ -75,16 +75,28 @@ const UIKitPage = () => {
 
           <h3 className={css.subsectionTitle}>Primary Buttons</h3>
           <div className={css.buttonGrid}>
-            <Button variant="primary" size="large">Large Primary</Button>
-            <Button variant="primary" size="medium">Medium Primary</Button>
-            <Button variant="primary" size="medium" disabled>Disabled Primary</Button>
+            <Button variant="primary" size="large">
+              Large Primary
+            </Button>
+            <Button variant="primary" size="medium">
+              Medium Primary
+            </Button>
+            <Button variant="primary" size="medium" disabled>
+              Disabled Primary
+            </Button>
           </div>
 
           <h3 className={css.subsectionTitle}>Outline Buttons</h3>
           <div className={css.buttonGrid}>
-            <Button variant="outline" size="large">Large Outline</Button>
-            <Button variant="outline" size="medium">Medium Outline</Button>
-            <Button variant="outline" size="medium" disabled>Disabled Outline</Button>
+            <Button variant="outline" size="large">
+              Large Outline
+            </Button>
+            <Button variant="outline" size="medium">
+              Medium Outline
+            </Button>
+            <Button variant="outline" size="medium" disabled>
+              Disabled Outline
+            </Button>
           </div>
 
           <h3 className={css.subsectionTitle}>Buttons with Icons</h3>
@@ -109,13 +121,13 @@ const UIKitPage = () => {
               <Icon name="plus" />
             </Button>
             <Button variant="primary" size="medium">
-              <Icon name="plus" size={18}/>
+              <Icon name="plus" size={18} />
             </Button>
             <Button variant="outline" size="large">
               <Icon name="trash" />
             </Button>
             <Button variant="outline" size="medium">
-              <Icon name="heart" size={18}/>
+              <Icon name="heart" size={18} />
             </Button>
           </div>
         </section>

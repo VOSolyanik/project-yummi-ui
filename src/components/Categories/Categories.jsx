@@ -11,8 +11,7 @@ import CategoryList from '@components/CategoryList/CategoryList';
 import MainTitle from '@components/MainTitle/MainTitle';
 import Subtitle from '@components/Subtitle/Subtitle';
 
-
-import { recipesAPI } from '../../services/api';
+import { recipesAPI } from '../../services/recipesApi.js';
 
 const Categories = ({ onCategorySelect }) => {
   const dispatch = useDispatch();
@@ -40,7 +39,7 @@ const Categories = ({ onCategorySelect }) => {
             recipes: response.data.recipes,
             totalPages: response.data.totalPages,
             currentPage: response.data.currentPage,
-            totalRecipes: response.data.totalRecipes,
+            totalRecipes: response.data.totalRecipes
           };
           onCategorySelect(categoryData);
         }

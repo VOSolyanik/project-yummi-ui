@@ -9,11 +9,7 @@ export const requiredCategories = [
   'Pork',
   'Seafood',
   'Side',
-  'Starter',
+  'Starter'
 ];
 
-export const vegetarianCategoryNames = [
-  'Vegetarian',
-  'Vegan',
-  'Soup',
-];
+export const vegetarianCategoryNames = ['Vegetarian', 'Vegan', 'Soup'];

@@ -4,10 +4,15 @@ import { Outlet, useLocation } from 'react-router-dom';
 
 import css from './SharedLayout.module.css';
 
+import { useRouteTracker } from '@hooks/useRouteTracker.js';
+
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 
 const SharedLayout = () => {
+  // Enable route tracking at the app level
+  useRouteTracker(true);
+
   const location = useLocation();
   const isHomePage = location.pathname === '/';
   return (

@@ -1,162 +1,61 @@
-import { requiredCategories } from './mockData.js';
-import { isVegetarianVariant } from '../utils/abTesting.js';
+import { toast } from 'react-hot-toast';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api';
+import axios from 'axios';
 
-class ApiService {
-  constructor(baseURL) {
-    this.baseURL = baseURL;
-  }
+import { getAuthToken, dispatchLogout } from '../redux/storeUtils.js';
 
-  async request(endpoint, options = {}) {
-    const url = `${this.baseURL}${endpoint}`;
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-        ...options.headers,
-      },
-      ...options,
-    };
+// Base URL configuration
+const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
 
-    try {
-      const response = await fetch(url, config);
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        const error = new Error(`HTTP error! status: ${response.status}`);
-        error.status = response.status;
-        error.responseText = errorText;
-        throw error;
-      }
-
-      const data = await response.json();
-      return { data, status: response.status };
-    } catch (error) {
-      console.error('API request failed:', error);
-      throw error;
-    }
-  }
-
-  async get(endpoint, params = {}) {
-    const searchParams = new URLSearchParams(params);
-    const queryString = searchParams.toString();
-    const url = queryString ? `${endpoint}?${queryString}` : endpoint;
-
-    return this.request(url, { method: 'GET' });
-  }
-
-  async post(endpoint, data) {
-    return this.request(endpoint, {
-      method: 'POST',
-      body: JSON.stringify(data),
-    });
-  }
-}
-
-const NAME_MAPPING = {
-  Dessert: 'Desserts',
-};
-
-const VEGETARIAN_CATEGORIES = [
-  'Vegetarian',
-  'Breakfast',
-  'Desserts',
-  'Vegan',
-  'Soup',
-  'Miscellaneous',
-  'Pasta',
-  'Pork',
-  'Seafood',
-  'Side',
-  'Starter',
-];
-
-const CATEGORY_MAPPINGS = {
-  Beef: 'Vegetarian',
-  Lamb: 'Vegan',
-  Goat: 'Soup',
-};
-
-const transformCategories = categories => {
-  return categories.map(category => ({
-    _id: category.id,
-    name: NAME_MAPPING[category.name] || category.name,
-  }));
-};
-
-const applyVegetarianMapping = (categories, originalData) => {
-  return categories.map(category => {
-    const mappedName = CATEGORY_MAPPINGS[category.name];
-    if (mappedName) {
-      const targetCategory = originalData.find(cat => cat.name === mappedName);
-      return {
-        _id: targetCategory?.id || category._id,
-        name: mappedName,
-      };
-    }
-    return category;
-  });
-};
-
-const filterAndSortCategories = (categories, requiredCategories) => {
-  const filtered = categories
-    .filter(category => requiredCategories.includes(category.name));
-
-  return requiredCategories
-    .map(name => filtered.find(cat => cat.name === name)).filter(Boolean);
-};
-
-export const categoriesAPI = {
-  getCategories: async () => {
-    const isVeg = isVegetarianVariant();
-
-    try {
-      const response = await new ApiService(API_BASE_URL).get('/categories');
-
-      let transformedCategories = transformCategories(response.data);
-
-      if (isVeg) {
-        transformedCategories = applyVegetarianMapping(
-          transformedCategories, response.data,
-        );
-      }
-
-      const currentRequiredCategories = isVeg
-        ? VEGETARIAN_CATEGORIES
-        : requiredCategories;
-      const sortedCategories = filterAndSortCategories(
-        transformedCategories, currentRequiredCategories,
-      );
-
-      return { data: sortedCategories };
-    } catch (error) {
-      console.error('Error fetching categories:', error);
-      throw error;
-    }
+// Create axios instance with base configuration
+const api = axios.create({
+  baseURL: BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+    'X-Requested-With': 'XMLHttpRequest' // CSRF protection header
   },
-};
+  timeout: 10000
+});
 
-export const recipesAPI = {
-  getRecipesByCategory: async (categoryId, page = 1, limit = 12) => {
-    const params = { page, limit };
-    if (categoryId !== 'all') {
-      params.category = categoryId;
+// Request interceptor - add token to every request
+api.interceptors.request.use(
+  config => {
+    // Get token from Redux store only
+    const token = getAuthToken();
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
     }
 
-    try {
-      const response = await new ApiService(API_BASE_URL).get('/recipes', params);
-
-      const transformedData = {
-        recipes: response.data.items || [],
-        totalPages: Math.ceil((response.data.totalCount || 0) / limit),
-        currentPage: page,
-        totalRecipes: response.data.totalCount || 0,
-      };
-
-      return { data: transformedData, status: response.status };
-    } catch (error) {
-      console.error('Error fetching recipes:', error);
-      throw error;
-    }
+    return config;
   },
-};
+  error => {
+    return Promise.reject(error);
+  }
+);
+
+// Response interceptor - handle authentication errors
+api.interceptors.response.use(
+  response => {
+    return response;
+  },
+  error => {
+    const { status, data } = error.response || {};
+
+    if (status === 401) {
+      // Token invalid or missing - dispatch logout action
+      dispatchLogout();
+      toast.error('Session expired. Please sign in again.');
+      window.location.href = '/';
+    } else if (status === 403) {
+      toast.error('Access denied');
+    } else if (status >= 500) {
+      toast.error('Server error. Please try again later.');
+    } else if (data?.message) {
+      toast.error(data.message);
+    }
+
+    return Promise.reject(error);
+  }
+);
+
+export default api;

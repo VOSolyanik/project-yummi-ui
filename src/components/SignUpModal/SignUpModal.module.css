@@ -1,0 +1,44 @@
+.content {
+  width: 100%;
+  padding-top: 16px;
+  text-align: left;
+}
+
+.caption {
+  margin-top: 1rem;
+  color: var(--secondary-text-color);
+  font-size: 0.75rem;
+  line-height: 1.5;
+  letter-spacing: -0.02em;
+  text-align: center;
+}
+
+.switchButton {
+  padding: 0 4px;
+  color: var(--black-color);
+  font-size: 0.75rem;
+  line-height: 1.5;
+  letter-spacing: -0.02em;
+  background-color: transparent;
+  font-weight: 500;
+}
+
+.switchButton:hover:not(:disabled) {
+  color: var(--charcoal-color);
+  transform: translateY(-1px);
+}
+
+@media (min-width: 768px) {
+  .content {
+    padding-top: 20px;
+  }
+
+  .caption {
+    margin-top: 1.25rem;
+    font-size: 0.875rem;
+  }
+
+  .switchButton {
+    font-size: 0.875rem;
+  }
+}
