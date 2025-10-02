@@ -1,0 +1,95 @@
+.form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.input {
+  padding: 13px;
+  width: 100%;
+  border: 1px solid var(--gray-color);
+  font-family: var(--primary-font);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  border-radius: 30px;
+  color: var(--main-text-color);
+  background: var(--main-bg-color);
+  transition: border-color 0.2s ease;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--black-color);
+}
+
+.input:not(:placeholder-shown) {
+  border-color: var(--black-color);
+}
+
+.input::placeholder {
+  color: var(--secondary-text-color);
+}
+
+.inputError {
+  border-color: var(--error-color) !important;
+}
+
+.passwordField {
+  position: relative;
+}
+
+.passwordToggle {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--black-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  transition: color 0.2s ease;
+}
+
+.passwordToggle:hover {
+  color: var(--charcoal-color);
+}
+
+.error {
+  font-size: 12px;
+  line-height: 1;
+  color: var(--error-color);
+}
+
+.submitButton {
+  margin-top: 18px;
+}
+
+/* Mobile responsiveness */
+@media (min-width: 768px) {
+  .input {
+    padding: 15px 17px;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .passwordToggle {
+    right: 16px;
+  }
+
+  .submitButton {
+    margin-top: 26px;
+  }
+}

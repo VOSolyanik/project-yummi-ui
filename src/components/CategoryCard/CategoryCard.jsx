@@ -26,7 +26,7 @@ const CategoryCard = ({ category, onClick, isAllCategories = false, size = 'norm
 
         // JPG fallback versions
         jpg1x: new URL(`../../assets/images/categories/${imageName}.jpg`, import.meta.url).href,
-        jpg2x: new URL(`../../assets/images/categories/desktop/${imageName}@2x.jpg`, import.meta.url).href,
+        jpg2x: new URL(`../../assets/images/categories/desktop/${imageName}@2x.jpg`, import.meta.url).href
       };
     } catch (error) {
       console.error(`Failed to load images for category: ${categoryName}`, error);

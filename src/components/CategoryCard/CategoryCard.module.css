@@ -66,7 +66,7 @@
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 30px;
   padding: 9px 14px;
-  color: var(--color-white);
+  color: var(--main-bg-color);
   font-family: 'Mulish', sans-serif;
   font-weight: 700;
   font-style: normal;
@@ -105,8 +105,8 @@
 .allCategoriesButton {
   width: 100%;
   height: 100%;
-  background-color: var(--primary-bg-color);
-  color: var(--color-white);
+  background-color: var(--primary-active-bg-color);
+  color: var(--primary-text-color);
   display: flex;
   align-items: center;
   justify-content: center;

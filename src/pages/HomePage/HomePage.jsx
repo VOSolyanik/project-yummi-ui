@@ -32,13 +32,10 @@ const HomePage = () => {
         </title>
       </Helmet>
 
-      {!showRecipes && <HeroBanner />}
+      <HeroBanner />
 
       {showRecipes ? (
-        <Recipes
-          categoryData={selectedCategory}
-          onBackToCategories={handleBackToCategories}
-        />
+        <Recipes categoryData={selectedCategory} onBackToCategories={handleBackToCategories} />
       ) : (
         <Categories onCategorySelect={handleCategorySelect} />
       )}
