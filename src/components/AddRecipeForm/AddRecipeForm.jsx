@@ -104,10 +104,10 @@ const AddRecipeForm = ({
                   <div className={css.select}>
                     <button
                       type="button"
-                      className={css.selectBtn + (!values.category ? ' ' + css.inactiveText : '')}
+                      className={css.selectBtn + (!values.categoryId ? ' ' + css.inactiveText : '')}
                       onClick={() => setOpenSelect(openSelect === 'category' ? null : 'category')}
                     >
-                      {values.category ? categories.find(c => c.id === values.category)?.name : 'Select a category'}
+                      {values.categoryId ? categories.find(c => c.id === values.categoryId)?.name : 'Select a category'}
                       <Icon name="arrow-down" size={18} />
                     </button>
                     {openSelect === 'category' && (
@@ -117,7 +117,7 @@ const AddRecipeForm = ({
                             key={c.id}
                             className={css.option}
                             onClick={() => {
-                              setFieldValue('category', c.id);
+                              setFieldValue('categoryId', c.id);
                               setOpenSelect(null);
                             }}
                           >
@@ -127,7 +127,7 @@ const AddRecipeForm = ({
                       </div>
                     )}
                   </div>
-                  <ErrorMessage name="category" component="div" className={css.error} />
+                  <ErrorMessage name="categoryId" component="div" className={css.error} />
                 </div>
 
                 <div>
@@ -167,20 +167,20 @@ const AddRecipeForm = ({
                 <div className={css.select}>
                   <button
                     type="button"
-                    className={css.selectBtn + (!values.country ? ' ' + css.inactiveText : '')}
-                    onClick={() => setOpenSelect(openSelect === 'country' ? null : 'country')}
+                    className={css.selectBtn + (!values.areaId ? ' ' + css.inactiveText : '')}
+                    onClick={() => setOpenSelect(openSelect === 'areaId' ? null : 'areaId')}
                   >
-                    {values.country ? countries.find(c => c.id === values.country)?.name : 'Area'}
+                    {values.areaId ? countries.find(c => c.id === values.areaId)?.name : 'Area'}
                     <Icon name="arrow-down" size={18} />
                   </button>
-                  {openSelect === 'country' && (
+                  {openSelect === 'areaId' && (
                     <div className={css.dropdown}>
                       {countries.map(c => (
                         <div
                           key={c.id}
                           className={css.option}
                           onClick={() => {
-                            setFieldValue('country', c.id);
+                            setFieldValue('areaId', c.id);
                             setOpenSelect(null);
                           }}
                         >
@@ -190,7 +190,7 @@ const AddRecipeForm = ({
                     </div>
                   )}
                 </div>
-                <ErrorMessage name="country" component="div" className={css.error} />
+                <ErrorMessage name="areaId" component="div" className={css.error} />
               </div>
 
               <div className={css.catTimeBlock}>

@@ -7,8 +7,8 @@ export const validationSchema = Yup.object({
   description: Yup.string().trim()
     .max(200, 'Max 200 characters')
     .required('Description is required'),
-  category: Yup.string().required('Category is required'),
-  country: Yup.string().required('Country is required'),
+  categoryId: Yup.string().required('Category is required'),
+  areaId: Yup.string().required('Country is required'),
   time: Yup.number().min(1, 'Min 1 minute')
     .required('Time is required'),
   // make input helper fields non-blocking for submit:

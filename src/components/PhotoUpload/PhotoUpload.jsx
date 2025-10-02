@@ -85,7 +85,12 @@ export default function PhotoUpload({ name = 'photo', css }) {
 function PreviewBox({ css, src }) {
   return (
     <div className={`${css.uploadBox} ${css.hasPreview}`} aria-label="Selected photo preview">
-      <img className={css.uploadImg} src={src} alt="Preview" />
+      <img
+        className={css.uploadImg}
+        src={src}
+        alt="Preview"
+        onError={() => { }}
+      />
     </div>
   );
 }

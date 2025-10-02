@@ -17,8 +17,8 @@ const initialValues = {
   photo: null,
   title: '',
   description: '',
-  category: '',
-  country: '',
+  categoryId: '',
+  areaId: '',
   time: 10,
   ingredientId: '',
   ingredientAmount: '',
@@ -52,16 +52,16 @@ const AddRecipePage = () => {
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
       const formData = new FormData();
-      formData.append('photo', values.photo);
+      formData.append('image', values.photo);
       formData.append('title', values.title.trim());
       formData.append('description', values.description.trim());
-      formData.append('category', values.category);
-      formData.append('country', values.country);
+      formData.append('categoryId', values.categoryId);
+      formData.append('areaId', values.areaId);
       formData.append('time', String(values.time));
       formData.append('instructions', values.instructions.trim());
       formData.append(
         'ingredients',
-        JSON.stringify(values.ingredients.map(i => ({ id: i.id, amount: i.amount })))
+        JSON.stringify(values.ingredients.map(i => ({ id: i.id, measure: i.amount })))
       );
 
       const created = await createRecipe(formData);
