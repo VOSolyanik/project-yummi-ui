@@ -41,15 +41,20 @@
   transition: all 0.2s ease;
 }
 
-.favoriteButton:hover,
-.favoriteButton:focus {
+.favoriteButton:hover:not(:disabled),
+.favoriteButton:focus:not(:disabled) {
   background: #050505;
   border-color: #050505;
 }
 
-.favoriteButton:hover .heartIcon,
-.favoriteButton:focus .heartIcon {
+.favoriteButton:hover:not(:disabled) .heartIcon,
+.favoriteButton:focus:not(:disabled) .heartIcon {
   filter: brightness(0) saturate(100%) invert(100%);
+}
+
+.favoriteButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .favoriteActive {

@@ -5,7 +5,7 @@ import css from './RecipeList.module.css';
 import RecipeCard from '@components/RecipeCard/RecipeCard';
 import RecipeCardSkeleton from '@components/RecipeCardSkeleton/RecipeCardSkeleton';
 
-const RecipeList = ({ recipes, onFavoriteToggle, isLoading, error }) => {
+const RecipeList = ({ recipes, onFavoriteToggle, isLoading, error, favoriteRecipeIds, onFavoriteChange }) => {
   // Memoize the recipes list to prevent unnecessary re-renders
   const memoizedRecipes = useMemo(() => {
     return recipes || [];
@@ -43,6 +43,8 @@ const RecipeList = ({ recipes, onFavoriteToggle, isLoading, error }) => {
           key={recipe.id}
           recipe={recipe}
           onFavoriteToggle={onFavoriteToggle}
+          favoriteRecipeIds={favoriteRecipeIds}
+          onFavoriteChange={onFavoriteChange}
         />
       ))}
     </div>

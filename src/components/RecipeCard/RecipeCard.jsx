@@ -1,5 +1,5 @@
-import React, { useState, useCallback, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import css from './RecipeCard.module.css';
@@ -8,9 +8,29 @@ import heartIcon from '../../assets/icons/favorites.svg';
 import arrowIcon from '../../assets/icons/arrow-up-right-black.svg';
 import noImagePlaceholder from '../../assets/images/no-image.png';
 
-const RecipeCard = ({ recipe, onFavoriteToggle, onAuthorClick, onRecipeClick }) => {
-  const [isFavorite, setIsFavorite] = useState(false);
+import { useAuth } from '../../hooks/useAuth';
+import { useAuthModal } from '../../hooks/useAuthModal';
+import { addToFavorites, removeFromFavorites, checkIfRecipeIsFavorite, clearFavoritesCache } from '../../services/favoritesApi';
+import toast from 'react-hot-toast';
+
+const RecipeCard = ({ 
+  recipe, 
+  onFavoriteToggle = null, 
+  onAuthorClick = null, 
+  onRecipeClick = null, 
+  favoriteRecipeIds = null, 
+  onFavoriteChange = null 
+}) => {
   const [imageError, setImageError] = useState(false);
+  const [isUpdatingFavorite, setIsUpdatingFavorite] = useState(false);
+  const navigate = useNavigate();
+  const { user, isAuthenticated } = useAuth();
+  const { openAuthModal } = useAuthModal();
+
+  // Calculate isFavorite from favoriteRecipeIds instead of local state
+  const isFavorite = isAuthenticated && favoriteRecipeIds ? favoriteRecipeIds.has(recipe.id) : false;
+  
+  const buttonClassName = `${css.favoriteButton} ${isFavorite ? css.favoriteActive : ''}`;
 
   const firstName = useMemo(() => {
     return recipe.owner?.name ? recipe.owner.name.split(' ')[0] : 'Unknown';
@@ -24,25 +44,87 @@ const RecipeCard = ({ recipe, onFavoriteToggle, onAuthorClick, onRecipeClick }) 
     return `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=random`;
   }, [recipe.owner?.avatarUrl, recipe.owner?.name]);
 
-  const handleFavoriteClick = useCallback((e) => {
+
+  const handleFavoriteClick = useCallback(async (e) => {
     e.preventDefault();
     e.stopPropagation();
 
-    if (onFavoriteToggle) {
-      onFavoriteToggle(recipe.id);
-    } else {
-      setIsFavorite(!isFavorite);
+    if (!isAuthenticated) {
+      openAuthModal();
+      return;
     }
-  }, [onFavoriteToggle, recipe.id, isFavorite]);
+
+    // Prevent multiple clicks while updating
+    if (isUpdatingFavorite) {
+      return;
+    }
+
+    setIsUpdatingFavorite(true);
+
+    try {
+      if (isFavorite) {
+        // Remove from favorites
+        await removeFromFavorites(recipe.id);
+        clearFavoritesCache(user?.id); // Clear cache after modification
+        toast.success('Recipe removed from favorites');
+        // Notify parent component about the change
+        if (onFavoriteChange) {
+          onFavoriteChange(recipe.id, false);
+        }
+      } else {
+        // Add to favorites
+        await addToFavorites(recipe.id);
+        clearFavoritesCache(user?.id); // Clear cache after modification
+        toast.success('Recipe added to favorites');
+        // Notify parent component about the change
+        if (onFavoriteChange) {
+          onFavoriteChange(recipe.id, true);
+        }
+      }
+    } catch (error) {
+      // Handle specific server errors
+      const errorMessage = error.response?.data?.message || error.message;
+      
+      if (errorMessage.includes('already in favorites')) {
+        // Recipe is already in favorites, notify parent to update UI
+        toast.success('Recipe is already in favorites');
+        if (onFavoriteChange) {
+          onFavoriteChange(recipe.id, true);
+        }
+      } else if (errorMessage.includes('not in favorites')) {
+        // Recipe is not in favorites, notify parent to update UI
+        toast.success('Recipe is not in favorites');
+        if (onFavoriteChange) {
+          onFavoriteChange(recipe.id, false);
+        }
+      } else {
+        // Other errors
+        toast.error('Failed to update favorites');
+        console.error('Error updating favorites:', error);
+      }
+    } finally {
+      setIsUpdatingFavorite(false);
+    }
+  }, [isAuthenticated, openAuthModal, user?.id, recipe.id, isFavorite, isUpdatingFavorite]);
 
   const handleAuthorClick = useCallback((e) => {
     e.preventDefault();
     e.stopPropagation();
 
+    if (!isAuthenticated) {
+      openAuthModal();
+      return;
+    }
+
     if (onAuthorClick) {
       onAuthorClick(recipe.owner);
+    } else {
+      // Navigate to user page
+      if (recipe.owner?.id) {
+        navigate(`/user/${recipe.owner.id}`);
+      }
     }
-  }, [onAuthorClick, recipe.owner]);
+  }, [navigate, isAuthenticated, openAuthModal, onAuthorClick, recipe.owner]);
 
   const handleRecipeClick = useCallback(() => {
     if (onRecipeClick) {
@@ -90,12 +172,14 @@ const RecipeCard = ({ recipe, onFavoriteToggle, onAuthorClick, onRecipeClick }) 
           </button>
 
           <div className={css.buttonGroup}>
-            <button
-              type="button"
-              className={`${css.favoriteButton} ${isFavorite ? css.favoriteActive : ''}`}
-              onClick={handleFavoriteClick}
-              aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
-            >
+                <button
+                  key={`favorite-${recipe.id}-${isFavorite}`}
+                  type="button"
+                  className={buttonClassName}
+                  onClick={handleFavoriteClick}
+                  disabled={isUpdatingFavorite}
+                  aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+                >
               <img
                 src={heartIcon}
                 alt="heart"
@@ -103,9 +187,14 @@ const RecipeCard = ({ recipe, onFavoriteToggle, onAuthorClick, onRecipeClick }) 
               />
             </button>
 
-            <Link
-              to={`/recipe/${recipe.id}`}
+            <button
+              type="button"
               className={css.viewButton}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                navigate(`/recipe/${recipe.id}`);
+              }}
               aria-label={`View ${recipe.title} recipe`}
             >
               <img
@@ -113,7 +202,7 @@ const RecipeCard = ({ recipe, onFavoriteToggle, onAuthorClick, onRecipeClick }) 
                 alt="arrow"
                 className={css.arrowIcon}
               />
-            </Link>
+            </button>
           </div>
         </div>
       </div>
@@ -136,12 +225,9 @@ RecipeCard.propTypes = {
   onFavoriteToggle: PropTypes.func,
   onAuthorClick: PropTypes.func,
   onRecipeClick: PropTypes.func,
+  favoriteRecipeIds: PropTypes.instanceOf(Set),
+  onFavoriteChange: PropTypes.func,
 };
 
-RecipeCard.defaultProps = {
-  onFavoriteToggle: null,
-  onAuthorClick: null,
-  onRecipeClick: null,
-};
 
 export default RecipeCard;

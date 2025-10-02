@@ -28,6 +28,9 @@ import {
   clearFilters,
 } from '@redux/filters/filtersSlice';
 
+import { useAuth } from '../../hooks/useAuth';
+import { checkRecipesFavorites } from '../../services/favoritesApi';
+
 const MOBILE_BREAKPOINT = 767;
 const MOBILE_ITEMS_PER_PAGE = 8;
 const DESKTOP_ITEMS_PER_PAGE = 12;
@@ -35,6 +38,7 @@ const DESKTOP_ITEMS_PER_PAGE = 12;
 const Recipes = ({ categoryData, onBackToCategories }) => {
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(1);
+  const [favoriteRecipeIds, setFavoriteRecipeIds] = useState(new Set());
 
   const recipes = useSelector(selectRecipes);
   const totalPages = useSelector(selectTotalPages);
@@ -43,6 +47,8 @@ const Recipes = ({ categoryData, onBackToCategories }) => {
   const error = useSelector(selectRecipesError);
   const selectedIngredient = useSelector(selectSelectedIngredient);
   const selectedArea = useSelector(selectSelectedArea);
+  
+  const { user, isAuthenticated } = useAuth();
 
   const isAllCategories = categoryData?.category?.name === 'All Categories';
   const categoryId = categoryData?.category?._id || 'all';
@@ -67,6 +73,39 @@ const Recipes = ({ categoryData, onBackToCategories }) => {
       }));
     }
   }, [dispatch, categoryId, getItemsPerPage]);
+
+  // Check favorites for current recipes when user is authenticated and recipes are loaded
+  useEffect(() => {
+    const checkCurrentRecipesFavorites = async () => {
+      if (isAuthenticated && user?.id && recipes && recipes.length > 0) {
+        try {
+          // Get IDs of currently displayed recipes
+          const currentRecipeIds = recipes.map(recipe => recipe.id);
+          
+          // Check which of these recipes are favorites
+          const favoritesStatus = await checkRecipesFavorites(user.id, currentRecipeIds);
+          
+          // Create Set of favorite recipe IDs from current page
+          const favoriteIds = new Set();
+          Object.entries(favoritesStatus).forEach(([recipeId, isFavorite]) => {
+            if (isFavorite) {
+              favoriteIds.add(recipeId);
+            }
+          });
+          
+          
+          setFavoriteRecipeIds(favoriteIds);
+        } catch (error) {
+          console.error('Error checking current recipes favorites:', error);
+          setFavoriteRecipeIds(new Set());
+        }
+      } else {
+        setFavoriteRecipeIds(new Set());
+      }
+    };
+
+    checkCurrentRecipesFavorites();
+  }, [isAuthenticated, user?.id, recipes]);
 
   const handleFiltersChange = useCallback(({ ingredient, area }) => {
     setCurrentPage(1);
@@ -98,6 +137,19 @@ const Recipes = ({ categoryData, onBackToCategories }) => {
     } catch (error) {
       toast.error('Failed to update favorites');
     }
+  }, []);
+
+  // Handle favorite changes from RecipeCard
+  const handleFavoriteChange = useCallback((recipeId, isFavorite) => {
+    setFavoriteRecipeIds(prev => {
+      const newSet = new Set(prev);
+      if (isFavorite) {
+        newSet.add(recipeId);
+      } else {
+        newSet.delete(recipeId);
+      }
+      return newSet;
+    });
   }, []);
 
   const handleBackClick = useCallback(() => {
@@ -143,6 +195,8 @@ const Recipes = ({ categoryData, onBackToCategories }) => {
               onFavoriteToggle={handleFavoriteToggle}
               isLoading={isLoading}
               error={error}
+              favoriteRecipeIds={favoriteRecipeIds}
+              onFavoriteChange={handleFavoriteChange}
             />
           </ErrorBoundary>
 
