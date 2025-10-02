@@ -1,16 +1,17 @@
 import React from 'react';
 
 import css from './CategoryCard.module.css';
+
 import arrowUpRightIcon from '../../assets/icons/arrow-up-right.svg';
 
-const CategoryCard = ({ category, onClick, isAllCategories = false, size = 'normal' }) => {
+const CategoryCard = ({ category, onClick, isAllCategories = false, size = 'normal', buttonText = 'ALL CATEGORIES' }) => {
   const handleClick = () => {
     if (onClick) {
       onClick(category);
     }
   };
 
-  const getCategoryImageSources = (categoryName) => {
+  const getCategoryImageSources = categoryName => {
     const imageName = categoryName.replace(/\s+/g, '');
 
     try {
@@ -25,7 +26,7 @@ const CategoryCard = ({ category, onClick, isAllCategories = false, size = 'norm
 
         // JPG fallback versions
         jpg1x: new URL(`../../assets/images/categories/${imageName}.jpg`, import.meta.url).href,
-        jpg2x: new URL(`../../assets/images/categories/desktop/${imageName}@2x.jpg`, import.meta.url).href,
+        jpg2x: new URL(`../../assets/images/categories/desktop/${imageName}@2x.jpg`, import.meta.url).href
       };
     } catch (error) {
       console.error(`Failed to load images for category: ${categoryName}`, error);
@@ -36,9 +37,7 @@ const CategoryCard = ({ category, onClick, isAllCategories = false, size = 'norm
   if (isAllCategories) {
     return (
       <div className={`${css.card} ${css[size]}`} onClick={handleClick}>
-        <div className={css.allCategoriesButton}>
-          ALL CATEGORIES
-        </div>
+        <div className={css.allCategoriesButton}>{buttonText}</div>
       </div>
     );
   }
@@ -49,16 +48,8 @@ const CategoryCard = ({ category, onClick, isAllCategories = false, size = 'norm
   const overlay = (
     <div className={css.overlay}>
       <span className={css.categoryName}>{category.name}</span>
-      <button
-        type="button"
-        className={css.arrowButton}
-        aria-label={`View ${category.name} recipes`}
-      >
-        <img
-          src={arrowUpRightIcon}
-          alt="arrow"
-          className={css.arrowIcon}
-        />
+      <button type="button" className={css.arrowButton} aria-label={`View ${category.name} recipes`}>
+        <img src={arrowUpRightIcon} alt="arrow" className={css.arrowIcon} />
       </button>
     </div>
   );
@@ -67,9 +58,7 @@ const CategoryCard = ({ category, onClick, isAllCategories = false, size = 'norm
   if (!imageSources) {
     return (
       <div className={`${css.card} ${css[size]}`} data-category={category.name} onClick={handleClick}>
-        <div className={css.imageContainer}>
-          {/* Empty container - no image */}
-        </div>
+        <div className={css.imageContainer}>{/* Empty container - no image */}</div>
         {overlay}
       </div>
     );
@@ -80,22 +69,13 @@ const CategoryCard = ({ category, onClick, isAllCategories = false, size = 'norm
       <div className={css.imageContainer}>
         <picture className={css.picture}>
           {/* AVIF with 2x support (best compression) */}
-          <source
-            srcSet={`${imageSources.avif1x} 1x, ${imageSources.avif2x} 2x`}
-            type="image/avif"
-          />
+          <source srcSet={`${imageSources.avif1x} 1x, ${imageSources.avif2x} 2x`} type="image/avif" />
 
           {/* WebP with 2x support (good compression) */}
-          <source
-            srcSet={`${imageSources.webp1x} 1x, ${imageSources.webp2x} 2x`}
-            type="image/webp"
-          />
+          <source srcSet={`${imageSources.webp1x} 1x, ${imageSources.webp2x} 2x`} type="image/webp" />
 
           {/* JPG fallback with 2x support */}
-          <source
-            srcSet={`${imageSources.jpg1x} 1x, ${imageSources.jpg2x} 2x`}
-            type="image/jpeg"
-          />
+          <source srcSet={`${imageSources.jpg1x} 1x, ${imageSources.jpg2x} 2x`} type="image/jpeg" />
 
           {/* Fallback img */}
           <img

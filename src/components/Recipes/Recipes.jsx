@@ -49,8 +49,8 @@ const Recipes = ({ categoryData, onBackToCategories }) => {
   const subtitle = 'Go on a taste journey, where every sip is a sophisticated creative chord, and\n every dessert is an expression of the most refined gastronomic desires.';
 
   const getItemsPerPage = useCallback(() => {
-    return typeof window !== 'undefined' && window.innerWidth <= MOBILE_BREAKPOINT 
-      ? MOBILE_ITEMS_PER_PAGE 
+    return typeof window !== 'undefined' && window.innerWidth <= MOBILE_BREAKPOINT
+      ? MOBILE_ITEMS_PER_PAGE
       : DESKTOP_ITEMS_PER_PAGE;
   }, []);
 
