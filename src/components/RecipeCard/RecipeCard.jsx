@@ -3,17 +3,27 @@ import React, { useState, useCallback, useMemo } from 'react';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
+import { addToFavorites, removeFromFavorites, clearFavoritesCache } from '@services/favoritesApi.js';
 import PropTypes from 'prop-types';
 
 import css from './RecipeCard.module.css';
 
 import Icon from '@components/Icon/Icon';
 
-import noImagePlaceholder from '../../assets/images/no-image.png';
 import { useAuth } from '@hooks/useAuth.js';
 import { useAuthModal } from '@hooks/useAuthModal.js';
-import { addToFavorites, removeFromFavorites, clearFavoritesCache } from '@services/favoritesApi.js';
 
+import noImagePlaceholder from '../../assets/images/no-image.png';
+
+/**
+ * RecipeCard component
+ * @param {Object} props - Component props
+ * @param {Object} props.recipe - Recipe data
+ * @param {Function|null} props.onAuthorClick - Callback for author click
+ * @param {Function|null} props.onRecipeClick - Callback for recipe click
+ * @param {Set|null} props.favoriteRecipeIds - Set of favorite recipe IDs
+ * @param {Function|null} props.onFavoriteChange - Callback for favorite change
+ */
 const RecipeCard = ({
   recipe,
   onAuthorClick = null,
@@ -68,7 +78,7 @@ const RecipeCard = ({
         clearFavoritesCache(user?.id); // Clear cache after modification
         toast.success('Recipe removed from favorites');
         // Notify parent component about the change
-        if (onFavoriteChange) {
+        if (typeof onFavoriteChange === 'function') {
           onFavoriteChange(recipe.id, false);
         }
       } else {
@@ -77,7 +87,7 @@ const RecipeCard = ({
         clearFavoritesCache(user?.id); // Clear cache after modification
         toast.success('Recipe added to favorites');
         // Notify parent component about the change
-        if (onFavoriteChange) {
+        if (typeof onFavoriteChange === 'function') {
           onFavoriteChange(recipe.id, true);
         }
       }
@@ -88,13 +98,13 @@ const RecipeCard = ({
       if (errorMessage.includes('already in favorites')) {
         // Recipe is already in favorites, notify parent to update UI
         toast.success('Recipe is already in favorites');
-        if (onFavoriteChange) {
+        if (typeof onFavoriteChange === 'function') {
           onFavoriteChange(recipe.id, true);
         }
       } else if (errorMessage.includes('not in favorites')) {
         // Recipe is not in favorites, notify parent to update UI
         toast.success('Recipe is not in favorites');
-        if (onFavoriteChange) {
+        if (typeof onFavoriteChange === 'function') {
           onFavoriteChange(recipe.id, false);
         }
       } else {
@@ -116,7 +126,7 @@ const RecipeCard = ({
       return;
     }
 
-    if (onAuthorClick) {
+    if (typeof onAuthorClick === 'function') {
       onAuthorClick(recipe.owner);
     } else {
       // Navigate to user page
@@ -127,7 +137,7 @@ const RecipeCard = ({
   }, [navigate, isAuthenticated, openSignInModal, onAuthorClick, recipe.owner]);
 
   const handleRecipeClick = useCallback(() => {
-    if (onRecipeClick) {
+    if (typeof onRecipeClick === 'function') {
       onRecipeClick(recipe);
     }
   }, [onRecipeClick, recipe]);
@@ -193,7 +203,7 @@ const RecipeCard = ({
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                if (onRecipeClick) {
+                if (typeof onRecipeClick === 'function') {
                   onRecipeClick(recipe);
                 } else {
                   navigate(`/recipe/${recipe.id}`);
