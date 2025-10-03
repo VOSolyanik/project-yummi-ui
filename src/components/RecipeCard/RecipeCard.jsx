@@ -200,7 +200,7 @@ const RecipeCard = ({
               aria-label={`View ${recipe.title} recipe`}
             >
               <Icon 
-                name="arrow-up-right-black" 
+                name="arrow-up-right" 
                 size={18} 
                 className={css.arrowIcon} 
               />

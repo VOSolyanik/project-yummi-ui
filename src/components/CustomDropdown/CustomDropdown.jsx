@@ -64,7 +64,7 @@ const CustomDropdown = ({
           {selectedOption ? selectedOption.label : placeholder}
         </span>
         <Icon 
-          name="chevron-down" 
+          name="arrow-down" 
           size={18} 
           className={`${css.chevron} ${isOpen ? css.rotated : ''}`} 
         />
