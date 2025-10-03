@@ -22,9 +22,9 @@ const UserProfilePage = () => {
   const dispatch = useDispatch();
   const { openLogoutModal } = useAuthModal();
 
-  useEffect(() => {
-    dispatch(getCurrentUser());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getCurrentUser());
+  // }, [dispatch]);
 
   const handleLogout = () => {
     openLogoutModal();
