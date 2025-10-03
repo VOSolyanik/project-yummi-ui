@@ -4,9 +4,9 @@ import { configureStore } from '@reduxjs/toolkit';
 import storage from 'redux-persist/lib/storage';
 
 import authReducer from './auth/authSlice';
-import recipesReducer from './recipes/recipesSlice';
-import filtersReducer from './filters/filtersSlice';
 import categoriesReducer from './categories/categoriesSlice';
+import filtersReducer from './filters/filtersSlice';
+import recipesReducer from './recipes/recipesSlice';
 import routerReducer from './router/routerSlice';
 import { initializeStoreUtils } from './storeUtils.js';
 
