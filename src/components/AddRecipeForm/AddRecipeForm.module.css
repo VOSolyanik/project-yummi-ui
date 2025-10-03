@@ -320,16 +320,6 @@
   outline: none;
 }
 
-.icon {
-  width: 16px;
-  height: 16px;
-}
-
-.icon:hover,
-.icon:focus {
-  stroke: var(--gray-color);
-}
-
 .addIngBtn {
   display: flex;
   gap: 8px;
@@ -349,9 +339,7 @@
 }
 
 .cameraIcon {
-  fill: var(--gray-color);
   color: var(--gray-color);
-  stroke: var(--gray-color);
   width: 38px;
   height: 38px;
 }
