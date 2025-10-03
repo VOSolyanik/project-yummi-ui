@@ -1,0 +1,139 @@
+.pagination {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0;
+  gap: 6px;
+  width: auto;
+}
+
+.pageButton {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 100px;
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  font-family: var(--primary-font);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 143%;
+  text-align: center;
+  letter-spacing: 0.17px;
+  color: var(--main-text-color);
+}
+
+.pageButton:hover:not(:disabled) {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.pageButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pageButton.active {
+  border: 1px solid var(--border-color);
+  background: transparent;
+  color: var(--black-color);
+}
+
+.navButton {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 100px;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  font-family: var(--primary-font);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 143%;
+  text-align: center;
+  letter-spacing: 0.17px;
+  color: var(--main-text-color);
+}
+
+.navButton:hover:not(:disabled) {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.navButton:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.ellipsis {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  font-family: var(--primary-font);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 143%;
+  text-align: center;
+  letter-spacing: 0.17px;
+  color: var(--main-text-color);
+}
+
+.pageNumbers {
+  display: flex;
+  gap: 4px;
+}
+
+@media screen and (max-width: 767px) {
+  .pagination {
+    gap: 4px;
+  }
+  
+  .pageButton {
+    width: 40px;
+    height: 40px;
+    font-family: var(--primary-font);
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 143%;
+    letter-spacing: 0.17px;
+    text-align: center;
+  }
+
+  .pageButton.active {
+    border: 1px solid var(--black-color);
+  }
+  
+  .ellipsis {
+    width: 40px;
+    height: 40px;
+    font-family: var(--primary-font);
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 143%;
+    letter-spacing: 0.17px;
+    text-align: center;
+  }
+  
+  .navButton {
+    width: 20px;
+    height: 36px;
+    font-size: 14px;
+  }
+  
+  .pageNumbers {
+    gap: 2px;
+  }
+}

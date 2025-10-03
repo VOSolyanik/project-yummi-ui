@@ -25,6 +25,7 @@
 
   --primary-bg-color: var(--charcoal-color);
   --primary-active-bg-color: var(--black-color);
+  --primary-hover-bg-color: var(--charcoal-color);
   --primary-text-color: var(--white-color);
 
   --secondary-text-color: var(--gray-color);
