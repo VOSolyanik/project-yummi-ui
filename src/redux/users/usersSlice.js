@@ -11,16 +11,6 @@ export const fetchRecipes = createAsyncThunk(
     } catch (err) {
       return rejectWithValue(err.response?.data || 'Failed to fetch recipes');
     }
-  },
-  {
-    // condition callback prevents re-fetching if already loaded
-    condition: (_, { getState }) => {
-      const { recipes } = getState().lists;
-      if (recipes.items.length > 0 || recipes.loading) {
-        return false; // cancel thunk
-      }
-      return true;
-    }
   }
 );
 
@@ -32,16 +22,6 @@ export const fetchFavorites = createAsyncThunk(
       return res.data;
     } catch (err) {
       return rejectWithValue(err.response?.data || 'Failed to fetch favorites');
-    }
-  },
-  {
-    // condition callback prevents re-fetching if already loaded
-    condition: (_, { getState }) => {
-      const { favorites } = getState().lists;
-      if (favorites.items.length > 0 || favorites.loading) {
-        return false; // cancel thunk
-      }
-      return true;
     }
   }
 );
@@ -55,16 +35,6 @@ export const fetchFollowers = createAsyncThunk(
     } catch (err) {
       return rejectWithValue(err.response?.data || 'Failed to fetch followers');
     }
-  },
-  {
-    // condition callback prevents re-fetching if already loaded
-    condition: (_, { getState }) => {
-      const { followers } = getState().lists;
-      if (followers.items.length > 0 || followers.loading) {
-        return false; // cancel thunk
-      }
-      return true;
-    }
   }
 );
 
@@ -77,37 +47,28 @@ export const fetchFollowing = createAsyncThunk(
     } catch (err) {
       return rejectWithValue(err.response?.data || 'Failed to fetch following');
     }
-  },
-  {
-    // condition callback prevents re-fetching if already loaded
-    condition: (_, { getState }) => {
-      const { following } = getState().lists;
-      if (following.items.length > 0 || following.loading) {
-        return false; // cancel thunk
-      }
-      return true;
-    }
   }
 );
 
 const listsSlice = createSlice({
-  name: 'lists',
+  name: 'users',
   initialState: {
-    recipes: { items: [], loading: false, error: null },
-    favorites: { items: [], loading: false, error: null },
-    followers: { items: [], loading: false, error: null },
-    following: { items: [], loading: false, error: null }
+    recipes: { items: null, limit: 12, page: 1, totalCount: 0, loading: false, error: null },
+    favorites: { items: null, limit: 12, page: 1, totalCount: 0, loading: false, error: null },
+    followers: { items: null, limit: 12, page: 1, totalCount: 0, loading: false, error: null },
+    following: { items: null, limit: 12, page: 1, totalCount: 0, loading: false, error: null }
   },
   reducers: {},
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     // Recipes
     builder
-      .addCase(fetchRecipes.pending, (state) => {
+      .addCase(fetchRecipes.pending, state => {
         state.recipes.loading = true;
       })
       .addCase(fetchRecipes.fulfilled, (state, action) => {
+        console.log(action.payload);
         state.recipes.loading = false;
-        state.recipes.items = action.payload;
+        state.recipes.items = action.payload.items;
       })
       .addCase(fetchRecipes.rejected, (state, action) => {
         state.recipes.loading = false;
@@ -116,12 +77,12 @@ const listsSlice = createSlice({
 
     // Favorites
     builder
-      .addCase(fetchFavorites.pending, (state) => {
+      .addCase(fetchFavorites.pending, state => {
         state.favorites.loading = true;
       })
       .addCase(fetchFavorites.fulfilled, (state, action) => {
         state.favorites.loading = false;
-        state.favorites.items = action.payload;
+        state.favorites.items = action.payload.items;
       })
       .addCase(fetchFavorites.rejected, (state, action) => {
         state.favorites.loading = false;
@@ -130,12 +91,12 @@ const listsSlice = createSlice({
 
     // Followers
     builder
-      .addCase(fetchFollowers.pending, (state) => {
+      .addCase(fetchFollowers.pending, state => {
         state.followers.loading = true;
       })
       .addCase(fetchFollowers.fulfilled, (state, action) => {
         state.followers.loading = false;
-        state.followers.items = action.payload;
+        state.followers.items = action.payload.items;
       })
       .addCase(fetchFollowers.rejected, (state, action) => {
         state.followers.loading = false;
@@ -144,12 +105,12 @@ const listsSlice = createSlice({
 
     // Following
     builder
-      .addCase(fetchFollowing.pending, (state) => {
+      .addCase(fetchFollowing.pending, state => {
         state.following.loading = true;
       })
       .addCase(fetchFollowing.fulfilled, (state, action) => {
         state.following.loading = false;
-        state.following.items = action.payload;
+        state.following.items = action.payload.items;
       })
       .addCase(fetchFollowing.rejected, (state, action) => {
         state.following.loading = false;
@@ -158,7 +119,8 @@ const listsSlice = createSlice({
   }
 });
 
+export const selectListRecipes = (state) => state.users.recipes.items;
+export const selectIsLoadingListRecipes = (state) => state.users.recipes.isLoading;
+export const selectListRecipesError = (state) => state.users.recipes.error;
+
 export default listsSlice.reducer;
-
-
-

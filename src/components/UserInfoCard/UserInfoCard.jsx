@@ -7,6 +7,7 @@ import css from './UserInfoCard.module.css';
 import noAvatarImg from '@assets/images/no-avatar.webp';
 
 import Icon from '../Icon/Icon';
+import Loader from '../Loader/Loader';
 
 import { uploadAvatar, selectUser } from '@/redux/auth/authSlice';
 
@@ -16,6 +17,10 @@ const UserInfoCard = () => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const fileInputRef = useRef(null);
+
+  if (!user) {
+    return <Loader />;
+  }
 
   const handleAploadAvatar = () => {
     fileInputRef.current.click(); // open file picker

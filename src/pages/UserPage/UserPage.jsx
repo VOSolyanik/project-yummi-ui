@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 
-
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import clsx from 'clsx';
 
@@ -14,17 +13,21 @@ import { useAuthModal } from '@hooks/useAuthModal.js';
 
 import Button from '@/components/Button/Button';
 import Tabs from '@/components/Tabs/Tabs';
-import UserInfoCard  from '@/components/UserInfoCard/UserInfoCard';
-import { getCurrentUser } from '@/redux/auth/authSlice';
+import UserInfoCard from '@/components/UserInfoCard/UserInfoCard';
+import { getCurrentUser, selectAuthToken, selectUser, selectAuthLoading } from '@/redux/auth/authSlice';
 
-
-const UserProfilePage = () => {
+const UserPage = () => {
   const dispatch = useDispatch();
   const { openLogoutModal } = useAuthModal();
+  const token = useSelector(selectAuthToken);
+  const user = useSelector(selectUser);
+  const isLoading = useSelector(selectAuthLoading);
 
-  // useEffect(() => {
-  //   dispatch(getCurrentUser());
-  // }, [dispatch]);
+  useEffect(() => {
+    if (token && !user && !isLoading) {
+      dispatch(getCurrentUser());
+    }
+  }, [dispatch, token, user, isLoading]);
 
   const handleLogout = () => {
     openLogoutModal();
@@ -41,14 +44,15 @@ const UserProfilePage = () => {
         </MainTitle>
 
         <Subtitle className={css.subtitle}>
-          Reveal your culinary art, 
-          share your favorite recipe and create gastronomic masterpieces with us.
+          Reveal your culinary art, share your favorite recipe and create gastronomic masterpieces with us.
         </Subtitle>
       </div>
       <div className={css.sectionWrapper}>
         <div>
-          <UserInfoCard/>
-          <Button className={css.btn} variant="primary" onClick={handleLogout}>LOG OUT</Button>
+          <UserInfoCard />
+          <Button className={css.btn} variant="primary" onClick={handleLogout}>
+            LOG OUT
+          </Button>
         </div>
         <Tabs />
       </div>
@@ -56,4 +60,4 @@ const UserProfilePage = () => {
   );
 };
 
-export default UserProfilePage;
+export default UserPage;
