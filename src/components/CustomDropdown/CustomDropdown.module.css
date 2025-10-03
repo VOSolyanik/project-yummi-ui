@@ -65,6 +65,7 @@
   height: 18px;
   flex-shrink: 0;
   transition: transform 0.2s ease;
+  color: var(--black-color);
 }
 
 .chevron.rotated {
@@ -116,7 +117,7 @@
 }
 
 .option:hover {
-  background-color: #F8F8F8;
+  background-color: var(--light-gray-color);
 }
 
 .option.selected {

@@ -18,7 +18,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  
+
   font-family: var(--primary-font);
   font-style: normal;
   font-weight: 400;
@@ -54,7 +54,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  
+
   font-family: var(--primary-font);
   font-style: normal;
   font-weight: 400;
@@ -80,7 +80,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  
+
   font-family: var(--primary-font);
   font-style: normal;
   font-weight: 400;
@@ -100,7 +100,7 @@
   .pagination {
     gap: 4px;
   }
-  
+
   .pageButton {
     width: 40px;
     height: 40px;
@@ -115,7 +115,7 @@
   .pageButton.active {
     border: 1px solid var(--black-color);
   }
-  
+
   .ellipsis {
     width: 40px;
     height: 40px;
@@ -126,14 +126,20 @@
     letter-spacing: 0.17px;
     text-align: center;
   }
-  
+
   .navButton {
     width: 20px;
     height: 36px;
     font-size: 14px;
   }
-  
+
   .pageNumbers {
     gap: 2px;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .navButton {
+    width: 10px;
   }
 }

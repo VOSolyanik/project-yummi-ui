@@ -78,7 +78,7 @@ const CategoryList = ({ categories, onCategoryClick, isLoading, error }) => {
         isAllCategories={true}
         onClick={handleAllCategoriesClick}
         size="normal"
-        buttonText={showAllCategories ? "VIEW ALL RECIPES" : "ALL CATEGORIES"}
+        buttonText={showAllCategories ? 'VIEW ALL RECIPES' : 'ALL CATEGORIES'}
       />
     </div>
   );

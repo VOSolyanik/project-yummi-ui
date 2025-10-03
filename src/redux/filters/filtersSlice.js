@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { filtersAPI } from '../../services/recipesApi.js';
+import { filtersAPI } from '@services/recipesApi.js';
 
 export const fetchIngredients = createAsyncThunk(
   'filters/fetchIngredients',
@@ -33,7 +33,7 @@ const initialState = {
   isLoadingIngredients: false,
   isLoadingAreas: false,
   ingredientsError: null,
-  areasError: null,
+  areasError: null
 };
 
 const filtersSlice = createSlice({
@@ -53,7 +53,7 @@ const filtersSlice = createSlice({
     clearErrors: (state) => {
       state.ingredientsError = null;
       state.areasError = null;
-    },
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -81,7 +81,7 @@ const filtersSlice = createSlice({
         state.isLoadingAreas = false;
         state.areasError = action.payload;
       });
-  },
+  }
 });
 
 export const { setSelectedIngredient, setSelectedArea, clearFilters, clearErrors } = filtersSlice.actions;

@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useCallback, useMemo } from 'react';
+
 import { useDispatch, useSelector } from 'react-redux';
 
 import css from './RecipeFilters.module.css';
-import CustomDropdown from '@components/CustomDropdown/CustomDropdown';
 
 import {
   fetchIngredients,
@@ -14,8 +14,11 @@ import {
   selectSelectedIngredient,
   selectSelectedArea,
   selectIsLoadingIngredients,
-  selectIsLoadingAreas,
+  selectIsLoadingAreas
 } from '@redux/filters/filtersSlice';
+
+import CustomDropdown from '@components/CustomDropdown/CustomDropdown';
+
 
 const RecipeFilters = ({ onFiltersChange }) => {
   const dispatch = useDispatch();
