@@ -31,7 +31,9 @@ const initialState = {
   selectedIngredient: null,
   selectedArea: null,
   isLoadingIngredients: false,
-  isLoadingAreas: false
+  isLoadingAreas: false,
+  ingredientsError: null,
+  areasError: null
 };
 
 const filtersSlice = createSlice({
@@ -47,34 +49,42 @@ const filtersSlice = createSlice({
     clearFilters: (state) => {
       state.selectedIngredient = null;
       state.selectedArea = null;
+    },
+    clearErrors: (state) => {
+      state.ingredientsError = null;
+      state.areasError = null;
     }
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchIngredients.pending, (state) => {
         state.isLoadingIngredients = true;
+        state.ingredientsError = null;
       })
       .addCase(fetchIngredients.fulfilled, (state, action) => {
         state.isLoadingIngredients = false;
         state.ingredients = action.payload;
       })
-      .addCase(fetchIngredients.rejected, (state) => {
+      .addCase(fetchIngredients.rejected, (state, action) => {
         state.isLoadingIngredients = false;
+        state.ingredientsError = action.payload;
       })
       .addCase(fetchAreas.pending, (state) => {
         state.isLoadingAreas = true;
+        state.areasError = null;
       })
       .addCase(fetchAreas.fulfilled, (state, action) => {
         state.isLoadingAreas = false;
         state.areas = action.payload;
       })
-      .addCase(fetchAreas.rejected, (state) => {
+      .addCase(fetchAreas.rejected, (state, action) => {
         state.isLoadingAreas = false;
+        state.areasError = action.payload;
       });
   }
 });
 
-export const { setSelectedIngredient, setSelectedArea, clearFilters } = filtersSlice.actions;
+export const { setSelectedIngredient, setSelectedArea, clearFilters, clearErrors } = filtersSlice.actions;
 
 export const selectIngredients = (state) => state.filters.ingredients;
 export const selectAreas = (state) => state.filters.areas;
@@ -82,5 +92,7 @@ export const selectSelectedIngredient = (state) => state.filters.selectedIngredi
 export const selectSelectedArea = (state) => state.filters.selectedArea;
 export const selectIsLoadingIngredients = (state) => state.filters.isLoadingIngredients;
 export const selectIsLoadingAreas = (state) => state.filters.isLoadingAreas;
+export const selectIngredientsError = (state) => state.filters.ingredientsError;
+export const selectAreasError = (state) => state.filters.areasError;
 
 export default filtersSlice.reducer;
