@@ -46,6 +46,7 @@
   --error-border-color: #fecaca;
   --empty-bg-color: #f8f9fa;
   --empty-border-color: #e9ecef;
+  --icon-border-light: rgba(191, 190, 190, 1);
 }
 
 html {

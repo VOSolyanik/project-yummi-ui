@@ -50,5 +50,5 @@ export const filtersAPI = {
       console.error('Error fetching areas:', error);
       throw error;
     }
-  },
+  }
 };

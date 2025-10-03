@@ -1,4 +1,5 @@
 import React from 'react';
+
 import css from './ErrorBoundary.module.css';
 
 class ErrorBoundary extends React.Component {
@@ -22,7 +23,7 @@ class ErrorBoundary extends React.Component {
           <div className={css.errorContent}>
             <h2 className={css.errorTitle}>Oops! Something went wrong</h2>
             <p className={css.errorMessage}>
-              We're sorry, but something unexpected happened. Please try refreshing the page.
+              We&apos;re sorry, but something unexpected happened. Please try refreshing the page.
             </p>
             <button 
               className={css.retryButton}

@@ -9,10 +9,6 @@ const RecipePagination = ({
   isLoading,
   totalRecipes 
 }) => {
-  if (!totalRecipes || totalRecipes === 0) {
-    return null;
-  }
-
   const pageNumbers = useMemo(() => {
     if (!totalPages || totalPages === 0) {
       return [1];
@@ -61,6 +57,10 @@ const RecipePagination = ({
       onPageChange(page);
     }
   }, [currentPage, isLoading, onPageChange]);
+
+  if (!totalRecipes || totalRecipes === 0) {
+    return null;
+  }
   
   const activePage = (!totalPages || totalPages === 0) ? 1 : currentPage;
   const canPrev = activePage > 1;
