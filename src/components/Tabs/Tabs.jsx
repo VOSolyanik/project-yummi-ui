@@ -48,10 +48,10 @@ const Tabs = () => {
 
       {/* Tab Content */}
       <div className={css.tabContent}>
-        {activeTab === 'recipes' && <ListItems items={[]} type={'recipe'}/>}
-        {activeTab === 'favorites' && <ListItems items={[]} type={'recipe'}/>}
-        {activeTab === 'followers' && <ListItems items={[]} type={'user'}/>}
-        {activeTab === 'following' && <ListItems items={[]} type={'user'}/>}
+        {activeTab === 'recipes' && <ListItems type={'recipes'}/>}
+        {activeTab === 'favorites' && <ListItems type={'favorites'}/>}
+        {activeTab === 'followers' && <ListItems type={'followers'}/>}
+        {activeTab === 'following' && <ListItems type={'following'}/>}
       </div>
     </div>
   );
