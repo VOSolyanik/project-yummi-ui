@@ -1,16 +1,23 @@
 .pathInfo {
   display: flex;
   gap: 8px;
-  margin-bottom: 18px;
-  letter-spacing: -2%;
+  margin-bottom: 20px;
+  font-size: 12px;
+  font-weight: bold;
   text-transform: uppercase;
+  color: var(--color-gray);
 }
 
 .homeLink {
   text-decoration: none;
-  color: var(--color-gray);
 }
 
 .recipeTitle {
-  color: var(--main-text-color);
+  color: var(--color-black);
+}
+
+@media (min-width: 768px) {
+  .pathInfo {
+    font-size: 14px;
+  }
 }
