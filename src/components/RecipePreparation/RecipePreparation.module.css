@@ -1,0 +1,22 @@
+.recipePreparation {
+  margin-bottom: 20px;
+}
+
+.recipePreparation h3 {
+  color: var(--color-black); 
+  font-size: 18px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.preparationText {
+  color: var(--secondary-text-color); 
+  line-height: 1.5;
+}
+
+/* Desktop Styles */
+@media (min-width: 768px) {
+  .recipePreparation h3 {
+    font-size: 20px;
+  }
+}

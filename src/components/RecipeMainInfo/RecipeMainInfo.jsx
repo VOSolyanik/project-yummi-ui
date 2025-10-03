@@ -3,9 +3,6 @@ import React from 'react';
 import styles from './RecipeMainInfo.module.css';
 
 const RecipeMainInfo = ({ recipe, onAuthorClick, owner }) => {
-  // Simple test: Log recipe title
-  console.log('RecipeMainInfo - Recipe Title:', recipe.title);
-
   return (
     <div className={styles.recipeMainInfo}>
       <img

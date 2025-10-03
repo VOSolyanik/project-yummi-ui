@@ -3,8 +3,8 @@
 }
 
 .recipeIngredients h3 {
-  color: var(--color-black); /* Use color variable */
-  font-size: 18px; /* Default mobile size */
+  color: var(--color-black); 
+  font-size: 18px; 
   margin-bottom: 10px;
   text-transform: uppercase;
 }
@@ -25,7 +25,7 @@
   height: 50px;
   border-radius: 50%;
   margin-right: 10px;
-  border: 1px solid var(--color-gray); /* Use color variable */
+  border: 1px solid var(--color-gray); 
 }
 
 .ingredientData {
@@ -35,12 +35,12 @@
 
 .ingredientName {
   font-weight: bold;
-  color: var(--color-black); /* Use color variable */
+  color: var(--color-black); 
 }
 
 .ingredientQuantity {
-  color: var(--color-gray); /* Use color variable */
-  font-size: 14px; /* Default mobile size */
+  color: var(--color-gray); 
+  font-size: 14px; 
 }
 
 /* Desktop Styles */

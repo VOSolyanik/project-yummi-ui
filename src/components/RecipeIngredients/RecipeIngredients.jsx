@@ -3,12 +3,6 @@ import React from 'react';
 import styles from './RecipeIngredients.module.css';
 
 const RecipeIngredients = ({ ingredients, recipeIngredients }) => {
-  // Simple test: Log number of ingredients
-  console.log(
-    'RecipeIngredients - Number of Ingredients:',
-    recipeIngredients.length,
-  );
-
   return (
     <div className={styles.recipeIngredients}>
       <h3>Ingredients</h3>
