@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
+
+import { useDispatch } from 'react-redux';
 
 import clsx from 'clsx';
 
@@ -13,10 +15,16 @@ import { useAuthModal } from '@hooks/useAuthModal.js';
 import Button from '@/components/Button/Button';
 import Tabs from '@/components/Tabs/Tabs';
 import UserInfoCard  from '@/components/UserInfoCard/UserInfoCard';
+import { getCurrentUser } from '@/redux/auth/authSlice';
 
 
 const UserProfilePage = () => {
+  const dispatch = useDispatch();
   const { openLogoutModal } = useAuthModal();
+
+  useEffect(() => {
+    dispatch(getCurrentUser());
+  }, [dispatch]);
 
   const handleLogout = () => {
     openLogoutModal();

@@ -4,6 +4,8 @@ import clsx from 'clsx';
 
 import css from './Tabs.module.css';
 
+import ListItems from '../ListItems/ListItems';
+
 const Tabs = () => {
   const [activeTab, setActiveTab] = useState('recipes');
 
@@ -12,7 +14,7 @@ const Tabs = () => {
       <div className={css.tabList}>
         <button
           className={clsx(css.tabBtn, {
-            [css.active]: activeTab === 'recipes',
+            [css.active]: activeTab === 'recipes'
           })}
           onClick={() => setActiveTab('recipes')}
         >
@@ -20,7 +22,7 @@ const Tabs = () => {
         </button>
         <button
           className={clsx(css.tabBtn, {
-            [css.active]: activeTab === 'favorites',
+            [css.active]: activeTab === 'favorites'
           })}
           onClick={() => setActiveTab('favorites')}
         >
@@ -28,7 +30,7 @@ const Tabs = () => {
         </button>
         <button
           className={clsx(css.tabBtn, {
-            [css.active]: activeTab === 'followers',
+            [css.active]: activeTab === 'followers'
           })}
           onClick={() => setActiveTab('followers')}
         >
@@ -36,7 +38,7 @@ const Tabs = () => {
         </button>
         <button
           className={clsx(css.tabBtn, {
-            [css.active]: activeTab === 'following',
+            [css.active]: activeTab === 'following'
           })}
           onClick={() => setActiveTab('following')}
         >
@@ -46,10 +48,10 @@ const Tabs = () => {
 
       {/* Tab Content */}
       <div className={css.tabContent}>
-        {activeTab === 'recipes' && <p>Content for recipes</p>}
-        {activeTab === 'favorites' && <p>Content for favorites</p>}
-        {activeTab === 'followers' && <p>Content for followers</p>}
-        {activeTab === 'following' && <p>Content for following</p>}
+        {activeTab === 'recipes' && <ListItems items={[]} type={'recipe'}/>}
+        {activeTab === 'favorites' && <ListItems items={[]} type={'recipe'}/>}
+        {activeTab === 'followers' && <ListItems items={[]} type={'user'}/>}
+        {activeTab === 'following' && <ListItems items={[]} type={'user'}/>}
       </div>
     </div>
   );
