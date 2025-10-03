@@ -1,19 +1,74 @@
+/* Mobile-first base styles */
 .header {
-  background-color: var(--color-gray-100);
+  margin-top: 0.5rem;
   padding: 1rem 0;
+  min-height: 70px;
+  transition: all 0.2s ease;
+}
+
+/* Inverse mode for dark backgrounds */
+.header.inverse {
+  position: relative;
+  margin: 0.5rem 0.5rem -78px;
+  z-index: 2;
 }
 
 .container {
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  gap: 0.25rem;
 }
 
-.logo {
+.authWrapper {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-left: auto;
 }
 
-.logo img {
-  width: 136px;
-  margin-right: -136px;
+.navWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Tablet styles (768px+) */
+@media screen and (min-width: 768px) {
+  .header {
+    padding: 1.25rem 0;
+    margin-top: 1rem;
+  }
+
+  .header.inverse {
+    padding: 1.25rem 0;
+    margin: 1rem 0.5rem -94px;
+  }
+
+  .logo {
+    flex: 1 0 124px;
+  }
+
+  .navWrapper {
+    flex: 1 0 auto;
+    order: 2;
+  }
+
+  .authWrapper {
+    flex: 1 0 124px;
+    order: 3;
+  }
+}
+
+/* Desktop styles (1440px+) */
+@media screen and (min-width: 1440px) {
+  .header {
+    padding: 1.25rem 0;
+    margin-top: 1.25rem;
+  }
+
+  .header.inverse {
+    padding: 1.25rem 0;
+    margin: 1.25rem 0.5rem -98px;
+  }
 }
