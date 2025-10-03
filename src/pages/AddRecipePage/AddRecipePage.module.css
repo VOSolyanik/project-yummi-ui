@@ -6,21 +6,11 @@
 }
 
 .text {
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 20px;
-  letter-spacing: -0.28px;
   margin-bottom: 32px;
+  color: var(--black-color);
 }
 
 .title {
-  font-size: 28px;
-  font-style: normal;
-  font-weight: 800;
-  line-height: 32px;
-  letter-spacing: -0.56px;
-  text-transform: uppercase;
   margin-bottom: 16px;
 }
 
