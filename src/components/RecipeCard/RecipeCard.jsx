@@ -191,7 +191,7 @@ const RecipeCard = ({
               aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
             >
               <Icon
-                name="favorites"
+                name="heart"
                 size={18}
                 className={css.heartIcon}
               />
