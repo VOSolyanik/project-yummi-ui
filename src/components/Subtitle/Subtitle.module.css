@@ -1,24 +1,19 @@
 .subtitle {
-  margin: 0;
-  font-size: 14px;
-  line-height: 1.5;
-  color: var(--secondary-text-color);
-}
-
-.categoriesSubtitle {
   font-family: 'Mulish', sans-serif;
+  font-size: 14px;
+  line-height: 20px;
   font-weight: 500;
-  font-style: normal;
-  font-size: 16px;
-  line-height: 24px;
-  letter-spacing: -0.02em; /* -2% */
+  letter-spacing: -0.02em;
   color: var(--secondary-text-color);
-  margin: 0;
-  max-width: 800px;
+  margin-bottom: 32px;
 }
 
 @media screen and (min-width: 768px) {
   .subtitle {
     font-size: 16px;
+    line-height: 24px;
+    color: var(--charcoal-rgb);
+    white-space: pre-line;
+    margin-bottom: 40px;
   }
 }
