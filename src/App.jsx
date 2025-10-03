@@ -20,6 +20,7 @@ const isUIKitEnabled = import.meta.env.VITE_SHOW_UI_KIT === 'true';
 const HomePage = lazy(() => import('@pages/HomePage/HomePage'));
 const NotFoundPage = lazy(() => import('@pages/NotFoundPage/NotFoundPage'));
 const AddRecipePage = lazy(() => import('@pages/AddRecipePage/AddRecipePage'));
+const RecipePage = lazy(() => import('@pages/RecipePage/RecipePage'));
 const UIKitPage = lazy(() => import('@pages/UIKitPage/UIKitPage'));
 const UserProfilePage = lazy(() => import('@/pages/UserPage/UserPage'));
 
@@ -79,6 +80,16 @@ const App = () => {
                     }
                   />
                 </Route>
+                <Route
+                  path="/recipe/:recipeId"
+                  element={
+                    <PrivateRoute>
+                      <Suspense fallback={<Loader />}>
+                        <RecipePage />
+                      </Suspense>
+                    </PrivateRoute>
+                  }
+                />
                 <Route
                   path="*"
                   element={
