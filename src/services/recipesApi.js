@@ -28,6 +28,18 @@ export const recipesAPI = {
       console.error('Error fetching recipes:', error);
       throw error;
     }
+  },
+
+  createRecipe: async (formData) => {
+    try {
+      const { data } = await api.post('/recipes', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+      return data ?? {};
+    } catch (error) {
+      console.error('Failed to create recipe:', error);
+      throw error;
+    }
   }
 };
 
