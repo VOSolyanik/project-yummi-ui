@@ -2,12 +2,13 @@ import { useEffect, useState } from 'react';
 
 import { Helmet } from 'react-helmet-async';
 import toast from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 import css from './AddRecipePage.module.css';
 
 import AddRecipeForm from '@components/AddRecipeForm/AddRecipeForm';
 import MainTitle from '@components/MainTitle/MainTitle.jsx';
+import PathInfo from '@components/PathInfo/PathInfo.jsx';
 import Subtitle from '@components/Subtitle/Subtitle.jsx';
 
 import { BASE_TITLE } from '@constants/pages';
@@ -87,6 +88,7 @@ const AddRecipePage = () => {
       </Helmet>
 
       <section className={css.container}>
+        <PathInfo current='Add recipe'/>
         <MainTitle level={2} id='add-recipe-heading' className={css.title}>Add Recipe</MainTitle>
         <Subtitle className={css.text}>
           Reveal your culinary art, share your favorite recipe
