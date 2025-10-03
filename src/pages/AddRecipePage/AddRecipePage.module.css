@@ -1,0 +1,43 @@
+/* Styles for Mobile devices */
+.container {
+  max-width: 375px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.text {
+  margin-bottom: 32px;
+  color: var(--black-color);
+}
+
+.title {
+  margin-bottom: 16px;
+}
+
+/* Styles for Tablet devices */
+@media only screen and (min-width: 768px) {
+  .container {
+    max-width: 768px;
+    padding: 0 32px;
+  }
+  .text {
+    font-size: 16px;
+    margin-bottom: 40px;
+    max-width: 443px;
+  }
+  .title {
+    font-size: 40px;
+    margin-bottom: 20px;
+    line-height: 44px;
+    letter-spacing: -0.8px;
+  }
+}
+
+/* Styles for Desktop devices */
+@media only screen and (min-width: 1440px) {
+  .container {
+    max-width: 1440px;
+    padding: 0 32px;
+  }
+}
+
