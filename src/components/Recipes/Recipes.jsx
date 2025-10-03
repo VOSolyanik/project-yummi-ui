@@ -10,7 +10,7 @@ import RecipeFilters from '@components/RecipeFilters/RecipeFilters';
 import RecipeList from '@components/RecipeList/RecipeList';
 import RecipePagination from '@components/RecipePagination/RecipePagination';
 import ErrorBoundary from '@components/ErrorBoundary/ErrorBoundary';
-import Icon from '../Icon/Icon';
+import Icon from '@components/Icon/Icon';
 
 import {
   fetchRecipes,

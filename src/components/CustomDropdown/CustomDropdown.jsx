@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import css from './CustomDropdown.module.css';
-import Icon from '../Icon/Icon';
+import Icon from '@components/Icon/Icon';
 
 const CustomDropdown = ({
   options = [],

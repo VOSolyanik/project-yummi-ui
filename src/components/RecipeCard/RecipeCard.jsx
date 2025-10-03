@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import css from './RecipeCard.module.css';
 
-import Icon from '../Icon/Icon';
+import Icon from '@components/Icon/Icon';
 import noImagePlaceholder from '../../assets/images/no-image.png';
 
 import { useAuth } from '../../hooks/useAuth';
