@@ -2,6 +2,8 @@ import React, { useEffect, useState, useCallback } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 
+import { checkRecipesFavorites } from '@services/favoritesApi.js';
+
 import css from './Recipes.module.css';
 
 import {
@@ -28,7 +30,6 @@ import Subtitle from '@components/Subtitle/Subtitle';
 
 
 import { useAuth } from '@hooks/useAuth.js';
-import { checkRecipesFavorites } from '@services/favoritesApi.js';
 
 const MOBILE_BREAKPOINT = 767;
 const MOBILE_ITEMS_PER_PAGE = 8;
@@ -103,7 +104,9 @@ const Recipes = ({ categoryData, onBackToCategories }) => {
       }
     };
 
-    checkCurrentRecipesFavorites();
+    checkCurrentRecipesFavorites().catch(error => {
+      console.error('Error in checkCurrentRecipesFavorites:', error);
+    });
   }, [isAuthenticated, user?.id, recipes]);
 
   const handleFiltersChange = useCallback(({ ingredient, area }) => {
