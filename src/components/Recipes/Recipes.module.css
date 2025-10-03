@@ -51,7 +51,7 @@
   line-height: 18px;
   letter-spacing: -0.02em;
   text-transform: uppercase;
-  color: #050505;
+  color: var(--black-color);
   cursor: pointer;
   transition: opacity 0.2s ease;
 }
@@ -61,14 +61,14 @@
 }
 
 .backButton:focus {
-  outline: 2px solid #050505;
-  outline-offset: 2px;
+  outline: none;
 }
 
 .backIcon {
   width: 18px;
   height: 18px;
   flex-shrink: 0;
+  color: var(--black-color);
 }
 
 .title {
@@ -79,7 +79,7 @@
   line-height: 44px;
   letter-spacing: -0.02em;
   text-transform: uppercase;
-  color: #050505;
+  color: var(--black-color);
 }
 
 .subtitle {
@@ -89,14 +89,14 @@
   font-size: 16px;
   line-height: 24px;
   letter-spacing: -0.02em;
-  color: #1A1A1A;
+  color: var(--main-text-color);
   white-space: pre-line;
 }
 
 
 @media screen and (max-width: 767px) {
   .recipes {
-    padding: 2rem 0;
+    padding: 2rem 16px;
     gap: 32px;
   }
 

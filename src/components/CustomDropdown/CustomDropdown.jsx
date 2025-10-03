@@ -1,13 +1,15 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import css from './CustomDropdown.module.css';
-import chevronDownIcon from '../../assets/icons/chevron-down.svg';
 
-const CustomDropdown = ({ 
-  options = [], 
-  value, 
-  onChange, 
-  placeholder = "Select option",
-  disabled = false 
+import css from './CustomDropdown.module.css';
+
+import Icon from '@components/Icon/Icon';
+
+const CustomDropdown = ({
+  options = [],
+  value,
+  onChange,
+  placeholder = 'Select option',
+  disabled = false
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(
@@ -63,10 +65,10 @@ const CustomDropdown = ({
         <span className={css.selectedText}>
           {selectedOption ? selectedOption.label : placeholder}
         </span>
-        <img
-          src={chevronDownIcon}
-          alt="Dropdown arrow"
-          className={`${css.chevron} ${isOpen ? css.rotated : ''}`}
+        <Icon 
+          name="arrow-down" 
+          size={18} 
+          className={`${css.chevron} ${isOpen ? css.rotated : ''}`} 
         />
       </button>
 

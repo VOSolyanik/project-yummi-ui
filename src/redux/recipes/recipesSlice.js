@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { recipesAPI } from '../../services/recipesApi.js';
+
+import { recipesAPI } from '@/services/index.js';
 
 export const fetchRecipes = createAsyncThunk(
   'recipes/fetchRecipes',
@@ -24,7 +25,7 @@ const initialState = {
   currentPage: 1,
   totalRecipes: 0,
   isLoading: false,
-  error: null,
+  error: null
 };
 
 const recipesSlice = createSlice({
@@ -39,7 +40,7 @@ const recipesSlice = createSlice({
       state.totalPages = 0;
       state.currentPage = 1;
       state.totalRecipes = 0;
-    },
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -58,7 +59,7 @@ const recipesSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       });
-  },
+  }
 });
 
 export const { clearError, clearRecipes } = recipesSlice.actions;
