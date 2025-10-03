@@ -1,35 +1,34 @@
 import React, { useEffect, useState, useCallback } from 'react';
+
 import { useDispatch, useSelector } from 'react-redux';
-import toast from 'react-hot-toast';
 
 import css from './Recipes.module.css';
-
-import MainTitle from '@components/MainTitle/MainTitle';
-import Subtitle from '@components/Subtitle/Subtitle';
-import RecipeFilters from '@components/RecipeFilters/RecipeFilters';
-import RecipeList from '@components/RecipeList/RecipeList';
-import RecipePagination from '@components/RecipePagination/RecipePagination';
-import ErrorBoundary from '@components/ErrorBoundary/ErrorBoundary';
-import Icon from '@components/Icon/Icon';
-
-import {
-  fetchRecipes,
-  selectRecipes,
-  selectTotalPages,
-  selectCurrentPage,
-  selectTotalRecipes,
-  selectIsLoadingRecipes,
-  selectRecipesError,
-} from '@redux/recipes/recipesSlice';
 
 import {
   selectSelectedIngredient,
   selectSelectedArea,
-  clearFilters,
+  clearFilters
 } from '@redux/filters/filtersSlice';
+import {
+  fetchRecipes,
+  selectRecipes,
+  selectTotalPages,
+  selectTotalRecipes,
+  selectIsLoadingRecipes,
+  selectRecipesError
+} from '@redux/recipes/recipesSlice';
 
-import { useAuth } from '../../hooks/useAuth';
-import { checkRecipesFavorites } from '../../services/favoritesApi';
+import ErrorBoundary from '@components/ErrorBoundary/ErrorBoundary';
+import Icon from '@components/Icon/Icon';
+import MainTitle from '@components/MainTitle/MainTitle';
+import RecipeFilters from '@components/RecipeFilters/RecipeFilters';
+import RecipeList from '@components/RecipeList/RecipeList';
+import RecipePagination from '@components/RecipePagination/RecipePagination';
+import Subtitle from '@components/Subtitle/Subtitle';
+
+
+import { useAuth } from '@hooks/useAuth.js';
+import { checkRecipesFavorites } from '@services/favoritesApi.js';
 
 const MOBILE_BREAKPOINT = 767;
 const MOBILE_ITEMS_PER_PAGE = 8;

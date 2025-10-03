@@ -1,12 +1,14 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
+
 import css from './CustomDropdown.module.css';
+
 import Icon from '@components/Icon/Icon';
 
 const CustomDropdown = ({
   options = [],
   value,
   onChange,
-  placeholder = "Select option",
+  placeholder = 'Select option',
   disabled = false
 }) => {
   const [isOpen, setIsOpen] = useState(false);

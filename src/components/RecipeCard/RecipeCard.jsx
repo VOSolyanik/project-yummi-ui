@@ -1,23 +1,25 @@
 import React, { useState, useCallback, useMemo } from 'react';
+
+import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+
 import PropTypes from 'prop-types';
 
 import css from './RecipeCard.module.css';
 
 import Icon from '@components/Icon/Icon';
+
 import noImagePlaceholder from '../../assets/images/no-image.png';
+import { useAuth } from '@hooks/useAuth.js';
+import { useAuthModal } from '@hooks/useAuthModal.js';
+import { addToFavorites, removeFromFavorites, clearFavoritesCache } from '@services/favoritesApi.js';
 
-import { useAuth } from '../../hooks/useAuth';
-import { useAuthModal } from '../../hooks/useAuthModal';
-import { addToFavorites, removeFromFavorites, clearFavoritesCache } from '../../services/favoritesApi';
-import toast from 'react-hot-toast';
-
-const RecipeCard = ({ 
-  recipe, 
-  onAuthorClick = null, 
-  onRecipeClick = null, 
-  favoriteRecipeIds = null, 
-  onFavoriteChange = null 
+const RecipeCard = ({
+  recipe,
+  onAuthorClick = null,
+  onRecipeClick = null,
+  favoriteRecipeIds = null,
+  onFavoriteChange = null
 }) => {
   const [imageError, setImageError] = useState(false);
   const [isUpdatingFavorite, setIsUpdatingFavorite] = useState(false);
@@ -27,7 +29,7 @@ const RecipeCard = ({
 
   // Calculate isFavorite from favoriteRecipeIds instead of local state
   const isFavorite = isAuthenticated && favoriteRecipeIds ? favoriteRecipeIds.has(recipe.id) : false;
-  
+
   const buttonClassName = `${css.favoriteButton} ${isFavorite ? css.favoriteActive : ''}`;
 
   const firstName = useMemo(() => {
@@ -82,7 +84,7 @@ const RecipeCard = ({
     } catch (error) {
       // Handle specific server errors
       const errorMessage = error.response?.data?.message || error.message;
-      
+
       if (errorMessage.includes('already in favorites')) {
         // Recipe is already in favorites, notify parent to update UI
         toast.success('Recipe is already in favorites');
@@ -170,18 +172,18 @@ const RecipeCard = ({
           </button>
 
           <div className={css.buttonGroup}>
-                <button
-                  key={`favorite-${recipe.id}-${isFavorite}`}
-                  type="button"
-                  className={buttonClassName}
-                  onClick={handleFavoriteClick}
-                  disabled={isUpdatingFavorite}
-                  aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
-                >
-              <Icon 
-                name="favorites" 
-                size={18} 
-                className={css.heartIcon} 
+            <button
+              key={`favorite-${recipe.id}-${isFavorite}`}
+              type="button"
+              className={buttonClassName}
+              onClick={handleFavoriteClick}
+              disabled={isUpdatingFavorite}
+              aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+            >
+              <Icon
+                name="favorites"
+                size={18}
+                className={css.heartIcon}
               />
             </button>
 
@@ -199,10 +201,10 @@ const RecipeCard = ({
               }}
               aria-label={`View ${recipe.title} recipe`}
             >
-              <Icon 
-                name="arrow-up-right" 
-                size={18} 
-                className={css.arrowIcon} 
+              <Icon
+                name="arrow-up-right"
+                size={18}
+                className={css.arrowIcon}
               />
             </button>
           </div>
@@ -221,13 +223,13 @@ RecipeCard.propTypes = {
     owner: PropTypes.shape({
       id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
       name: PropTypes.string,
-      avatarUrl: PropTypes.string,
-    }),
+      avatarUrl: PropTypes.string
+    })
   }).isRequired,
   onAuthorClick: PropTypes.func,
   onRecipeClick: PropTypes.func,
   favoriteRecipeIds: PropTypes.instanceOf(Set),
-  onFavoriteChange: PropTypes.func,
+  onFavoriteChange: PropTypes.func
 };
 
 
