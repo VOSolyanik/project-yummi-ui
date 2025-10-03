@@ -1,0 +1,101 @@
+/* --- Container & spacing --- */
+.photoPreviewBlock {
+  margin-bottom: 32px;
+}
+@media (min-width: 768px) {
+  .photoPreviewBlock {
+    margin-bottom: 80px;
+  }
+}
+
+/* --- Hidden input --- */
+.fileInputHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* --- Upload box (empty state) --- */
+.uploadBox {
+  position: relative;
+  width: 100%;
+  min-height: 318px;
+  border: 1px dashed var(--gray-color);
+  border-radius: 30px;
+  background: var(--white-color);
+  color: var(--gray-color);
+  display: grid;
+  place-items: center;
+  text-align: center;
+  cursor: pointer;
+}
+.uploadBox:hover,
+.uploadBox:focus-visible {
+  outline: none;
+}
+@media (min-width: 768px) {
+  .uploadBox { min-height: 400px; }
+}
+
+.uploadInner {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.uploadText {
+  font-size: var(--fz-base);
+  text-decoration: underline;
+  color: var(--black-color);
+}
+
+/* --- Preview state --- */
+.hasPreview {
+  border: none;
+  overflow: hidden;
+}
+.uploadImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
+.uploadLink {
+  display: block;
+  margin-top: 10px;
+  text-align: center;
+  font-size: var(--fz-base);
+  color: var(--black-color);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.cameraIcon {
+  color: var(--gray-color);
+  width: 38px;
+  height: 38px;
+}
+@media (min-width: 768px) {
+  .cameraIcon { width: 48px; height: 48px; }
+}
+
+.invalid {
+  border-color: var(--red-color);
+  color: var(--red-color);
+  outline: none;
+}
+.invalid::placeholder { color: var(--red-color); }
+
+.error {
+  color: var(--red-color);
+  font-size: var(--fz-small);
+}

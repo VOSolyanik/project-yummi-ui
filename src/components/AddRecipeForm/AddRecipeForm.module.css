@@ -633,3 +633,14 @@
 .filePreview {
   display: none;
 }
+
+.formDropdown {
+  width: 100%;
+  max-width: 343px;
+}
+
+@media (min-width: 768px) {
+  .formDropdown {
+    max-width: 313px;
+  }
+}

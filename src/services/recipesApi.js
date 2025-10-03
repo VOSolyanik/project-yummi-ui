@@ -30,46 +30,6 @@ export const recipesAPI = {
     }
   },
 
-  getCategories: async () => {
-    try {
-      const { data } = await api.get('/categories');
-      return (data || []).map(c => ({
-        id: c.id,
-        name: c.name
-      }));
-    } catch (error) {
-      console.error('Failed to load categories:', error);
-      throw error;
-    }
-  },
-
-  getCountries: async () => {
-    try {
-      const { data } = await api.get('/areas');
-      return (data || []).map(c => ({
-        id: c.id,
-        name: c.name
-      }));
-    } catch (error) {
-      console.error('Failed to load areas:', error);
-      throw error;
-    }
-  },
-
-  getIngredients: async () => {
-    try {
-      const { data } = await api.get('/ingredients');
-      return (data || []).map(i => ({
-        id: i.id,
-        name: i.name,
-        imgUrl: i.imgUrl
-      }));
-    } catch (error) {
-      console.error('Failed to load ingredients:', error);
-      throw error;
-    }
-  },
-
   createRecipe: async (formData) => {
     try {
       const { data } = await api.post('/recipes', formData, {

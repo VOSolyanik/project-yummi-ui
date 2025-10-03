@@ -7,19 +7,21 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import css from './AddRecipeForm.module.css';
 
 import Button from '@components/Button/Button';
+import CustomDropdown from '@components/CustomDropdown/CustomDropdown.jsx';
 import Icon from '@components/Icon/Icon';
 import PhotoUpload from '@components/PhotoUpload/PhotoUpload.jsx';
 
 import { validationSchema } from '@/schemas/addRecipeFormValidation.js';
 
 const AddRecipeForm = ({
-  categories = [],
-  countries = [],
-  ingredients = [],
+  categoryOptions = [],
+  areaOptions = [],
+  ingredientOptions = [],
+  ingredientItems = [], // raw items: [{id,name,imgUrl}]
   initialValues,
   onSubmit
 }) => {
-  const [openSelect, setOpenSelect] = useState(null);
+  const [_, setOpenSelect] = useState(null);
   const fileUrlRef = useRef(null);
 
   useEffect(
@@ -29,21 +31,13 @@ const AddRecipeForm = ({
     []
   );
 
-  const ingredientMap = useMemo(
-    () => Object.fromEntries(ingredients.map(i => [i.id, i])),
-    [ingredients]
-  );
+  const ingredientMap = useMemo(() => Object.fromEntries(ingredientItems.map(i => [i.id, i])), [ingredientItems]);
 
   return (
-    <Formik
-      initialValues={initialValues}
-      validationSchema={validationSchema}
-      onSubmit={onSubmit}
-    >
+    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
       {({ values, setFieldValue, isSubmitting, resetForm, errors, touched }) => (
         <Form className={css.form}>
-
-          <PhotoUpload name="photo" css={css} />
+          <PhotoUpload name="photo" />
 
           {/* Name */}
           <div className={css.mainBlock}>
@@ -85,11 +79,7 @@ const AddRecipeForm = ({
                 )}
               </Field>
               <div className={css.descriptionCounter}>
-                <span
-                  className={
-                    css.counterCurrent + (!values.description.length ? ' ' + css.inactiveText : '')
-                  }
-                >
+                <span className={css.counterCurrent + (!values.description.length ? ' ' + css.inactiveText : '')}>
                   {values.description.length}
                 </span>
                 <span className={css.counterMax}>/200</span>
@@ -101,32 +91,13 @@ const AddRecipeForm = ({
               <div className={css.catTimeBlock}>
                 <div className={css.catBlock}>
                   <div className={css.label}>Category</div>
-                  <div className={css.select}>
-                    <button
-                      type="button"
-                      className={css.selectBtn + (!values.categoryId ? ' ' + css.inactiveText : '')}
-                      onClick={() => setOpenSelect(openSelect === 'category' ? null : 'category')}
-                    >
-                      {values.categoryId ? categories.find(c => c.id === values.categoryId)?.name : 'Select a category'}
-                      <Icon name="arrow-down" size={18} />
-                    </button>
-                    {openSelect === 'category' && (
-                      <div className={css.dropdown}>
-                        {categories.map(c => (
-                          <div
-                            key={c.id}
-                            className={css.option}
-                            onClick={() => {
-                              setFieldValue('categoryId', c.id);
-                              setOpenSelect(null);
-                            }}
-                          >
-                            {c.name}
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
+                  <CustomDropdown
+                    options={categoryOptions}
+                    value={values.categoryId}
+                    onChange={val => setFieldValue('categoryId', val)}
+                    placeholder="Select a category"
+                    className={css.formDropdown}
+                  />
                   <ErrorMessage name="categoryId" component="div" className={css.error} />
                 </div>
 
@@ -138,15 +109,10 @@ const AddRecipeForm = ({
                       className={css.iconBtn}
                       onClick={() => setFieldValue('time', Math.max(10, Number(values.time) - 10))}
                     >
-                      <Icon name="minus"/>
+                      <Icon name="minus" />
                     </button>
 
-                    <span
-                      className={
-                        css.timeValue +
-                        (values.time === 10 ? ' ' + css.inactiveText : '')
-                      }
-                    >
+                    <span className={css.timeValue + (values.time === 10 ? ' ' + css.inactiveText : '')}>
                       {values.time} min
                     </span>
 
@@ -155,7 +121,7 @@ const AddRecipeForm = ({
                       className={css.iconBtn}
                       onClick={() => setFieldValue('time', Number(values.time) + 10)}
                     >
-                      <Icon name="plus"  />
+                      <Icon name="plus" />
                     </button>
                   </div>
                   <ErrorMessage name="time" component="div" className={css.error} />
@@ -164,65 +130,26 @@ const AddRecipeForm = ({
 
               <div className={css.areaBlock}>
                 <div className={css.label}>Area</div>
-                <div className={css.select}>
-                  <button
-                    type="button"
-                    className={css.selectBtn + (!values.areaId ? ' ' + css.inactiveText : '')}
-                    onClick={() => setOpenSelect(openSelect === 'areaId' ? null : 'areaId')}
-                  >
-                    {values.areaId ? countries.find(c => c.id === values.areaId)?.name : 'Area'}
-                    <Icon name="arrow-down" size={18} />
-                  </button>
-                  {openSelect === 'areaId' && (
-                    <div className={css.dropdown}>
-                      {countries.map(c => (
-                        <div
-                          key={c.id}
-                          className={css.option}
-                          onClick={() => {
-                            setFieldValue('areaId', c.id);
-                            setOpenSelect(null);
-                          }}
-                        >
-                          {c.name}
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
+                <CustomDropdown
+                  options={areaOptions}
+                  value={values.areaId}
+                  onChange={val => setFieldValue('areaId', val)}
+                  placeholder="Area"
+                  className={css.formDropdown}
+                />
                 <ErrorMessage name="areaId" component="div" className={css.error} />
               </div>
 
               <div className={css.catTimeBlock}>
                 <div className={css.catBlock}>
                   <div className={css.label}>Ingredients</div>
-                  <div className={css.select}>
-                    <button
-                      type="button"
-                      className={css.selectBtn + (!values.ingredientId ? ' ' + css.inactiveText : '')}
-                      onClick={() => setOpenSelect(openSelect === 'ingredient' ? null : 'ingredient')}
-                    >
-                      {values.ingredientId ? ingredientMap[values.ingredientId]?.name : 'Add the ingredient'}
-                      <Icon name="arrow-down" size={18} />
-                    </button>
-                    {openSelect === 'ingredient' && (
-                      <div className={css.dropdown}>
-                        {ingredients.map(i => (
-                          <div
-                            key={i.id}
-                            className={css.option}
-                            onClick={() => {
-                              setFieldValue('ingredientId', i.id);
-                              setOpenSelect(null);
-                            }}
-                          >
-                            {i.name}
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-
+                  <CustomDropdown
+                    options={ingredientOptions}
+                    value={values.ingredientId}
+                    onChange={val => setFieldValue('ingredientId', val)}
+                    placeholder="Add the ingredient"
+                    className={css.formDropdown}
+                  />
                 </div>
 
                 <div className={css.descriptionWrap}>
@@ -249,7 +176,7 @@ const AddRecipeForm = ({
                 <Button
                   type="button"
                   variant="outline"
-                  size='large'
+                  size="large"
                   onClick={() => {
                     if (!values.ingredientId || !values.ingredientAmount) {
                       toast.error('Select ingredient and amount');
@@ -262,17 +189,14 @@ const AddRecipeForm = ({
                       amount: values.ingredientAmount,
                       imgUrl: ing.imgUrl
                     };
-                    setFieldValue('ingredients', [
-                      ...values.ingredients.filter(i => i.id !== newItem.id),
-                      newItem
-                    ]);
+                    setFieldValue('ingredients', [...values.ingredients.filter(i => i.id !== newItem.id), newItem]);
                     setFieldValue('ingredientId', '');
                     setFieldValue('ingredientAmount', '');
                     setOpenSelect(null);
                   }}
                 >
                   Add Ingredient
-                  <Icon name="plus"/>
+                  <Icon name="plus" />
                 </Button>
                 <ErrorMessage name="ingredients" component="div" className={css.error} />
               </div>
@@ -294,7 +218,10 @@ const AddRecipeForm = ({
                       className={css.ingClose}
                       title="Remove"
                       onClick={() =>
-                        setFieldValue('ingredients', values.ingredients.filter(i => i.id !== item.id))
+                        setFieldValue(
+                          'ingredients',
+                          values.ingredients.filter(i => i.id !== item.id)
+                        )
                       }
                     >
                       <Icon name="close" />
@@ -327,11 +254,7 @@ const AddRecipeForm = ({
                 )}
               </Field>
               <div className={css.descriptionCounter}>
-                <span
-                  className={
-                    css.counterCurrent + (!values.instructions.length ? ' ' + css.inactiveText : '')
-                  }
-                >
+                <span className={css.counterCurrent + (!values.instructions.length ? ' ' + css.inactiveText : '')}>
                   {values.instructions.length}
                 </span>
                 <span className={css.counterMax}>/1000</span>
@@ -350,7 +273,7 @@ const AddRecipeForm = ({
               >
                 <Icon name="trash" />
               </button>
-              <Button type="submit" variant="primary" size='large' disabled={isSubmitting}>
+              <Button type="submit" variant="primary" size="large" disabled={isSubmitting}>
                 Publish
               </Button>
             </div>

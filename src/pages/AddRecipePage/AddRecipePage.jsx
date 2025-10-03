@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { Helmet } from 'react-helmet-async';
 import toast from 'react-hot-toast';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import css from './AddRecipePage.module.css';
 
@@ -13,8 +13,10 @@ import Subtitle from '@components/Subtitle/Subtitle.jsx';
 
 import { BASE_TITLE } from '@constants/pages';
 
+import { categoriesAPI } from '@/services/categoriesApi.js';
 import { recipesAPI } from '@/services/index.js';
-const { createRecipe, getCategories, getCountries, getIngredients } = recipesAPI;
+import { filtersAPI } from '@/services/recipesApi.js';
+const { createRecipe } = recipesAPI;
 
 const initialValues = {
   photo: null,
@@ -32,17 +34,25 @@ const initialValues = {
 const AddRecipePage = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-  const [lists, setLists] = useState({ categories: [], countries: [], ingredients: [] });
-
+  const [lists, setLists] = useState({ ingredients: [] });
+  const [options, setOptions] = useState({
+    categoryOptions: [],
+    areaOptions: [],
+    ingredientOptions: []
+  });
   useEffect(() => {
     (async () => {
       try {
-        const [cats, cnts, ings] = await Promise.all([
-          getCategories(),
-          getCountries(),
-          getIngredients()
+        const [{ data: cats }, { data: areas }, { data: ings }] = await Promise.all([
+          categoriesAPI.getCategories(),
+          filtersAPI.getAreas(),
+          filtersAPI.getIngredients()
         ]);
-        setLists({ categories: cats, countries: cnts, ingredients: ings });
+        const categoryOptions = cats.map(c => ({ value: c._id, label: c.name }));
+        const areaOptions      = areas.map(a => ({ value: a.id, label: a.name }));
+        const ingredientOptions = ings.map(i => ({ value: i.id, label: i.name }));
+        setOptions({ categoryOptions, areaOptions, ingredientOptions });
+        setLists({ ingredients: ings });
         // eslint-disable-next-line no-unused-vars
       } catch (e) {
         toast.error('Failed to load form data');
@@ -99,9 +109,10 @@ const AddRecipePage = () => {
           <div className={css.loading}>Loading…</div>
         ) : (
           <AddRecipeForm
-            categories={lists.categories}
-            countries={lists.countries}
-            ingredients={lists.ingredients}
+            ingredientItems={lists.ingredients}
+            categoryOptions={options.categoryOptions}
+            areaOptions={options.areaOptions}
+            ingredientOptions={options.ingredientOptions}
             initialValues={initialValues}
             onSubmit={handleSubmit}
           />

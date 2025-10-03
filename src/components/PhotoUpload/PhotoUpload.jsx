@@ -2,9 +2,11 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { useField, useFormikContext } from 'formik';
 
+import styles from './PhotoUpload.module.css';
+
 import Icon from '@components/Icon/Icon';
 
-export default function PhotoUpload({ name = 'photo', css }) {
+export default function PhotoUpload({ name = 'photo' }) {
   const [field, meta] = useField(name);
   const { setFieldValue } = useFormikContext();
   const [previewUrl, setPreviewUrl] = useState(null);
@@ -14,22 +16,20 @@ export default function PhotoUpload({ name = 'photo', css }) {
   useEffect(() => {
     if (field.value instanceof File) {
       const url = URL.createObjectURL(field.value);
-      fileUrlRef.current && URL.revokeObjectURL(fileUrlRef.current);
+      if (fileUrlRef.current) URL.revokeObjectURL(fileUrlRef.current);
       fileUrlRef.current = url;
       setPreviewUrl(url);
       return;
     }
     if (!field.value) {
-      fileUrlRef.current && URL.revokeObjectURL(fileUrlRef.current);
+      if (fileUrlRef.current) URL.revokeObjectURL(fileUrlRef.current);
       fileUrlRef.current = null;
       setPreviewUrl(null);
     }
   }, [field.value]);
 
-  useEffect(() => {
-    return () => {
-      if (fileUrlRef.current) URL.revokeObjectURL(fileUrlRef.current);
-    };
+  useEffect(() => () => {
+    if (fileUrlRef.current) URL.revokeObjectURL(fileUrlRef.current);
   }, []);
 
   const onChange = (e) => {
@@ -50,61 +50,55 @@ export default function PhotoUpload({ name = 'photo', css }) {
   const hasError = meta.touched && !!meta.error;
 
   return (
-    <div className={css.photoPreviewBlock}>
-      {/* hidden input */}
+    <div className={styles.photoPreviewBlock}>
       <input
         id={inputId}
         type="file"
         accept="image/*"
-        className={css.fileInputHidden}
+        className={styles.fileInputHidden}
         onChange={onChange}
       />
 
       {previewUrl ? (
         <>
-          <PreviewBox css={css} src={previewUrl} />
-          <label htmlFor={inputId} className={css.uploadLink}>
+          <PreviewBox src={previewUrl} />
+          <label htmlFor={inputId} className={styles.uploadLink}>
             Upload another photo
           </label>
-          {hasError && <div className={css.error}>{meta.error}</div>}
+          {hasError && <div className={styles.error}>{meta.error}</div>}
         </>
       ) : (
         <>
-          <EmptyUploadBox
-            css={css}
-            inputId={inputId}
-            invalid={hasError}
-          />
-          {hasError && <div className={css.error}>{meta.error}</div>}
+          <EmptyUploadBox inputId={inputId} invalid={hasError} />
+          {hasError && <div className={styles.error}>{meta.error}</div>}
         </>
       )}
     </div>
   );
 }
 
-function PreviewBox({ css, src }) {
+function PreviewBox({ src }) {
   return (
-    <div className={`${css.uploadBox} ${css.hasPreview}`} aria-label="Selected photo preview">
+    <div className={`${styles.uploadBox} ${styles.hasPreview}`} aria-label="Selected photo preview">
       <img
-        className={css.uploadImg}
+        className={styles.uploadImg}
         src={src}
         alt="Preview"
-        onError={() => { }}
+        onError={() => {}}
       />
     </div>
   );
 }
 
-function EmptyUploadBox({ css, inputId, invalid }) {
+function EmptyUploadBox({ inputId, invalid }) {
   return (
     <label
       htmlFor={inputId}
-      className={`${css.uploadBox} ${invalid ? css.invalid : ''}`}
-      role="button"
+      className={`${styles.uploadBox} ${invalid ? styles.invalid : ''}`}
     >
-      <span className={css.uploadInner}>
-        <Icon name="camera" className={css.cameraIcon}/>
-        <span className={css.uploadText}>Upload a photo</span>
+      <span className={styles.uploadInner}>
+        <Icon name="camera" className={styles.cameraIcon} />
+        <span className={styles.uploadText}>Upload a photo</span>
       </span>
     </label>
   );
