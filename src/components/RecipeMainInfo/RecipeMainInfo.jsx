@@ -18,7 +18,7 @@ const RecipeMainInfo = ({ recipe }) => {
     if (!isAuthenticated) {
       openSignInModal();
     } else {
-      navigate(`/user/${recipe.owner.$oid}`);
+      navigate(`/user/${recipe.owner.id}`);
     }
   };
 
@@ -29,7 +29,7 @@ const RecipeMainInfo = ({ recipe }) => {
   return (
     <div className={css.mainInfo}>
       <img
-        src={recipe.thumb}
+        src={recipe.thumbUrl || noImagePlaceholder}
         alt={recipe.title}
         className={css.recipeImage}
         onError={handleImageError}
@@ -37,20 +37,22 @@ const RecipeMainInfo = ({ recipe }) => {
       <div className={css.details}>
         <h1 className={css.title}>{recipe.title}</h1>
         <div className={css.tags}>
-          <span className={css.tag}>{recipe.category}</span>
+          <span className={css.tag}>{recipe.category.name}</span>
           <span className={css.tag}>{recipe.time} min</span>
         </div>
         <p className={css.description}>{recipe.description}</p>
-        
-// TODO: Змінити на отримання Власника по ID
-// TODO: замінити `className={css.authorButton}` на  `recipeInfoDataOwner`
 
         <button type="button" className={css.authorButton} onClick={handleAuthorClick}>
-          {/* We don't have author details, so using a placeholder */}
-          <div className={css.authorAvatar}></div>
+          {recipe.owner.avatarUrl ? (
+            <img src={recipe.owner.avatarUrl} alt={recipe.owner.name} className={css.authorAvatar} />
+          ) : (
+            <div className={css.authorAvatarPlaceholder}>
+              {recipe.owner.name.charAt(0)}
+            </div>
+          )}
           <div className={css.authorInfo}>
             <span className={css.authorLabel}>Created by:</span>
-            <span className={css.authorName}>Recipe Author</span>
+            <span className={css.authorName}>{recipe.owner.name}</span>
           </div>
         </button>
       </div>

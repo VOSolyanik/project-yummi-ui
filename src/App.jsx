@@ -83,11 +83,9 @@ const App = () => {
                 <Route
                   path="/recipe/:recipeId"
                   element={
-                    <PrivateRoute>
-                      <Suspense fallback={<Loader />}>
-                        <RecipePage />
-                      </Suspense>
-                    </PrivateRoute>
+                    <Suspense fallback={<Loader />}>
+                      <RecipePage />
+                    </Suspense>
                   }
                 />
                 <Route

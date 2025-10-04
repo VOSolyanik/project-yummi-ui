@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import toast from 'react-hot-toast';
 
@@ -9,10 +9,11 @@ import RecipeIngredients from '@/components/RecipeIngredients/RecipeIngredients'
 import RecipeMainInfo from '@/components/RecipeMainInfo/RecipeMainInfo';
 import RecipePreparation from '@/components/RecipePreparation/RecipePreparation';
 import { useAuth } from '@/hooks/useAuth';
-import { 
-  addToFavorites, 
-  removeFromFavorites, 
-  checkIfRecipeIsFavorite 
+import {
+  addToFavorites,
+  removeFromFavorites,
+  checkIfRecipeIsFavorite,
+  clearFavoritesCache
 } from '@/services/favoritesApi';
 
 const RecipeInfo = ({ recipe }) => {
@@ -20,16 +21,17 @@ const RecipeInfo = ({ recipe }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
 
-  const checkFavoriteStatus = useCallback(async () => {
-    if (isAuthenticated && user?.id && recipe?._id) {
-      const result = await checkIfRecipeIsFavorite(user.id, recipe._id);
-      setIsFavorite(result);
-    }
-  }, [isAuthenticated, user?.id, recipe?._id]);
-
   useEffect(() => {
-    checkFavoriteStatus();
-  }, [checkFavoriteStatus]);
+    const checkStatus = async () => {
+      if (isAuthenticated && user?.id && recipe?.id) {
+        setIsUpdating(true);
+        const result = await checkIfRecipeIsFavorite(user.id, recipe.id);
+        setIsFavorite(result);
+        setIsUpdating(false);
+      }
+    };
+    checkStatus();
+  }, [isAuthenticated, user?.id, recipe?.id]);
 
   const handleFavoriteToggle = async () => {
     if (!isAuthenticated) {
@@ -40,16 +42,18 @@ const RecipeInfo = ({ recipe }) => {
     setIsUpdating(true);
     try {
       if (isFavorite) {
-        await removeFromFavorites(recipe._id);
+        await removeFromFavorites(recipe.id);
         toast.success('Removed from favorites!');
         setIsFavorite(false);
       } else {
-        await addToFavorites(recipe._id);
+        await addToFavorites(recipe.id);
         toast.success('Added to favorites!');
         setIsFavorite(true);
       }
+      clearFavoritesCache(user.id);
     } catch (error) {
       toast.error('Could not update favorites.');
+      console.error('Favorite toggle error:', error);
     } finally {
       setIsUpdating(false);
     }
@@ -64,13 +68,14 @@ const RecipeInfo = ({ recipe }) => {
       <RecipeMainInfo recipe={recipe} />
       <RecipeIngredients ingredients={recipe.ingredients} />
       <RecipePreparation instructions={recipe.instructions} />
-      <Button 
-        variant="outline" 
-        size="large" 
+      <Button
+        variant="outline"
+        size="large"
         onClick={handleFavoriteToggle}
         disabled={isUpdating}
+        className={css.favoriteButton}
       >
-        {isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+        {isUpdating ? 'Updating...' : (isFavorite ? 'Remove from favorites' : 'Add to favorites')}
       </Button>
     </div>
   );
