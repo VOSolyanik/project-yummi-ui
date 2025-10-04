@@ -1,55 +1,88 @@
-.recipeIngredients {
-  margin-bottom: 20px;
-}
-
-.recipeIngredients h3 {
-  color: var(--color-black); 
-  font-size: 18px; 
-  margin-bottom: 10px;
-  text-transform: uppercase;
-}
-
-.ingredientsList {
-  list-style: none;
-  padding: 0;
-}
-
-.ingredientItem {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.ingredientImage {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  margin-right: 10px;
-  border: 1px solid var(--color-gray); 
-}
-
-.ingredientData {
+.ingredientsSection {
   display: flex;
   flex-direction: column;
+  gap: 20px;
 }
 
-.ingredientName {
-  font-weight: bold;
-  color: var(--color-black); 
+.title {
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.33;
+  text-transform: uppercase;
+  color: var(--black-color);
 }
 
-.ingredientQuantity {
-  color: var(--color-gray); 
-  font-size: 14px; 
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
 }
 
-/* Desktop Styles */
+.item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.imageWrapper {
+  width: 75px;
+  height: 75px;
+  flex-shrink: 0;
+  border: 1px solid var(--secondary-text-color);
+  border-radius: 15px;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.itemDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.itemName {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--black-color);
+}
+
+.itemMeasure {
+  font-size: 14px;
+  color: var(--secondary-text-color);
+}
+
+@media (min-width: 375px) {
+    .item {
+        width: calc(50% - 8px);
+    }
+}
+
+
 @media (min-width: 768px) {
-  .recipeIngredients h3 {
+  .title {
     font-size: 20px;
+    line-height: 1.2;
   }
-
-  .ingredientQuantity {
-    font-size: 16px;
+  .list {
+      gap: 20px;
+  }
+  .item {
+      width: calc(33.333% - 14px);
+  }
+  .imageWrapper {
+      width: 90px;
+      height: 90px;
+  }
+  .itemName, .itemMeasure {
+      font-size: 16px;
   }
 }
