@@ -1,6 +1,6 @@
 .dropdown {
   position: relative;
-  width: 330px;
+  width: 100%;
 }
 
 .select {
@@ -10,7 +10,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 15px 18px;
-  width: 330px;
+  width: 100%;
   height: 56px;
 
   border: 1px solid var(--border-color);
@@ -127,11 +127,11 @@
 
 @media screen and (min-width: 768px) and (max-width: 1439px) {
   .dropdown {
-    width: 345px;
+    width: 100%;
   }
 
   .select {
-    width: 345px;
+    width: 100%;
   }
 
   .select.placeholder {

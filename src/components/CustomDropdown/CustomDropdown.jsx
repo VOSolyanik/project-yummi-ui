@@ -9,7 +9,8 @@ const CustomDropdown = ({
   value,
   onChange,
   placeholder = 'Select option',
-  disabled = false
+  disabled = false,
+  className = ''
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(
@@ -52,7 +53,7 @@ const CustomDropdown = ({
   const isPlaceholder = !selectedOption || selectedOption.value === '';
 
   return (
-    <div className={css.dropdown} ref={dropdownRef}>
+    <div className={`${css.dropdown} ${className}`} ref={dropdownRef}>
       <button
         type="button"
         className={`${css.select} ${isOpen ? css.open : ''} ${disabled ? css.disabled : ''} ${isPlaceholder ? css.placeholder : ''}`}
@@ -65,10 +66,10 @@ const CustomDropdown = ({
         <span className={css.selectedText}>
           {selectedOption ? selectedOption.label : placeholder}
         </span>
-        <Icon 
-          name="arrow-down" 
-          size={18} 
-          className={`${css.chevron} ${isOpen ? css.rotated : ''}`} 
+        <Icon
+          name="arrow-down"
+          size={18}
+          className={`${css.chevron} ${isOpen ? css.rotated : ''}`}
         />
       </button>
 
