@@ -16,7 +16,7 @@ import Button from '@/components/Button/Button';
 import Tabs from '@/components/Tabs/Tabs';
 import UserInfoCard from '@/components/UserInfoCard/UserInfoCard';
 import { getCurrentUser, selectAuthToken, selectUser, selectAuthLoading } from '@/redux/auth/authSlice';
-import { fetchUserById, selectSelectedUser } from '@/redux/users/usersSlice';
+import { fetchUserById, unfollowUser, followUser, selectSelectedUser } from '@/redux/users/usersSlice';
 
 const UserPage = () => {
   const { userId } = useParams();
@@ -28,23 +28,32 @@ const UserPage = () => {
   const isLoading = useSelector(selectAuthLoading);
 
   useEffect(() => {
-    console.log(userId);
-  
     if (userId && userId !== 'me' && !selectedUser && !isLoading) { 
       dispatch(fetchUserById(userId));
     } 
     else if (token && !currentUser && !isLoading) {
       dispatch(getCurrentUser());
     }
-    console.log(selectedUser);
   }, [dispatch, token, currentUser, isLoading, userId, selectedUser]);
 
   const handleLogout = () => {
     openLogoutModal();
   };
 
+  // TODO: зробити логіку кнопки Follow.
+  // Зробила thunks (follow/unfollow) у usersSlice.js
+  // але потрібно ще доповнити slice для них, щось не змогла придумати як правильно.
+  // У компоненті FollowerItem є також логіка follow/unfollow, але там не через store,
+  // тож потрібно буде і там переробити.
+
   const handleFollow = () => {
-    // 
+    // if (!selectedUser) return;
+
+    // if (selectedUser.isFollowed) {
+    //   dispatch(unfollowUser(selectedUser.id));
+    // } else {
+    //   dispatch(unfollowUser(selectedUser.id));
+    // }
   };
 
   return (
@@ -66,7 +75,11 @@ const UserPage = () => {
           <div>
             <UserInfoCard user={selectedUser} isCurrent={false}/>
             <Button className={css.btn} variant="primary" onClick={handleFollow}>
-              FOLLOW
+              {
+                selectedUser?.isFollowed
+                  ? 'UNFOLLOW'
+                  : 'FOLLOW'
+              }
             </Button>
           </div>
           <Tabs isCurrent={false}/>

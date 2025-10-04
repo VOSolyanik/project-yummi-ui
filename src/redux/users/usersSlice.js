@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
+import { socialAPI } from '@/services/socialApi';
 import { usersAPI } from '@/services/usersApi';
 
 export const fetchUserById = createAsyncThunk(
@@ -62,7 +63,31 @@ export const fetchFollowing = createAsyncThunk(
   }
 );
 
-const listsSlice = createSlice({
+export const followUser = createAsyncThunk(
+  'users/followUser',
+  async (userId, { rejectWithValue }) => {
+    try {
+      const res = await socialAPI.followUser(userId);
+      return { userId, message: res.data.message };
+    } catch (err) {
+      return rejectWithValue(err.response?.data?.message || 'Failed to follow');
+    }
+  }
+);
+
+export const unfollowUser = createAsyncThunk(
+  'users/unfollowUser',
+  async (userId, { rejectWithValue }) => {
+    try {
+      const res = await socialAPI.unfollowUser(userId);
+      return { userId, message: res.data.message };
+    } catch (err) {
+      return rejectWithValue(err.response?.data?.message || 'Failed to unfollow');
+    }
+  }
+);
+
+const usersSlice = createSlice({
   name: 'users',
   initialState: {
     selectedUser: { user: null, loading: false, error: null },
@@ -151,4 +176,4 @@ export const selectListRecipes = (state) => state.users.recipes.items;
 export const selectIsLoadingListRecipes = (state) => state.users.recipes.isLoading;
 export const selectListRecipesError = (state) => state.users.recipes.error;
 
-export default listsSlice.reducer;
+export default usersSlice.reducer;
