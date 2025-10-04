@@ -1,3 +1,49 @@
-.recipePage {
-  padding: 20px;
+.page {
+  padding-top: 64px;
+  padding-bottom: 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.error {
+    color: var(--error-color);
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+.contentWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.mainContent {
+  flex-grow: 1;
+}
+
+.sidebar {
+  flex-shrink: 0;
+}
+
+@media (min-width: 768px) {
+    .page {
+        padding-top: 80px;
+        padding-bottom: 80px;
+        gap: 40px;
+    }
+    .contentWrapper {
+        gap: 40px;
+    }
+}
+
+@media (min-width: 1440px) {
+  .contentWrapper {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 80px;
+  }
+  .sidebar {
+      width: 305px;
+  }
 }
