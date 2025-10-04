@@ -25,6 +25,10 @@
   text-transform: uppercase;
 }
 
+.subtitle {
+  color: #1a1a1a;
+}
+
 .btn {
   display: block;
   width: 343px;
@@ -50,6 +54,11 @@
   .container {
     padding-top: 80px;
   }
+
+  .subtitle {
+    color:  #bfbebe;
+  }
+
   .sectionWrapper {
     display: flex;
     gap: 40px;

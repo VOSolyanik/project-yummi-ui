@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 import clsx from 'clsx';
 
@@ -12,14 +14,37 @@ import { useAuthModal } from '@hooks/useAuthModal.js';
 
 import Button from '@/components/Button/Button';
 import Tabs from '@/components/Tabs/Tabs';
-import UserInfoCard  from '@/components/UserInfoCard/UserInfoCard';
+import UserInfoCard from '@/components/UserInfoCard/UserInfoCard';
+import { getCurrentUser, selectAuthToken, selectUser, selectAuthLoading } from '@/redux/auth/authSlice';
+import { fetchUserById, selectSelectedUser } from '@/redux/users/usersSlice';
 
-
-const UserProfilePage = () => {
+const UserPage = () => {
+  const { userId } = useParams();
+  const dispatch = useDispatch();
   const { openLogoutModal } = useAuthModal();
+  const token = useSelector(selectAuthToken);
+  const currentUser = useSelector(selectUser);
+  const selectedUser = useSelector(selectSelectedUser);
+  const isLoading = useSelector(selectAuthLoading);
+
+  useEffect(() => {
+    console.log(userId);
+  
+    if (userId && userId !== 'me' && !selectedUser && !isLoading) { 
+      dispatch(fetchUserById(userId));
+    } 
+    else if (token && !currentUser && !isLoading) {
+      dispatch(getCurrentUser());
+    }
+    console.log(selectedUser);
+  }, [dispatch, token, currentUser, isLoading, userId, selectedUser]);
 
   const handleLogout = () => {
     openLogoutModal();
+  };
+
+  const handleFollow = () => {
+    // 
   };
 
   return (
@@ -33,19 +58,31 @@ const UserProfilePage = () => {
         </MainTitle>
 
         <Subtitle className={css.subtitle}>
-          Reveal your culinary art, 
-          share your favorite recipe and create gastronomic masterpieces with us.
+          Reveal your culinary art, share your favorite recipe and create gastronomic masterpieces with us.
         </Subtitle>
       </div>
       <div className={css.sectionWrapper}>
-        <div>
-          <UserInfoCard/>
-          <Button className={css.btn} variant="primary" onClick={handleLogout}>LOG OUT</Button>
-        </div>
+        {userId && userId !== 'me' ? (
+          
+          <div>
+            <UserInfoCard user={selectedUser}/>
+            <Button className={css.btn} variant="primary" onClick={handleFollow}>
+              FOLLOW
+            </Button>
+          </div>
+
+        ) : (
+          <div>
+            <UserInfoCard user={currentUser} />
+            <Button className={css.btn} variant="primary" onClick={handleLogout}>
+              LOG OUT
+            </Button>
+          </div>
+        )}
         <Tabs />
       </div>
     </div>
   );
 };
 
-export default UserProfilePage;
+export default UserPage;
