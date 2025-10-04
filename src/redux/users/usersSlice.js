@@ -2,6 +2,18 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 import { usersAPI } from '@/services/usersApi';
 
+export const fetchUserById = createAsyncThunk(
+  'users/fetchById',
+  async (userId, { rejectWithValue }) => {
+    try {
+      const response = await usersAPI.getUserById(userId);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response?.data || 'Failed to fetch user');
+    }
+  }
+);
+
 export const fetchRecipes = createAsyncThunk(
   'users/fetchRecipes',
   async (userId, { rejectWithValue }) => {
@@ -53,6 +65,7 @@ export const fetchFollowing = createAsyncThunk(
 const listsSlice = createSlice({
   name: 'users',
   initialState: {
+    selectedUser: { user: null, loading: false, error: null },
     recipes: { items: null, limit: 12, page: 1, totalCount: 0, loading: false, error: null },
     favorites: { items: null, limit: 12, page: 1, totalCount: 0, loading: false, error: null },
     followers: { items: null, limit: 12, page: 1, totalCount: 0, loading: false, error: null },
@@ -60,6 +73,20 @@ const listsSlice = createSlice({
   },
   reducers: {},
   extraReducers: builder => {
+    // User By Id
+    builder
+      .addCase(fetchUserById.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(fetchUserById.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.selectedUser.user = action.payload;
+      })
+      .addCase(fetchUserById.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      });
     // Recipes
     builder
       .addCase(fetchRecipes.pending, state => {
@@ -119,6 +146,7 @@ const listsSlice = createSlice({
   }
 });
 
+export const selectSelectedUser = (state) => state.users.selectedUser.user;
 export const selectListRecipes = (state) => state.users.recipes.items;
 export const selectIsLoadingListRecipes = (state) => state.users.recipes.isLoading;
 export const selectListRecipesError = (state) => state.users.recipes.error;

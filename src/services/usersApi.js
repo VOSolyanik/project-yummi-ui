@@ -1,6 +1,16 @@
 import api from './api.js';
 
 export const usersAPI = {
+  getUserById: async (userId) => {
+    try {
+      const response = await api.get(`/users/${userId}`);
+      return response;
+    } catch (error) {
+      const message = error.response?.data?.message || 'User not found';
+      throw new Error(message);
+    }
+  },
+
   getRecipies: async (userId) => {
     try {
       const response = await api.get(`/users/${userId}/recipes`);
