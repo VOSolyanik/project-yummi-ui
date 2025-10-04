@@ -1,23 +1,30 @@
 .pathInfo {
   display: flex;
+  align-items: center;
   gap: 8px;
-  margin-bottom: 20px;
   font-size: 12px;
-  font-weight: bold;
+  font-weight: 700;
   text-transform: uppercase;
-  color: var(--color-gray);
+  line-height: 1.5;
 }
 
-.homeLink {
+.link {
+  color: var(--secondary-text-color);
   text-decoration: none;
+  transition: color 0.2s ease;
 }
 
-.recipeTitle {
-  color: var(--color-black);
+.link:hover {
+  color: var(--black-color);
 }
 
-@media (min-width: 768px) {
-  .pathInfo {
-    font-size: 14px;
-  }
+.separator {
+  color: var(--secondary-text-color);
+}
+
+.currentPage {
+  color: var(--black-color);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

@@ -2,16 +2,16 @@ import React from 'react';
 
 import { Link } from 'react-router-dom';
 
-import styles from './PathInfo.module.css';
+import css from './PathInfo.module.css';
 
-const PathInfo = ({ recipeTitle }) => (
-  <div className={styles.pathInfo}>
-    <Link to="/" className={styles.homeLink}>
-      Home
-    </Link>
-    <span className={styles.homeLink}> / </span>
-    <span className={styles.recipeTitle}>{recipeTitle}</span>
-  </div>
-);
+const PathInfo = ({ currentPage }) => {
+  return (
+    <div className={css.pathInfo}>
+      <Link to="/" className={css.link}>Home</Link>
+      <span className={css.separator}>/</span>
+      <span className={css.currentPage}>{currentPage}</span>
+    </div>
+  );
+};
 
 export default PathInfo;

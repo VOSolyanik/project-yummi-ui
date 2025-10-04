@@ -30,6 +30,28 @@ export const recipesAPI = {
     }
   },
 
+  // Get rcipe by ID
+  getRecipeById: async (recipeId) => {
+    try {
+      const response = await api.get(`/recipes/${recipeId}`);
+      return response.data;
+    } catch (error) {
+      console.error(`Error fetching recipe with ID ${recipeId}:`, error);
+      throw error;
+    }
+  },
+
+  // Get Popular Recipes
+  getPopularRecipes: async () => {
+    try {
+      const response = await api.get('/recipes/popular');
+      return response.data.slice(0, 4); // Slice recipes to 4
+    } catch (error) {
+      console.error('Error fetching popular recipes:', error);
+      throw error;
+    }
+  },
+
   createRecipe: async (formData) => {
     try {
       const { data } = await api.post('/recipes', formData, {
