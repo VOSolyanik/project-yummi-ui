@@ -6,7 +6,7 @@ import css from './Tabs.module.css';
 
 import ListItems from '../ListItems/ListItems';
 
-const Tabs = () => {
+const Tabs = ({ isCurrent }) => {
   const [activeTab, setActiveTab] = useState('recipes');
 
   return (
@@ -20,14 +20,16 @@ const Tabs = () => {
         >
           My recipes
         </button>
-        <button
-          className={clsx(css.tabBtn, {
-            [css.active]: activeTab === 'favorites'
-          })}
-          onClick={() => setActiveTab('favorites')}
-        >
-          My favorites
-        </button>
+        {isCurrent && (
+          <button
+            className={clsx(css.tabBtn, {
+              [css.active]: activeTab === 'favorites'
+            })}
+            onClick={() => setActiveTab('favorites')}
+          >
+            My favorites
+          </button>
+        )}
         <button
           className={clsx(css.tabBtn, {
             [css.active]: activeTab === 'followers'
@@ -36,14 +38,16 @@ const Tabs = () => {
         >
           Followers
         </button>
-        <button
-          className={clsx(css.tabBtn, {
-            [css.active]: activeTab === 'following'
-          })}
-          onClick={() => setActiveTab('following')}
-        >
-          Following
-        </button>
+        {isCurrent && (
+          <button
+            className={clsx(css.tabBtn, {
+              [css.active]: activeTab === 'following'
+            })}
+            onClick={() => setActiveTab('following')}
+          >
+            Following
+          </button>
+        )}
       </div>
 
       {/* Tab Content */}

@@ -11,7 +11,7 @@ import Loader from '../Loader/Loader';
 
 import { uploadAvatar } from '@/redux/auth/authSlice';
 
-const UserInfoCard = ({ user }) => {
+const UserInfoCard = ({ user, isCurrent }) => {
   const dispatch = useDispatch();
   const fileInputRef = useRef(null);
 
@@ -40,9 +40,11 @@ const UserInfoCard = ({ user }) => {
             <img className={css.img} src={noAvatarImg} alt="No picture" />
           )}
         </div>
-        <div className={css.addBtn} onClick={handleAploadAvatar}>
-          <Icon name={'plus'} size={18} className={css.icon}></Icon>
-        </div>
+        {isCurrent && (
+          <div className={css.addBtn} onClick={handleAploadAvatar}>
+            <Icon name={'plus'} size={18} className={css.icon}></Icon>
+          </div>
+        )}
         {/* hidden file input */}
         <input
           type="file"
@@ -64,18 +66,22 @@ const UserInfoCard = ({ user }) => {
           <span>Added recipes: </span>
           <span className={css.data}>{user?.createdRecipes}</span>
         </li>
-        <li className={css.userInfoItem}>
-          <span>Favorites: </span>
-          <span className={css.data}>{user?.favoriteCount}</span>
-        </li>
+        {isCurrent && (
+          <li className={css.userInfoItem}>
+            <span>Favorites: </span>
+            <span className={css.data}>{user?.favoriteCount}</span>
+          </li>
+        )}
         <li className={css.userInfoItem}>
           <span>Followers: </span>
           <span className={css.data}>{user?.followersCount}</span>
         </li>
-        <li className={css.userInfoItem}>
-          <span>Following: </span>
-          <span className={css.data}>{user?.followingCount}</span>
-        </li>
+        {isCurrent && (
+          <li className={css.userInfoItem}>
+            <span>Following: </span>
+            <span className={css.data}>{user?.followingCount}</span>
+          </li>
+        )}
       </ul>
     </div>
   );

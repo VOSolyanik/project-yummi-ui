@@ -31,9 +31,10 @@ export const usersAPI = {
     }
   },
 
-  getFollowers: async (userId) => {
+  getFollowers: async (userId, page = 1, limit = 12) => {
+    const params = { page, limit };
     try {
-      const response = await api.get(`/users/${userId}/followers`);
+      const response = await api.get(`/users/${userId}/followers`, { params });
       return response;
     } catch (error) {
       const message = error.response?.data?.message || 'Error getting followers';
@@ -41,9 +42,10 @@ export const usersAPI = {
     }
   },
 
-  getFollowing: async (userId) => {
+  getFollowing: async (userId, page = 1, limit = 12) => {
+    const params = { page, limit };
     try {
-      const response = await api.get(`/users/${userId}/following`);
+      const response = await api.get(`/users/${userId}/following`, { params });
       return response;
     } catch (error) {
       const message = error.response?.data?.message || 'Error getting following';

@@ -61,26 +61,27 @@ const UserPage = () => {
           Reveal your culinary art, share your favorite recipe and create gastronomic masterpieces with us.
         </Subtitle>
       </div>
-      <div className={css.sectionWrapper}>
-        {userId && userId !== 'me' ? (
-          
+      {userId && userId !== 'me' ? (
+        <div className={css.sectionWrapper}>
           <div>
-            <UserInfoCard user={selectedUser}/>
+            <UserInfoCard user={selectedUser} isCurrent={false}/>
             <Button className={css.btn} variant="primary" onClick={handleFollow}>
               FOLLOW
             </Button>
           </div>
-
-        ) : (
+          <Tabs isCurrent={false}/>
+        </div>
+      ) : (
+        <div className={css.sectionWrapper}>
           <div>
-            <UserInfoCard user={currentUser} />
+            <UserInfoCard user={currentUser} isCurrent={true}/>
             <Button className={css.btn} variant="primary" onClick={handleLogout}>
               LOG OUT
             </Button>
           </div>
-        )}
-        <Tabs />
-      </div>
+          <Tabs isCurrent={true}/>
+        </div>
+      )}
     </div>
   );
 };

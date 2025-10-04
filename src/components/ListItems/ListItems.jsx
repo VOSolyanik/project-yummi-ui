@@ -32,10 +32,7 @@ const ListItems = ({ type }) => {
   }, []);
 
   function isUserFollowed(currentUserId, followersArray) {
-    console.log('currentUserId', currentUserId);
-    console.log('followersArray', followersArray);
     if (!Array.isArray(followersArray)) return false;
-    console.log('pass');
     return followersArray.some(user => user.id === currentUserId);
   }
 
@@ -68,7 +65,7 @@ const ListItems = ({ type }) => {
   if (listState.error) return <p>Error: {listState.error}</p>;
   if ((type === 'recipes' || type === 'favorites') && listState.items?.length === 0) return <p className={css.infoText}>Nothing has been added to your recipes list yet.
     Please browse our recipes and add your favorites for easy access in the future.</p>;
-  if ((type === 'followers' || type === 'following') && listState.items?.length === 0) return <p>There are currently no followers on your account.
+  if ((type === 'followers' || type === 'following') && listState.items?.length === 0) return <p className={css.infoText}>There are currently no followers on your account.
     Please engage our visitors with interesting content and draw their attention to your profile.</p>;
 
   return (
