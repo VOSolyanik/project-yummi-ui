@@ -110,6 +110,22 @@
   gap: 16px;
 }
 
+/* Component Demos */
+.componentDemo {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  background-color: var(--light-bg-color);
+  border-radius: 12px;
+  border: 1px solid var(--stroke-color);
+}
+
+.customSubtitle {
+  color: var(--accent-color);
+  font-style: italic;
+}
+
 /* Responsive */
 @media screen and (max-width: 768px) {
   .section {

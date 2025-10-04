@@ -2,7 +2,8 @@ import React from 'react';
 
 import css from './RecipesPreview.module.css';
 
-import Icon from '@components/Icon/Icon.jsx';
+import Button from '../Button/Button';
+import Icon from '../Icon/Icon';
 
 const RecipesPreview = ({ title, description, image, onOpen, onDelete }) => {
   return (
@@ -15,13 +16,22 @@ const RecipesPreview = ({ title, description, image, onOpen, onDelete }) => {
           <p className={css.description}>{description}</p>
         </div>
 
-        <div className={css.buttons}>
-          <button type="button" className={css.iconButton} onClick={onOpen} aria-label="Open recipe">
-            <Icon name="arrow-up-right" className={css.icon} size={16} />
-          </button>
-          <button type="button" className={css.iconButton} onClick={onDelete} aria-label="Delete recipe">
-            <Icon name="trash" className={css.icon} size={16} />
-          </button>
+        <div className={css.buttons} role="group" aria-label="Recipe actions">
+          <Button
+            variant="outline"
+            size="medium"
+            onClick={onOpen}
+            aria-label="Open recipe"
+          >
+            <Icon name="arrow-up-right" size={18} />
+          </Button>
+          <Button
+            variant="outline"
+            onClick={onDelete}
+            size="medium"
+            aria-label="Delete recipe">
+            <Icon name="trash" size={18} />
+          </Button>
         </div>
       </div>
     </div>

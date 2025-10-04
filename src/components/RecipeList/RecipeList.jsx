@@ -38,7 +38,7 @@ const RecipeList = ({ recipes, isLoading, error, favoriteRecipeIds, onFavoriteCh
 
   return (
     <div className={css.grid}>
-      {memoizedRecipes.map((recipe) => (
+      {memoizedRecipes.map(recipe => (
         <RecipeCard
           key={recipe.id}
           recipe={recipe}

@@ -12,7 +12,7 @@ const Tabs = () => {
       <div className={css.tabList}>
         <button
           className={clsx(css.tabBtn, {
-            [css.active]: activeTab === 'recipes',
+            [css.active]: activeTab === 'recipes'
           })}
           onClick={() => setActiveTab('recipes')}
         >
@@ -20,7 +20,7 @@ const Tabs = () => {
         </button>
         <button
           className={clsx(css.tabBtn, {
-            [css.active]: activeTab === 'favorites',
+            [css.active]: activeTab === 'favorites'
           })}
           onClick={() => setActiveTab('favorites')}
         >
@@ -28,7 +28,7 @@ const Tabs = () => {
         </button>
         <button
           className={clsx(css.tabBtn, {
-            [css.active]: activeTab === 'followers',
+            [css.active]: activeTab === 'followers'
           })}
           onClick={() => setActiveTab('followers')}
         >
@@ -36,7 +36,7 @@ const Tabs = () => {
         </button>
         <button
           className={clsx(css.tabBtn, {
-            [css.active]: activeTab === 'following',
+            [css.active]: activeTab === 'following'
           })}
           onClick={() => setActiveTab('following')}
         >

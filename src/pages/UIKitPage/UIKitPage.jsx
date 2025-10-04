@@ -2,9 +2,18 @@ import React, { useState } from 'react';
 
 import css from './UIKitPage.module.css';
 
-import Button from '../../components/Button/Button';
-import CheckBox from '../../components/CheckBox/CheckBox';
-import Icon from '../../components/Icon/Icon';
+import Button from '@components/Button/Button';
+import CheckBox from '@components/CheckBox/CheckBox';
+import CustomDropdown from '@components/CustomDropdown/CustomDropdown';
+import Icon from '@components/Icon/Icon';
+import Loader from '@components/Loader/Loader';
+import MainTitle from '@components/MainTitle/MainTitle';
+import RecipeCard from '@components/RecipeCard/RecipeCard';
+import RecipeCardSkeleton from '@components/RecipeCardSkeleton/RecipeCardSkeleton';
+import RecipePagination from '@components/RecipePagination/RecipePagination';
+import RecipesPreview from '@components/RecipesPreview/RecipesPreview';
+import Subtitle from '@components/Subtitle/Subtitle';
+import Tabs from '@components/Tabs/Tabs';
 
 const UIKitPage = () => {
   const [checkboxStates, setCheckboxStates] = useState({
@@ -12,6 +21,31 @@ const UIKitPage = () => {
     checkbox2: true,
     checkbox3: false
   });
+
+  const [dropdownValue, setDropdownValue] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const dropdownOptions = [
+    { value: '', label: 'Select an option' },
+    { value: 'option1', label: 'Option 1' },
+    { value: 'option2', label: 'Option 2' },
+    { value: 'option3', label: 'Option 3' }
+  ];
+
+  const mockRecipe = {
+    id: '1',
+    title: 'Delicious Pasta Recipe',
+    description: 'A mouth-watering pasta dish with fresh ingredients and aromatic herbs.',
+    thumb: '/src/assets/images/no-image.png',
+    owner: {
+      id: '1',
+      name: 'John',
+      avatar: '/src/assets/images/no-avatar.webp'
+    },
+    time: '30',
+    difficulty: 'Medium',
+    isFavorite: false
+  };
 
   const handleCheckboxChange = name => {
     setCheckboxStates(prev => ({
@@ -229,6 +263,123 @@ const UIKitPage = () => {
               label="Error checkbox"
               error
             />
+          </div>
+        </section>
+
+        {/* Typography Components Section */}
+        <section className={css.section}>
+          <h2 className={css.sectionTitle}>Typography Components</h2>
+
+          <h3 className={css.subsectionTitle}>Main Title</h3>
+          <div className={css.componentDemo}>
+            <MainTitle level={1}>Heading Level 1</MainTitle>
+            <MainTitle level={2}>Heading Level 2</MainTitle>
+            <MainTitle level={3}>Heading Level 3</MainTitle>
+            <MainTitle level={4}>Heading Level 4</MainTitle>
+          </div>
+
+          <h3 className={css.subsectionTitle}>Subtitle</h3>
+          <div className={css.componentDemo}>
+            <Subtitle>This is a subtitle component for secondary text</Subtitle>
+            <Subtitle className={css.customSubtitle}>Subtitle with custom styling</Subtitle>
+          </div>
+        </section>
+
+        {/* Form Components Section */}
+        <section className={css.section}>
+          <h2 className={css.sectionTitle}>Form Components</h2>
+
+          <h3 className={css.subsectionTitle}>Custom Dropdown</h3>
+          <div className={css.componentDemo}>
+            <CustomDropdown
+              options={dropdownOptions}
+              value={dropdownValue}
+              onChange={setDropdownValue}
+              placeholder="Choose an option"
+            />
+            <CustomDropdown
+              options={dropdownOptions}
+              value=""
+              onChange={() => {}}
+              placeholder="Disabled dropdown"
+              disabled
+            />
+          </div>
+        </section>
+
+        {/* Navigation Components Section */}
+        <section className={css.section}>
+          <h2 className={css.sectionTitle}>Navigation Components</h2>
+
+          <h3 className={css.subsectionTitle}>Tabs</h3>
+          <div className={css.componentDemo}>
+            <Tabs />
+          </div>
+
+          <h3 className={css.subsectionTitle}>Recipe Pagination</h3>
+          <div className={css.componentDemo}>
+            <RecipePagination
+              currentPage={currentPage}
+              totalPages={5}
+              onPageChange={setCurrentPage}
+              isLoading={false}
+              totalRecipes={50}
+            />
+            <div style={{ marginTop: '20px' }}>
+              <RecipePagination
+                currentPage={3}
+                totalPages={10}
+                onPageChange={() => {}}
+                isLoading={true}
+                totalRecipes={100}
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* Content Components Section */}
+        <section className={css.section}>
+          <h2 className={css.sectionTitle}>Content Components</h2>
+
+          <h3 className={css.subsectionTitle}>Recipe Card</h3>
+          <div className={css.componentDemo}>
+            <div style={{ maxWidth: '300px' }}>
+              <RecipeCard
+                recipe={mockRecipe}
+                onRecipeClick={() => console.log('Recipe clicked')}
+                onAuthorClick={() => console.log('Author clicked')}
+              />
+            </div>
+          </div>
+
+          <h3 className={css.subsectionTitle}>Recipe Card Skeleton</h3>
+          <div className={css.componentDemo}>
+            <div style={{ maxWidth: '300px' }}>
+              <RecipeCardSkeleton />
+            </div>
+          </div>
+
+          <h3 className={css.subsectionTitle}>Recipes Preview</h3>
+          <div className={css.componentDemo}>
+            <div style={{ maxWidth: '400px' }}>
+              <RecipesPreview
+                title="Delicious Pasta Recipe"
+                description="A mouth-watering pasta dish with fresh ingredients and aromatic herbs that will delight your taste buds."
+                image="/src/assets/images/no-image.png"
+                onOpen={() => console.log('Open recipe')}
+                onDelete={() => console.log('Delete recipe')}
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* Utility Components Section */}
+        <section className={css.section}>
+          <h2 className={css.sectionTitle}>Utility Components</h2>
+
+          <h3 className={css.subsectionTitle}>Loader</h3>
+          <div className={css.componentDemo}>
+            <Loader />
           </div>
         </section>
       </div>

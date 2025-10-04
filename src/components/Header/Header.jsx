@@ -55,9 +55,7 @@ const Header = ({ inverse = false }) => {
         <Logo className={css.logo} inverse={inverse} />
 
         <div className={css.authWrapper}>
-          {isLoading ? (
-            null
-          ) : isAuthenticated ? (
+          {isLoading ? null : isAuthenticated ? (
             <UserBar
               user={user}
               onProfileClick={handleProfileClick}
@@ -65,22 +63,14 @@ const Header = ({ inverse = false }) => {
               inverse={inverse}
             />
           ) : (
-            <AuthBar
-              onSignInClick={handleSignInClick}
-              onSignUpClick={handleSignUpClick}
-              inverse={inverse}
-            />
+            <AuthBar onSignInClick={handleSignInClick} onSignUpClick={handleSignUpClick} inverse={inverse} />
           )}
         </div>
 
         {(isAuthenticated || !isMobile) && (
           <div className={css.navWrapper}>
             {/* Always show Nav for development */}
-            <NavBar
-              isAuthenticated={isAuthenticated}
-              isMobile={isMobile}
-              inverse={inverse}
-            />
+            <NavBar isAuthenticated={isAuthenticated} isMobile={isMobile} inverse={inverse} />
           </div>
         )}
       </div>

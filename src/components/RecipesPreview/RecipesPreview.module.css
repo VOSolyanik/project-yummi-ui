@@ -72,37 +72,6 @@
   height: 36px;
 }
 
-.iconButton {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 36px;
-  height: 36px;
-  border: 1px solid var(--gray-color);
-  border-radius: 30px;
-  background: transparent;
-  cursor: pointer;
-  font-size: 16px;
-  line-height: 1;
-
-  transition: all 0.2s ease;
-}
-
-.iconButton:hover {
-  border-color: var(--black-color);
-  background: var(--black-color);
-}
-
-.icon {
-  width: 16px;
-  height: 16px;
-}
-
-.iconButton:hover .icon {
-  filter: brightness(0) invert(1);
-}
-
-
 /* Tablet */
 @media screen and (min-width: 768px) and (max-width: 1439px) {
   .card {
@@ -149,19 +118,6 @@
   .buttons {
     width: 88px;
     height: 42px;
-  }
-
-  .iconButton {
-    width: 42px;
-    height: 42px;
-    padding: 12px;
-    font-size: 18px;
-    border-radius: 30px;
-  }
-
-  .icon {
-    width: 18px;
-    height: 18px;
   }
 }
 
@@ -211,18 +167,5 @@
   .buttons {
     width: 88px;
     height: 42px;
-  }
-
-  .iconButton {
-    width: 42px;
-    height: 42px;
-    padding: 12px;
-    font-size: 18px;
-    border-radius: 30px;
-  }
-
-  .icon {
-    width: 18px;
-    height: 18px;
   }
 }

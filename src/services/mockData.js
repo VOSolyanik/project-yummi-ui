@@ -1,6 +1,6 @@
 export const requiredCategories = [
   'Beef',
-  'Breakfast', 
+  'Breakfast',
   'Desserts',
   'Lamb',
   'Goat',

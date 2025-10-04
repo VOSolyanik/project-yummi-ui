@@ -117,16 +117,6 @@ export default defineConfig([
               position: 'before'
             },
             {
-              pattern: '@assets/**',
-              group: 'internal',
-              position: 'before'
-            },
-            {
-              pattern: '@styles/**',
-              group: 'internal',
-              position: 'before'
-            },
-            {
               pattern: '@utils/**',
               group: 'internal',
               position: 'before'
@@ -138,6 +128,11 @@ export default defineConfig([
             },
             {
               pattern: '@contexts/**',
+              group: 'internal',
+              position: 'before'
+            },
+            {
+              pattern: '@assets/**',
               group: 'internal',
               position: 'before'
             }

@@ -6,7 +6,7 @@
 .tabList {
   display: flex;
   gap: 30px;
-  border-bottom: 1px solid #BFBEBE;
+  border-bottom: 1px solid var(--gray-color);
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: thin;
@@ -24,7 +24,7 @@
 .tabBtn {
   flex: 0 0 auto;
   padding-bottom: 14px;
-  color: #BFBEBE;
+  color: var(--gray-color);
   background: none;
   border: none;
   outline: none;
@@ -43,8 +43,8 @@
 }
 
 .tabBtn.active {
-  border-bottom: 1px solid #050505; 
-  color: #050505;
+  border-bottom: 1px solid var(--black-color);
+  color: var(--black-color);
 }
 
 .tabContent {

@@ -17,12 +17,12 @@ const Categories = ({ onCategorySelect }) => {
   const error = useSelector(selectError);
 
   useEffect(() => {
-    if (categories.length === 0 && !isLoading) {
+    if (categories.length === 0 && !isLoading && !error) {
       dispatch(fetchCategories());
     }
-  }, [dispatch, categories.length, isLoading]);
+  }, [dispatch, categories.length, isLoading, error]);
 
-  const handleCategoryClick = async (category) => {
+  const handleCategoryClick = async category => {
     // Just pass the category data to parent - Recipes component will fetch the recipes
     if (onCategorySelect) {
       const categoryData = {

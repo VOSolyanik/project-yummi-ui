@@ -30,6 +30,7 @@ export const useRouteTracker = (enableTracking = false) => {
   useEffect(() => {
     if (enableTracking) {
       const currentPath = location.pathname + location.search;
+      console.log('Route change detected:', currentPath);
       dispatch(setCurrentPath(currentPath));
     }
   }, [location.pathname, location.search, dispatch, enableTracking]);

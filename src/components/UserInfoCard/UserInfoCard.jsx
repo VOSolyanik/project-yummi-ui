@@ -6,6 +6,7 @@ import css from './UserInfoCard.module.css';
 
 import noAvatarImg from '@assets/images/no-avatar.webp';
 
+import Button from '../Button/Button';
 import Icon from '../Icon/Icon';
 
 import { uploadAvatar, selectUser } from '@/redux/auth/authSlice';
@@ -17,7 +18,7 @@ const UserInfoCard = () => {
   const user = useSelector(selectUser);
   const fileInputRef = useRef(null);
 
-  const handleAploadAvatar = () => {
+  const handleUploadAvatar = () => {
     fileInputRef.current.click(); // open file picker
   };
 
@@ -38,9 +39,9 @@ const UserInfoCard = () => {
             <img className={css.img} src={noAvatarImg} alt="No picture" />
           )}
         </div>
-        <div className={css.addBtn} onClick={handleAploadAvatar}>
+        <Button variant="primary" size="medium" className={css.addBtn} onClick={handleUploadAvatar}>
           <Icon name={'plus'} size={18} className={css.icon}></Icon>
-        </div>
+        </Button>
         {/* hidden file input */}
         <input
           type="file"
@@ -60,11 +61,11 @@ const UserInfoCard = () => {
         </li>
         <li className={css.userInfoItem}>
           <span>Added recipes: </span>
-          <span className={css.data}>{user.createdRecipes}</span>
+          <span className={css.data}>{user.ownRecipesCount}</span>
         </li>
         <li className={css.userInfoItem}>
           <span>Favorites: </span>
-          <span className={css.data}>{user.favoriteCount}</span>
+          <span className={css.data}>{user.favoriteIds?.length}</span>
         </li>
         <li className={css.userInfoItem}>
           <span>Followers: </span>
@@ -72,7 +73,7 @@ const UserInfoCard = () => {
         </li>
         <li className={css.userInfoItem}>
           <span>Following: </span>
-          <span className={css.data}>{user.followingCount}</span>
+          <span className={css.data}>{user.followingIds?.length}</span>
         </li>
       </ul>
     </div>

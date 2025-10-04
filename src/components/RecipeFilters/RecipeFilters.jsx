@@ -56,7 +56,7 @@ const RecipeFilters = ({ onFiltersChange }) => {
   }, [dispatch, areas, selectedIngredient?.id, onFiltersChange]);
 
   const ingredientOptions = useMemo(() => [
-    { value: '', label: 'Ingredients' },
+    { value: '', label: 'All Ingredients' },
     ...(ingredients || []).map(ingredient => ({
       value: ingredient.id,
       label: ingredient.name
@@ -64,7 +64,7 @@ const RecipeFilters = ({ onFiltersChange }) => {
   ], [ingredients]);
 
   const areaOptions = useMemo(() => [
-    { value: '', label: 'Area' },
+    { value: '', label: 'All Areas' },
     ...(areas || []).map(area => ({
       value: area.id,
       label: area.name
