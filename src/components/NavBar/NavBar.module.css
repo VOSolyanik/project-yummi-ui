@@ -1,11 +1,17 @@
 /* Mobile-first: Desktop navigation hidden by default */
 .nav {
-  display: none;
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .navList {
   display: flex;
   gap: 1rem;
+}
+
+.desktopMenu {
+  display: none;
 }
 
 .navLink {
@@ -23,34 +29,108 @@
   background: transparent;
 }
 
+.navLink.activeLink {
+  box-shadow: inset 0 0 0 1px var(--gray-color);
+}
+
 .navLink:hover,
 .navLink:focus {
-  box-shadow: inset 0 0 0 1px rgb(var(--primary-active-bg-color));
+  box-shadow: inset 0 0 0 1px var(--primary-active-bg-color);
 }
 
-.navLink.activeLink {
-  box-shadow: inset 0 0 0 1px rgb(var(--gray-color));
-}
-
-/* Inverse mode for dark backgrounds */
-.inverseLink {
-  color: var(--white-color);
-}
-
-.inverseLink.activeLink {
-  box-shadow: inset 0 0 0 1px rgba(var(--white-rgb), 1);
-}
-
-.inverseLink:hover,
-.inverseLink:focus {
-  box-shadow: inset 0 0 0 1px rgba(var(--white-rgb), 1);
-}
-
-.burgerButton {
+.menuToggleButton,
+.menuCloseButton {
   padding: 2px;
   background: transparent;
   border: none;
+}
+
+.menuCloseButton {
   color: var(--white-color);
+}
+
+.menuToggleButton {
+  color: var(--black-color);
+}
+
+/* Inverse variant for dark backgrounds */
+.inverse .navLink {
+  color: var(--white-color);
+}
+
+.inverse .navLink:hover,
+.inverse .navLink:focus {
+  box-shadow: inset 0 0 0 1px rgba(var(--white-rgb), 1);
+}
+
+.inverse .navLink.activeLink {
+  box-shadow: inset 0 0 0 1px rgba(var(--white-rgb), 1);
+}
+
+.inverse .menuToggleButton {
+  color: var(--white-color);
+}
+
+/* MOBILE OVERLAY */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+}
+
+/* Slide-in panel */
+.menuPanel {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--black-color);
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 0 0;
+  box-shadow: 0 0 24px rgba(0, 0, 0, 0.2);
+  animation: slideIn 200ms ease-out;
+}
+
+.menuContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-bottom: 1rem;
+  max-height: 672px;
+  color: var(--white-color);
+}
+
+.menuHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 2rem;
+  margin-bottom: 2rem;
+}
+
+.mobileMenu {
+  flex-grow: 0 0 50%;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mobileImages {
+  flex-grow: 0 0 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 32px;
+}
+
+.smallImage {
+  width: 77px;
+}
+
+.bigImage {
+  width: 190px;
 }
 
 @keyframes fadeIn {
@@ -73,9 +153,12 @@
 
 /* Tablet styles (768px+) - show desktop nav, hide mobile */
 @media screen and (min-width: 768px) {
-  .nav {
+  .menuToggleButton {
+    display: none;
+  }
+
+  .desktopMenu {
     display: flex;
-    align-items: center;
   }
 
   .navList {

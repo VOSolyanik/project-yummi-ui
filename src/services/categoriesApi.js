@@ -5,14 +5,12 @@ const NAME_MAPPING = {
   Dessert: 'Desserts'
 };
 
-
 const transformCategories = categories => {
   return categories.map(category => ({
     _id: category.id,
     name: NAME_MAPPING[category.name] || category.name
   }));
 };
-
 
 const filterAndSortCategories = (categories, requiredCategories) => {
   const filtered = categories.filter(category => requiredCategories.includes(category.name));

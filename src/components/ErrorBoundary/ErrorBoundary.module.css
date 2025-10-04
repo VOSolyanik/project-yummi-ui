@@ -51,15 +51,15 @@
     min-height: 300px;
     padding: 1rem;
   }
-  
+
   .errorTitle {
     font-size: 20px;
   }
-  
+
   .errorMessage {
     font-size: 14px;
   }
-  
+
   .retryButton {
     padding: 10px 20px;
     font-size: 14px;

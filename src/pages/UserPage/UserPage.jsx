@@ -16,7 +16,7 @@ import Button from '@/components/Button/Button';
 import Tabs from '@/components/Tabs/Tabs';
 import UserInfoCard from '@/components/UserInfoCard/UserInfoCard';
 import { getCurrentUser, selectAuthToken, selectUser, selectAuthLoading } from '@/redux/auth/authSlice';
-import { fetchUserById, unfollowUser, followUser, selectSelectedUser } from '@/redux/users/usersSlice';
+import { fetchUserById, selectSelectedUser } from '@/redux/users/usersSlice';
 
 const UserPage = () => {
   const { userId } = useParams();
@@ -28,9 +28,9 @@ const UserPage = () => {
   const isLoading = useSelector(selectAuthLoading);
 
   useEffect(() => {
-    if (userId && userId !== 'me' && !selectedUser && !isLoading) { 
+    if (userId && userId !== 'me' && !selectedUser && !isLoading) {
       dispatch(fetchUserById(userId));
-    } 
+    }
     else if (token && !currentUser && !isLoading) {
       dispatch(getCurrentUser());
     }

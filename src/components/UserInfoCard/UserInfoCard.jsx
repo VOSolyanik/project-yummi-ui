@@ -6,6 +6,7 @@ import css from './UserInfoCard.module.css';
 
 import noAvatarImg from '@assets/images/no-avatar.webp';
 
+import Button from '../Button/Button';
 import Icon from '../Icon/Icon';
 import Loader from '../Loader/Loader';
 
@@ -19,7 +20,7 @@ const UserInfoCard = ({ user, isCurrent }) => {
     return <Loader />;
   }
 
-  const handleAploadAvatar = () => {
+  const handleUploadAvatar = () => {
     fileInputRef.current.click(); // open file picker
   };
 
@@ -41,9 +42,9 @@ const UserInfoCard = ({ user, isCurrent }) => {
           )}
         </div>
         {isCurrent && (
-          <div className={css.addBtn} onClick={handleAploadAvatar}>
+          <Button variant="primary" size="medium" className={css.addBtn} onClick={handleUploadAvatar}>
             <Icon name={'plus'} size={18} className={css.icon}></Icon>
-          </div>
+          </Button>
         )}
         {/* hidden file input */}
         <input
@@ -64,12 +65,12 @@ const UserInfoCard = ({ user, isCurrent }) => {
         </li>
         <li className={css.userInfoItem}>
           <span>Added recipes: </span>
-          <span className={css.data}>{user?.createdRecipes}</span>
+          <span className={css.data}>{user?.ownRecipesCount}</span>
         </li>
         {isCurrent && (
           <li className={css.userInfoItem}>
             <span>Favorites: </span>
-            <span className={css.data}>{user?.favoriteCount}</span>
+            <span className={css.data}>{user?.favoriteIds?.length}</span>
           </li>
         )}
         <li className={css.userInfoItem}>
@@ -79,7 +80,7 @@ const UserInfoCard = ({ user, isCurrent }) => {
         {isCurrent && (
           <li className={css.userInfoItem}>
             <span>Following: </span>
-            <span className={css.data}>{user?.followingCount}</span>
+            <span className={css.data}>{user?.followingIds?.length}</span>
           </li>
         )}
       </ul>

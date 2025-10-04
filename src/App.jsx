@@ -23,7 +23,6 @@ const AddRecipePage = lazy(() => import('@pages/AddRecipePage/AddRecipePage'));
 const UIKitPage = lazy(() => import('@pages/UIKitPage/UIKitPage'));
 const UserProfilePage = lazy(() => import('@/pages/UserPage/UserPage'));
 
-
 const App = () => {
   return (
     <>

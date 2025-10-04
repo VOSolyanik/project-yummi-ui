@@ -25,50 +25,6 @@
   border-radius: 30px;
 }
 
-.favoriteButton {
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  width: 42px;
-  height: 42px;
-  border: 1px solid var(--icon-border-light);
-  border-radius: 50%;
-  background: white;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.favoriteButton:hover:not(:disabled) {
-  background: var(--black-color);
-  border-color: var(--black-color);
-}
-
-.favoriteButton:hover:not(:disabled) .heartIcon {
-  filter: brightness(0) saturate(100%) invert(100%);
-}
-
-.favoriteButton:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-.favoriteActive {
-  background: var(--black-color);
-  border-color: var(--black-color);
-}
-
-.favoriteActive .heartIcon {
-  filter: brightness(0) saturate(100%) invert(100%);
-}
-
-.heartIcon {
-  width: 18px;
-  height: 18px;
-}
-
 .content {
   display: flex;
   flex-direction: column;
@@ -167,39 +123,6 @@
   color: var(--main-text-color);
 }
 
-.viewButton {
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  width: 42px;
-  height: 42px;
-  border: 1px solid var(--icon-border-light);
-  border-radius: 50%;
-  background: white;
-  cursor: pointer;
-  text-decoration: none;
-  transition: all 0.2s ease;
-}
-
-.viewButton:hover,
-.viewButton:focus {
-  background: var(--black-color);
-  border-color: var(--black-color);
-}
-
-.viewButton:hover .arrowIcon,
-.viewButton:focus .arrowIcon {
-  filter: brightness(0) saturate(100%) invert(100%);
-}
-
-.arrowIcon {
-  width: 18px;
-  height: 18px;
-}
-
 @media screen and (min-width: 375px) and (max-width: 767px) {
   .card {
     width: 100%;
@@ -245,28 +168,6 @@
 
   .authorName {
     font-size: 14px;
-  }
-
-  .favoriteButton {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-  }
-
-  .heartIcon {
-    width: 16px;
-    height: 16px;
-  }
-
-  .viewButton {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-  }
-
-  .arrowIcon {
-    width: 16px;
-    height: 16px;
   }
 }
 
@@ -316,27 +217,5 @@
 
   .authorName {
     font-size: 16px;
-  }
-
-  .favoriteButton {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-  }
-
-  .heartIcon {
-    width: 18px;
-    height: 18px;
-  }
-
-  .viewButton {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-  }
-
-  .arrowIcon {
-    width: 18px;
-    height: 18px;
   }
 }

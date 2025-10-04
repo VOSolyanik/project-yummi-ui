@@ -40,7 +40,9 @@
   outline: none;
 }
 @media (min-width: 768px) {
-  .uploadBox { min-height: 400px; }
+  .uploadBox {
+    min-height: 400px;
+  }
 }
 
 .uploadInner {
@@ -85,7 +87,10 @@
   height: 38px;
 }
 @media (min-width: 768px) {
-  .cameraIcon { width: 48px; height: 48px; }
+  .cameraIcon {
+    width: 48px;
+    height: 48px;
+  }
 }
 
 .invalid {
@@ -93,7 +98,9 @@
   color: var(--red-color);
   outline: none;
 }
-.invalid::placeholder { color: var(--red-color); }
+.invalid::placeholder {
+  color: var(--red-color);
+}
 
 .error {
   color: var(--red-color);

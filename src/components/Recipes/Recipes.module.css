@@ -93,7 +93,6 @@
   white-space: pre-line;
 }
 
-
 @media screen and (max-width: 767px) {
   .recipes {
     padding: 2rem 16px;
@@ -146,7 +145,7 @@
     font-size: 14px;
     line-height: 20px;
     letter-spacing: -0.02em;
-    color: #BFBEBE;
+    color: var(--gray-color);
     white-space: normal;
   }
 }
