@@ -1,81 +1,124 @@
-.recipeMainInfo {
+.mainInfo {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
+  gap: 20px;
 }
 
 .recipeImage {
   width: 100%;
-  max-width: 100%; 
-  border-radius: 10px;
-  margin-bottom: 15px;
+  height: auto;
+  aspect-ratio: 343 / 318;
+  object-fit: cover;
+  border-radius: 30px;
 }
 
-.recipeTitle {
-  font-size: 20px; 
-  margin-bottom: 10px;
-  color: var(--color-black); 
-  text-transform: uppercase;
-}
-
-.recipeTags {
+.details {
   display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 10px;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.recipeCategory,
-.recipeTime {
-  padding: 5px 10px;
-  border: 1px solid var(--color-gray); 
+.title {
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.33;
+  text-transform: uppercase;
+  color: var(--black-color);
+}
+
+.tags {
+  display: flex;
+  gap: 8px;
+}
+
+.tag {
+  padding: 10px;
+  border: 1px solid var(--secondary-text-color);
   border-radius: 20px;
-  color: var(--color-gray); 
-  font-size: 14px; 
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--secondary-text-color);
 }
 
-.recipeDescription {
-  margin-bottom: 15px;
-  color: var(--secondary-text-color); 
-  font-size: 14px; 
-  line-height: 1.4;
+.description {
+  font-size: 14px;
+  line-height: 1.43;
+  color: var(--charcoal-color);
 }
 
-.recipeOwnerButton {
-  background-color: transparent;
+.authorButton {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: none;
   border: none;
-  padding: 8px 12px;
-  border-radius: 5px;
+  padding: 0;
   cursor: pointer;
-  color: var(--color-dark-gray); 
-  font-weight: bold;
+  text-align: left;
 }
 
-/* Desktop Styles */
+.authorAvatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: var(--light-gray-color);
+}
+
+.authorInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.authorLabel {
+  font-size: 12px;
+  color: var(--secondary-text-color);
+}
+
+.authorName {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--secondary-text-color);
+}
+
 @media (min-width: 768px) {
-  .recipeMainInfo {
+  .recipeImage {
+    height: 400px;
+    aspect-ratio: 704 / 400;
+  }
+
+  .title {
+    font-size: 24px;
+    line-height: 1.16;
+  }
+
+  .description {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .authorAvatar {
+    width: 50px;
+    height: 50px;
+  }
+
+  .authorName {
+    color: var(--charcoal-color);
+  }
+}
+
+@media (min-width: 1440px) {
+  .mainInfo {
     flex-direction: row;
-    align-items: flex-start;
-    text-align: left; 
-    gap: 20px;
+    gap: 80px;
   }
 
   .recipeImage {
-    max-width: 400px;
-    margin-bottom: 0;
+    width: 551px;
+    height: 400px;
+    flex-shrink: 0;
   }
 
-  .recipeTitle {
-    font-size: 28px;
-  }
-
-  .recipeCategory,
-  .recipeTime {
-    font-size: 16px;
-  }
-
-  .recipeDescription {
-    font-size: 16px;
+  .details {
+    flex-grow: 1;
   }
 }
