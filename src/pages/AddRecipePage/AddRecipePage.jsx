@@ -48,7 +48,7 @@ const AddRecipePage = () => {
           filtersAPI.getAreas(),
           filtersAPI.getIngredients()
         ]);
-        const categoryOptions = cats.map(c => ({ value: c._id, label: c.name }));
+        const categoryOptions = cats.map(c => ({ value: c.id, label: c.name }));
         const areaOptions      = areas.map(a => ({ value: a.id, label: a.name }));
         const ingredientOptions = ings.map(i => ({ value: i.id, label: i.name }));
         setOptions({ categoryOptions, areaOptions, ingredientOptions });
