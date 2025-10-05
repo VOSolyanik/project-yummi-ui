@@ -35,6 +35,8 @@
 </symbol><symbol id="plus" viewBox="0 0 24 24">
 <path d="M12 5V19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M5 12H19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</symbol><symbol id="quote-sign" viewBox="0 0 40 32">
+<path d="M0 32V21.2941C0 17.2941 0.716418 13.6079 2.14925 10.2353C3.58209 6.86275 6.00995 3.45098 9.43284 0L15.6418 4.82353C13.6517 6.78432 12.1393 8.62746 11.1045 10.3529C10.0697 12.0784 9.39303 13.8431 9.07463 15.6471H16.7164V32H0ZM23.2836 32V21.2941C23.2836 17.2941 24 13.6079 25.4328 10.2353C26.8657 6.86275 29.2935 3.45098 32.7164 0L38.9254 4.82353C36.9353 6.78432 35.4229 8.62746 34.3881 10.3529C33.3532 12.0784 32.6766 13.8431 32.3582 15.6471H40V32H23.2836Z" fill="#BFBEBE"/>
 </symbol><symbol id="trash" viewBox="0 0 18 18">
 <path d="M6.75 2.25H11.25" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M2.25 4.5H15.75M14.25 4.5L13.724 12.3895C13.6451 13.5732 13.6057 14.165 13.35 14.6138C13.1249 15.0088 12.7854 15.3265 12.3762 15.5248C11.9115 15.75 11.3183 15.75 10.132 15.75H7.86799C6.68168 15.75 6.08852 15.75 5.62375 15.5248C5.21457 15.3265 4.87507 15.0088 4.64999 14.6138C4.39433 14.165 4.35488 13.5732 4.27596 12.3895L3.75 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
