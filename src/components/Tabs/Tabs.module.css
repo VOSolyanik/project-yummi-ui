@@ -9,7 +9,7 @@
   border-bottom: 1px solid var(--gray-color);
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin;
+  scrollbar-width: none;
 }
 
 .tabList::-webkit-scrollbar {
@@ -47,10 +47,6 @@
   color: var(--black-color);
 }
 
-.tabContent {
-  padding-top: 32px;
-}
-
 @media screen and (min-width: 768px) {
   .tabsContainer {
     max-width: 704px;
@@ -64,14 +60,10 @@
   .tabBtn {
     font-size: 20px;
   }
-
-  .tabContent {
-    padding-top: 40px;
-  }
 }
 
 @media screen and (min-width: 1440px) {
-  .tabContainer {
+  .tabsContainer {
     max-width: 846px;
   }
 }

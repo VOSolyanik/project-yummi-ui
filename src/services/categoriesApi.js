@@ -7,7 +7,7 @@ const NAME_MAPPING = {
 
 const transformCategories = categories => {
   return categories.map(category => ({
-    _id: category.id,
+    id: category.id,
     name: NAME_MAPPING[category.name] || category.name
   }));
 };

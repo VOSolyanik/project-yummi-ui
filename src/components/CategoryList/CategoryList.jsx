@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import css from './CategoryList.module.css';
 
 import CategoryCard from '@components/CategoryCard/CategoryCard';
+
+import { useViewport } from '@hooks/useViewport';
 
 const WIDE_CATEGORIES = ['Desserts', 'Lamb', 'Pork', 'Side', 'Vegan'];
 const INITIAL_DISPLAY_CATEGORIES_DESKTOP = 11;
@@ -10,18 +12,8 @@ const INITIAL_DISPLAY_CATEGORIES_MOBILE = 8;
 
 const CategoryList = ({ categories, onCategoryClick, isLoading, error }) => {
   const [showAllCategories, setShowAllCategories] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkIsMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    checkIsMobile();
-    window.addEventListener('resize', checkIsMobile);
-
-    return () => window.removeEventListener('resize', checkIsMobile);
-  }, []);
+  const { width } = useViewport();
+  const isMobile = width < 768;
 
   const getCardSize = categoryName => {
     return WIDE_CATEGORIES.includes(categoryName) ? 'wide' : 'normal';
@@ -31,7 +23,7 @@ const CategoryList = ({ categories, onCategoryClick, isLoading, error }) => {
     if (!showAllCategories) {
       setShowAllCategories(true);
     } else {
-      onCategoryClick({ _id: 'all', name: 'All Categories' });
+      onCategoryClick({ id: 'all', name: 'All Categories' });
     }
   };
 
@@ -67,7 +59,7 @@ const CategoryList = ({ categories, onCategoryClick, isLoading, error }) => {
     <div className={css.grid}>
       {displayCategories.map(category => (
         <CategoryCard
-          key={category._id}
+          key={category.id}
           category={category}
           onClick={onCategoryClick}
           size={getCardSize(category.name)}

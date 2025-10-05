@@ -4,7 +4,7 @@ import { MODAL_TYPES } from '../constants/modalTypes.js';
 
 const AuthModalContext = createContext();
 
-function AuthModalProvider({ children }) {
+const AuthModalProvider = ({ children }) => {
   const [currentModal, setCurrentModal] = useState(null);
   const [modalProps, setModalProps] = useState({});
 
@@ -63,6 +63,6 @@ function AuthModalProvider({ children }) {
       {children}
     </AuthModalContext.Provider>
   );
-}
+};
 
 export { AuthModalContext, AuthModalProvider };

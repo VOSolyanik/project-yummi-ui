@@ -9,6 +9,7 @@ import filtersReducer from './filters/filtersSlice';
 import recipesReducer from './recipes/recipesSlice';
 import routerReducer from './router/routerSlice';
 import { initializeStoreUtils } from './storeUtils.js';
+import usersReduser from './users/usersSlice';
 
 // Persist config for auth - only persist token
 const authPersistConfig = {
@@ -25,7 +26,8 @@ export const store = configureStore({
     categories: categoriesReducer,
     recipes: recipesReducer,
     filters: filtersReducer,
-    router: routerReducer
+    router: routerReducer,
+    users: usersReduser
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

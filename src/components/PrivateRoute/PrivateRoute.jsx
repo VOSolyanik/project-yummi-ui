@@ -19,12 +19,11 @@ import Loader from '../Loader/Loader';
 const PrivateRoute = ({ children }) => {
   const { isAuthenticated, isLoading } = useAuth();
   const { openSignInModal, currentModal } = useAuthModal();
-  const { previousPath, currentPath, pendingPrivateRoute } = useRouteTracker();
+  const { currentPath, pendingPrivateRoute } = useRouteTracker();
 
   const location = useLocation();
   const dispatch = useDispatch();
 
-  console.log(previousPath, currentPath, pendingPrivateRoute);
   useEffect(() => {
 
     // If user is not authenticated and not loading

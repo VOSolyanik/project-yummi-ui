@@ -1,8 +1,6 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useCallback, useMemo } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-
-import { checkRecipesFavorites } from '@services/favoritesApi.js';
 
 import css from './Recipes.module.css';
 
@@ -13,11 +11,12 @@ import {
 } from '@redux/filters/filtersSlice';
 import {
   fetchRecipes,
+  selectCurrentPage,
   selectRecipes,
   selectTotalPages,
-  selectTotalRecipes,
-  selectIsLoadingRecipes,
-  selectRecipesError
+  selectTotalCount,
+  selectIsLoading,
+  selectError
 } from '@redux/recipes/recipesSlice';
 
 import ErrorBoundary from '@components/ErrorBoundary/ErrorBoundary';
@@ -28,124 +27,68 @@ import RecipeList from '@components/RecipeList/RecipeList';
 import RecipePagination from '@components/RecipePagination/RecipePagination';
 import Subtitle from '@components/Subtitle/Subtitle';
 
+import { useViewport } from '@hooks/useViewport.js';
 
-import { useAuth } from '@hooks/useAuth.js';
-
-const MOBILE_BREAKPOINT = 767;
 const MOBILE_ITEMS_PER_PAGE = 8;
 const DESKTOP_ITEMS_PER_PAGE = 12;
 
-const Recipes = ({ categoryData, onBackToCategories }) => {
+const Recipes = ({ category, onBackToCategories }) => {
   const dispatch = useDispatch();
-  const [currentPage, setCurrentPage] = useState(1);
-  const [favoriteRecipeIds, setFavoriteRecipeIds] = useState(new Set());
+  const { width } = useViewport();
+  const isMobile = width < 768;
 
   const recipes = useSelector(selectRecipes);
+  const currentPage = useSelector(selectCurrentPage);
   const totalPages = useSelector(selectTotalPages);
-  const totalRecipes = useSelector(selectTotalRecipes);
-  const isLoading = useSelector(selectIsLoadingRecipes);
-  const error = useSelector(selectRecipesError);
+  const totalRecipes = useSelector(selectTotalCount);
+  const isLoading = useSelector(selectIsLoading);
+  const error = useSelector(selectError);
   const selectedIngredient = useSelector(selectSelectedIngredient);
   const selectedArea = useSelector(selectSelectedArea);
 
-  const { user, isAuthenticated } = useAuth();
-
-  const isAllCategories = categoryData?.category?.name === 'All Categories';
-  const categoryId = categoryData?.category?._id || 'all';
-  const title = isAllCategories ? 'All categories' : categoryData?.category?.name || 'Recipes';
+  const isAllCategories = category?.name === 'All Categories';
+  const categoryId = category?.id || 'all';
+  const title = isAllCategories ? 'All categories' : category?.name || 'Recipes';
   const subtitle = 'Go on a taste journey, where every sip is a sophisticated creative chord, and\n every dessert is an expression of the most refined gastronomic desires.';
 
-  const getItemsPerPage = useCallback(() => {
-    return typeof window !== 'undefined' && window.innerWidth <= MOBILE_BREAKPOINT
+  const itemsPerPage = useMemo(() => {
+    return isMobile
       ? MOBILE_ITEMS_PER_PAGE
       : DESKTOP_ITEMS_PER_PAGE;
-  }, []);
+  }, [isMobile]);
 
   useEffect(() => {
     if (categoryId) {
-      setCurrentPage(1);
       dispatch(fetchRecipes({
         categoryId,
         page: 1,
-        limit: getItemsPerPage(),
+        limit: itemsPerPage,
         ingredient: null,
         area: null
       }));
     }
-  }, [dispatch, categoryId, getItemsPerPage]);
-
-  // Check favorites for current recipes when user is authenticated and recipes are loaded
-  useEffect(() => {
-    const checkCurrentRecipesFavorites = async () => {
-      if (isAuthenticated && user?.id && recipes && recipes.length > 0) {
-        try {
-          // Get IDs of currently displayed recipes
-          const currentRecipeIds = recipes.map(recipe => recipe.id);
-
-          // Check which of these recipes are favorites
-          const favoritesStatus = await checkRecipesFavorites(user.id, currentRecipeIds);
-
-          // Create Set of favorite recipe IDs from current page
-          const favoriteIds = new Set();
-          Object.entries(favoritesStatus).forEach(([recipeId, isFavorite]) => {
-            if (isFavorite) {
-              favoriteIds.add(recipeId);
-            }
-          });
-
-
-          setFavoriteRecipeIds(favoriteIds);
-        } catch (error) {
-          console.error('Error checking current recipes favorites:', error);
-          setFavoriteRecipeIds(new Set());
-        }
-      } else {
-        setFavoriteRecipeIds(new Set());
-      }
-    };
-
-    checkCurrentRecipesFavorites().catch(error => {
-      console.error('Error in checkCurrentRecipesFavorites:', error);
-    });
-  }, [isAuthenticated, user?.id, recipes]);
+  }, [dispatch, categoryId, itemsPerPage]);
 
   const handleFiltersChange = useCallback(({ ingredient, area }) => {
-    setCurrentPage(1);
-    const limit = getItemsPerPage();
     dispatch(fetchRecipes({
       categoryId,
       page: 1,
-      limit,
+      limit: itemsPerPage,
       ingredient,
       area
     }));
-  }, [dispatch, categoryId, getItemsPerPage]);
+  }, [dispatch, categoryId, itemsPerPage]);
 
   const handlePageChange = useCallback((page) => {
-    setCurrentPage(page);
-    const limit = getItemsPerPage();
     dispatch(fetchRecipes({
       categoryId,
       page,
-      limit,
+      limit: itemsPerPage,
       ingredient: selectedIngredient?.id || null,
       area: selectedArea?.id || null
     }));
-  }, [dispatch, categoryId, selectedIngredient?.id, selectedArea?.id, getItemsPerPage]);
+  }, [dispatch, categoryId, selectedIngredient?.id, selectedArea?.id, itemsPerPage]);
 
-
-  // Handle favorite changes from RecipeCard
-  const handleFavoriteChange = useCallback((recipeId, isFavorite) => {
-    setFavoriteRecipeIds(prev => {
-      const newSet = new Set(prev);
-      if (isFavorite) {
-        newSet.add(recipeId);
-      } else {
-        newSet.delete(recipeId);
-      }
-      return newSet;
-    });
-  }, []);
 
   const handleBackClick = useCallback(() => {
     dispatch(clearFilters());
@@ -185,8 +128,6 @@ const Recipes = ({ categoryData, onBackToCategories }) => {
               recipes={recipes}
               isLoading={isLoading}
               error={error}
-              favoriteRecipeIds={favoriteRecipeIds}
-              onFavoriteChange={handleFavoriteChange}
             />
           </ErrorBoundary>
 
