@@ -8,11 +8,12 @@ import clsx from 'clsx';
 import css from './UserPage.module.css';
 
 import { selectUser, selectActionInProgress, followUser, unfollowUser } from '@redux/auth/authSlice';
-import { fetchUserById, selectSelectedUser, selectIsLoadingSelectedUser } from '@redux/users/usersSlice';
+import { fetchUserById, selectSelectedUser, selectIsLoadingSelectedUser, clearState } from '@redux/users/usersSlice';
 
 import Button from '@components/Button/Button';
 import Loader from '@components/Loader/Loader';
 import MainTitle from '@components/MainTitle/MainTitle';
+import PathInfo from '@components/PathInfo/PathInfo';
 import Subtitle from '@components/Subtitle/Subtitle';
 import Tabs from '@components/Tabs/Tabs';
 import UserInfoCard from '@components/UserInfoCard/UserInfoCard';
@@ -38,14 +39,22 @@ const UserPage = () => {
     [profileId, currentUser?.id]
   );
 
+  const user = isCurrentUserProfile ? currentUser : selectedUser;
+
   const isFollowed = useMemo(
     () => !isCurrentUserProfile && currentUser?.followingIds?.some(id => id === selectedUser?.id),
     [currentUser, selectedUser, isCurrentUserProfile]
   );
 
   useEffect(() => {
-    dispatch(fetchUserById(profileId));
-  }, [dispatch, profileId]);
+    if (!isCurrentUserProfile) {
+      dispatch(fetchUserById(profileId));
+    }
+
+    return () => {
+      dispatch(clearState());
+    };
+  }, [dispatch, isCurrentUserProfile, profileId]);
 
 
   const handleLogout = () => {
@@ -65,9 +74,7 @@ const UserPage = () => {
   return (
     <div className={clsx('container', css.container)}>
       <div className={css.titlesContainer}>
-        <div className={css.breadcrumb}>
-          Home / <span>Profile</span>
-        </div>
+        <PathInfo currentPage='Profile'/>
         <MainTitle level={2} id="profile-heading" className={css.title}>
           Profile
         </MainTitle>
@@ -76,10 +83,10 @@ const UserPage = () => {
           Reveal your culinary art, share your favorite recipe and create gastronomic masterpieces with us.
         </Subtitle>
       </div>
-      {isLoading || !selectedUser ? (<Loader />) : (
+      {isLoading || !user ? (<Loader />) : (
         <div className={css.sectionWrapper}>
           <div>
-            <UserInfoCard user={selectedUser} isCurrent={isCurrentUserProfile}/>
+            <UserInfoCard user={user} isCurrent={isCurrentUserProfile}/>
             {isCurrentUserProfile ? (
               <Button className={css.btn} variant="primary" onClick={handleLogout}>
                 LOG OUT
@@ -94,7 +101,7 @@ const UserPage = () => {
               </Button>
             )}
           </div>
-          <Tabs user={selectedUser} isCurrent={isCurrentUserProfile}/>
+          <Tabs user={user} isCurrent={isCurrentUserProfile}/>
         </div>
       )}
     </div>

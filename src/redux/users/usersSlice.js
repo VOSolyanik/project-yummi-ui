@@ -62,16 +62,26 @@ export const fetchFollowing = createAsyncThunk(
   }
 );
 
+const initialState = {
+  selectedUser: { user: null, loading: false, error: null },
+  recipes: { items: null, limit: 12, page: 1, totalCount: 0, loading: false, error: null },
+  favorites: { items: null, limit: 12, page: 1, totalCount: 0, loading: false, error: null },
+  followers: { items: null, limit: 12, page: 1, totalCount: 0, loading: false, error: null },
+  following: { items: null, limit: 12, page: 1, totalCount: 0, loading: false, error: null }
+};
+
 const usersSlice = createSlice({
   name: 'users',
-  initialState: {
-    selectedUser: { user: null, loading: false, error: null },
-    recipes: { items: null, limit: 12, page: 1, totalCount: 0, loading: false, error: null },
-    favorites: { items: null, limit: 12, page: 1, totalCount: 0, loading: false, error: null },
-    followers: { items: null, limit: 12, page: 1, totalCount: 0, loading: false, error: null },
-    following: { items: null, limit: 12, page: 1, totalCount: 0, loading: false, error: null }
+  initialState: initialState,
+  reducers: {
+    clearState: state => {
+      state.selectedUser = initialState.selectedUser;
+      state.recipes = initialState.recipes;
+      state.favorites = initialState.favorites;
+      state.followers = initialState.followers;
+      state.following = initialState.following;
+    }
   },
-  reducers: {},
   extraReducers: builder => {
     // User By Id
     builder
@@ -144,6 +154,8 @@ const usersSlice = createSlice({
       });
   }
 });
+
+export const { clearState } = usersSlice.actions;
 
 export const selectSelectedUser = (state) => state.users.selectedUser.user;
 export const selectIsLoadingSelectedUser = (state) => state.users.selectedUser.loading;
