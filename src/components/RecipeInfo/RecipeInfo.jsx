@@ -4,11 +4,14 @@ import toast from 'react-hot-toast';
 
 import css from './RecipeInfo.module.css';
 
+import noImagePlaceholder from '../../assets/images/no-image.png';
+
 import Button from '@/components/Button/Button';
 import RecipeIngredients from '@/components/RecipeIngredients/RecipeIngredients';
 import RecipeMainInfo from '@/components/RecipeMainInfo/RecipeMainInfo';
 import RecipePreparation from '@/components/RecipePreparation/RecipePreparation';
 import { useAuth } from '@/hooks/useAuth';
+import { useAuthModal } from '@/hooks/useAuthModal';
 import {
   addToFavorites,
   removeFromFavorites,
@@ -18,6 +21,7 @@ import {
 
 const RecipeInfo = ({ recipe }) => {
   const { user, isAuthenticated } = useAuth();
+  const { openSignInModal } = useAuthModal();
   const [isFavorite, setIsFavorite] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
 
@@ -35,7 +39,7 @@ const RecipeInfo = ({ recipe }) => {
 
   const handleFavoriteToggle = async () => {
     if (!isAuthenticated) {
-      toast.error('Please sign in to manage favorites.');
+      openSignInModal();
       return;
     }
 
@@ -59,24 +63,36 @@ const RecipeInfo = ({ recipe }) => {
     }
   };
 
+  const handleImageError = (e) => {
+    e.target.src = noImagePlaceholder;
+  };
+
   if (!recipe) {
     return null;
   }
 
   return (
     <div className={css.recipeInfo}>
-      <RecipeMainInfo recipe={recipe} />
-      <RecipeIngredients ingredients={recipe.ingredients} />
-      <RecipePreparation instructions={recipe.instructions} />
-      <Button
-        variant="outline"
-        size="large"
-        onClick={handleFavoriteToggle}
-        disabled={isUpdating}
-        className={css.favoriteButton}
-      >
-        {isUpdating ? 'Updating...' : (isFavorite ? 'Remove from favorites' : 'Add to favorites')}
-      </Button>
+      <img
+        src={recipe.thumbUrl || noImagePlaceholder}
+        alt={recipe.title}
+        className={css.recipeImage}
+        onError={handleImageError}
+      />
+      <div className={css.detailsWrapper}>
+        <RecipeMainInfo recipe={recipe} />
+        <RecipeIngredients ingredients={recipe.ingredients} />
+        <RecipePreparation instructions={recipe.instructions} />
+        <Button
+          variant="outline"
+          size="large"
+          onClick={handleFavoriteToggle}
+          disabled={isUpdating}
+          className={css.favoriteButton}
+        >
+          {isUpdating ? 'Updating...' : (isFavorite ? 'Remove from favorites' : 'Add to favorites')}
+        </Button>
+      </div>
     </div>
   );
 };

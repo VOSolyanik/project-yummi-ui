@@ -4,8 +4,6 @@ import { useNavigate } from 'react-router-dom';
 
 import css from './RecipeMainInfo.module.css';
 
-import noImagePlaceholder from '../../assets/images/no-image.png';
-
 import { useAuth } from '@/hooks/useAuth';
 import { useAuthModal } from '@/hooks/useAuthModal';
 
@@ -22,18 +20,8 @@ const RecipeMainInfo = ({ recipe }) => {
     }
   };
 
-  const handleImageError = (e) => {
-    e.target.src = noImagePlaceholder;
-  };
-
   return (
-    <div className={css.mainInfo}>
-      <img
-        src={recipe.thumbUrl || noImagePlaceholder}
-        alt={recipe.title}
-        className={css.recipeImage}
-        onError={handleImageError}
-      />
+    <>
       <div className={css.details}>
         <h1 className={css.title}>{recipe.title}</h1>
         <div className={css.tags}>
@@ -56,7 +44,7 @@ const RecipeMainInfo = ({ recipe }) => {
           </div>
         </button>
       </div>
-    </div>
+    </>
   );
 };
 
