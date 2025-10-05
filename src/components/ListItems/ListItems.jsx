@@ -108,7 +108,6 @@ const ListItems = ({ type, user }) => {
   }, [type, dispatch, user.id, itemsPerPage]);
 
   const listState = userLists[type];
-  console.log(listState);
 
   if (listState.loading) return <Loader />;
   if (listState.error) return <p>Error: {listState.error}</p>;
