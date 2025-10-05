@@ -4,7 +4,6 @@ import clsx from 'clsx';
 
 import css from './UserBar.module.css';
 
-import Button from '../Button/Button';
 import Icon from '../Icon/Icon';
 
 const UserBar = ({ user, onProfileClick, onLogoutClick, inverse = false }) => {
@@ -83,9 +82,9 @@ const UserBar = ({ user, onProfileClick, onLogoutClick, inverse = false }) => {
         aria-haspopup="menu"
         aria-controls="user-dropdown-menu"
       >
-        {user?.avatar ? (
+        {user?.avatarUrl ? (
           <img
-            src={user.avatar}
+            src={user.avatarUrl}
             alt={user?.name || 'User'}
             className={css.userAvatar}
           />
