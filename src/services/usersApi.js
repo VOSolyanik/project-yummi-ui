@@ -11,9 +11,10 @@ export const usersAPI = {
     }
   },
 
-  getRecipes: async (userId) => {
+  getRecipes: async (userId, page = 1, limit = 12) => {
+    const params = { page, limit };
     try {
-      const response = await api.get(`/users/${userId}/recipes`);
+      const response = await api.get(`/users/${userId}/recipes`, { params });
       return response;
     } catch (error) {
       const message = error.response?.data?.message || 'Error getting recipes';
@@ -21,9 +22,10 @@ export const usersAPI = {
     }
   },
 
-  getFavorites: async (userId) => {
+  getFavorites: async (userId, page = 1, limit =  12) => {
+    const params = { page, limit };
     try {
-      const response = await api.get(`/users/${userId}/favorites`);
+      const response = await api.get(`/users/${userId}/favorites`, { params });
       return response;
     } catch (error) {
       const message = error.response?.data?.message || 'Error getting favorites';
