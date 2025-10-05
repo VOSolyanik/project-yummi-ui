@@ -89,8 +89,6 @@ const AddRecipePage = () => {
     }
   };
 
-  if (loading) return <div>Loading…</div>;
-
   return (
     <>
       <Helmet>
@@ -98,7 +96,7 @@ const AddRecipePage = () => {
       </Helmet>
 
       <section className={css.container}>
-        <PathInfo currentPage='Add recipe'/>
+        <PathInfo currentPage='Add recipe' className={css.pathInfo}/>
         <MainTitle level={2} id='add-recipe-heading' className={css.title}>Add Recipe</MainTitle>
         <Subtitle className={css.text}>
           Reveal your culinary art, share your favorite recipe
