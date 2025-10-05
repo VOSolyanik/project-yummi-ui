@@ -8,6 +8,15 @@
   text-align: center;
 }
 
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  gap: 60px;
+  flex: 1;
+}
+
 @media screen and (min-width: 768px) {
   .infoText {
     padding: 100px 47px 200px 47px;
