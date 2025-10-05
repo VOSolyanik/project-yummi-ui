@@ -65,7 +65,6 @@ const RecipePagination = ({
   }
   
   const activePage = (!totalPages || totalPages === 0) ? 1 : currentPage;
-  console.log('Active Page:', activePage);
   const canPrev = activePage > 1;
   const canNext = activePage < totalPages;
   const showArrows = totalPages > 3;
