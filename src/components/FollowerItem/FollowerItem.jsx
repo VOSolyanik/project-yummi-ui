@@ -1,8 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React from 'react';
 
 import { NavLink } from 'react-router-dom';
 
-import { socialAPI } from '@services/socialApi.js';
 import PropTypes from 'prop-types';
 
 import css from './FollowerItem.module.css';
@@ -12,79 +11,32 @@ import Icon from '@components/Icon/Icon.jsx';
 
 import noAvatarImg from '@assets/images/no-avatar.webp';
 
-import { recipesAPI } from '@/services/index.js';
 
-const FollowerItem = ({ avatar, id, isFollowing: initialIsFollowing, recipesCount, username }) => {
-  const [buttonDisabled, setButtonDisabled] = useState(false);
-  const [recipes, setRecipes] = useState([]);
-  const [recipesTotalCount, setRecipesTotalCount] = useState(0);
-  const [isFollowing, setIsFollowing] = useState(initialIsFollowing);
-  const userRecipes = useCallback(async () => {
-    try {
-      const res = await recipesAPI.getRecipesByUser(id);
-      setRecipes(res?.data?.recipes ?? []);
-      setRecipesTotalCount(res?.data?.totalRecipes ?? 0);
-    } catch (e) {
-      console.error('Failed to load user recipes:', e);
-    }
-  }, [id]);
+const FollowerItem = ({ user, isCurrent, isFollowing, recipesCount, onFollowToggle }) => {
+  const recipesToShow = user?.latestRecipes ? user.latestRecipes.slice(0, recipesCount) : [];
 
-  const followUser = async (id) => {
-    await socialAPI.followUser(id);
-    setIsFollowing(true);
+  const handleFollowToggle = () => {
+    onFollowToggle(user.id, isFollowing);
   };
-
-  const unfollowUser = async (id) => {
-    await socialAPI.unfollowUser(id);
-    setIsFollowing(false);
-  };
-
-  useEffect(() => {
-    userRecipes();
-  }, [userRecipes]);
-
-  useEffect(() => {
-    setIsFollowing(initialIsFollowing);
-  }, [initialIsFollowing]);
-
-  const onButtonClick = async () => {
-    setButtonDisabled(true);
-    try {
-      if (isFollowing) {
-        await unfollowUser(id);
-      } else {
-        await followUser(id);
-      }
-    } catch (e) {
-      console.error(e);
-    } finally {
-      setButtonDisabled(false);
-    }
-  };
-
-  function recipesToDisplay() {
-    return recipes?.slice(0, recipesCount);
-  }
 
   return (
     <div className={css.component}>
       <div className={css.user}>
-        <NavLink className={css.avatar} to={`/user/${id}`}>
-          {avatar ? (
-            <img alt={`${username} avatar`} height="60" src={avatar} width="60" />
+        <NavLink className={css.avatar} to={`/user/${user.id}`}>
+          {user.avatarUrl ? (
+            <img alt={`${user.name} avatar`} height="60" src={user.avatarUrl} width="60" />
           ) : (
-            <img alt={`${username} avatar`} height="60" src={noAvatarImg} width="60" />
+            <img alt={`${user.name} avatar`} height="60" src={noAvatarImg} width="60" />
           )}
         </NavLink>
         <div>
           <h3 className={css.username}>
-            <NavLink to={`/user/${id}`}>{username}</NavLink>
+            <NavLink to={`/user/${user.id}`}>{user.name}</NavLink>
           </h3>
-          <p className={css['recipes-count']}>Own recipes: {recipesTotalCount}</p>
-          {(
+          <p className={css['recipes-count']}>Own recipes: {user.ownRecipesCount}</p>
+          {!isCurrent && (
             <Button
-              onClick={onButtonClick}
-              disabled={buttonDisabled}
+              onClick={handleFollowToggle}
               variant="outline"
             >
               {isFollowing ? 'Unfollow' : 'Follow'}
@@ -93,7 +45,7 @@ const FollowerItem = ({ avatar, id, isFollowing: initialIsFollowing, recipesCoun
         </div>
       </div>
       <div className={css.recipes}>
-        {recipesToDisplay()?.map(recipe => (
+        {recipesToShow.map(recipe => (
           <NavLink className={css.recipe} key={recipe.id} to={`/recipe/${recipe.id}`}>
             <img alt="Thumbnail" className={css.thumbnail} height="100" src={recipe.thumbUrl} width="100" />
           </NavLink>
@@ -101,7 +53,7 @@ const FollowerItem = ({ avatar, id, isFollowing: initialIsFollowing, recipesCoun
       </div>
       <Button
         as={NavLink}
-        to={`/user/${id}`}
+        to={`/user/${user.id}`}
         variant="outline"
         size="large">
         <Icon name="arrow-up-right"/>
@@ -111,11 +63,22 @@ const FollowerItem = ({ avatar, id, isFollowing: initialIsFollowing, recipesCoun
 };
 
 FollowerItem.propTypes = {
-  avatar: PropTypes.string,
-  id: PropTypes.string.isRequired,
+  user: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    avatarUrl: PropTypes.string,
+    ownRecipesCount: PropTypes.number.isRequired,
+    latestRecipes: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        thumbUrl: PropTypes.string.isRequired
+      })
+    )
+  }).isRequired,
+  isCurrent: PropTypes.bool.isRequired,
   isFollowing: PropTypes.bool.isRequired,
   recipesCount: PropTypes.number.isRequired,
-  username: PropTypes.string.isRequired
+  onFollowToggle: PropTypes.func.isRequired
 };
 
 export default FollowerItem;

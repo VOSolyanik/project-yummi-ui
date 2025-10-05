@@ -15,15 +15,7 @@ export const recipesAPI = {
 
     try {
       const response = await api.get('/recipes', { params });
-
-      const transformedData = {
-        recipes: response.data.items || [],
-        totalPages: Math.ceil((response.data.totalCount || 0) / limit),
-        currentPage: page,
-        totalRecipes: response.data.totalCount || 0
-      };
-
-      return { data: transformedData, status: response.status };
+      return response.data;
     } catch (error) {
       console.error('Error fetching recipes:', error);
       throw error;
@@ -38,28 +30,6 @@ export const recipesAPI = {
       return data ?? {};
     } catch (error) {
       console.error('Failed to create recipe:', error);
-      throw error;
-    }
-  },
-
-  // /users/:id/recipes
-  getRecipesByUser: async (userId, page = 1, limit = 12, sortBy = 'createdAt', sortDir = 'desc') => {
-    const params = { page, limit, sortBy, sortDir };
-
-    try {
-      // бекенд ми описали як GET /users/{userId}/recipes
-      const response = await api.get(`/users/${userId}/recipes`, { params });
-
-      const transformedData = {
-        recipes: response.data.items || [],
-        totalPages: Math.ceil((response.data.totalCount || 0) / limit),
-        currentPage: page,
-        totalRecipes: response.data.totalCount || 0
-      };
-
-      return { data: transformedData };
-    } catch (error) {
-      console.error('Error fetching user recipes:', error);
       throw error;
     }
   }

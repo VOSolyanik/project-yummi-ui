@@ -11,7 +11,7 @@ export const usersAPI = {
     }
   },
 
-  getRecipies: async (userId) => {
+  getRecipes: async (userId) => {
     try {
       const response = await api.get(`/users/${userId}/recipes`);
       return response;

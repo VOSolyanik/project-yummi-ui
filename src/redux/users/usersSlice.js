@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-import { socialAPI } from '@/services/socialApi';
 import { usersAPI } from '@/services/usersApi';
 
 export const fetchUserById = createAsyncThunk(
@@ -19,7 +18,7 @@ export const fetchRecipes = createAsyncThunk(
   'users/fetchRecipes',
   async (userId, { rejectWithValue }) => {
     try {
-      const res = await usersAPI.getRecipies(userId);
+      const res = await usersAPI.getRecipes(userId);
       return res.data;
     } catch (err) {
       return rejectWithValue(err.response?.data || 'Failed to fetch recipes');
@@ -63,30 +62,6 @@ export const fetchFollowing = createAsyncThunk(
   }
 );
 
-export const followUser = createAsyncThunk(
-  'users/followUser',
-  async (userId, { rejectWithValue }) => {
-    try {
-      const res = await socialAPI.followUser(userId);
-      return { userId, message: res.data.message };
-    } catch (err) {
-      return rejectWithValue(err.response?.data?.message || 'Failed to follow');
-    }
-  }
-);
-
-export const unfollowUser = createAsyncThunk(
-  'users/unfollowUser',
-  async (userId, { rejectWithValue }) => {
-    try {
-      const res = await socialAPI.unfollowUser(userId);
-      return { userId, message: res.data.message };
-    } catch (err) {
-      return rejectWithValue(err.response?.data?.message || 'Failed to unfollow');
-    }
-  }
-);
-
 const usersSlice = createSlice({
   name: 'users',
   initialState: {
@@ -101,16 +76,16 @@ const usersSlice = createSlice({
     // User By Id
     builder
       .addCase(fetchUserById.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
+        state.selectedUser.loading = true;
+        state.selectedUser.error = null;
       })
       .addCase(fetchUserById.fulfilled, (state, action) => {
-        state.isLoading = false;
+        state.selectedUser.loading = false;
         state.selectedUser.user = action.payload;
       })
       .addCase(fetchUserById.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload;
+        state.selectedUser.loading = false;
+        state.selectedUser.error = action.payload;
       });
     // Recipes
     builder
@@ -118,7 +93,6 @@ const usersSlice = createSlice({
         state.recipes.loading = true;
       })
       .addCase(fetchRecipes.fulfilled, (state, action) => {
-        console.log(action.payload);
         state.recipes.loading = false;
         state.recipes.items = action.payload.items;
       })
@@ -172,6 +146,7 @@ const usersSlice = createSlice({
 });
 
 export const selectSelectedUser = (state) => state.users.selectedUser.user;
+export const selectIsLoadingSelectedUser = (state) => state.users.selectedUser.loading;
 export const selectListRecipes = (state) => state.users.recipes.items;
 export const selectIsLoadingListRecipes = (state) => state.users.recipes.isLoading;
 export const selectListRecipesError = (state) => state.users.recipes.error;

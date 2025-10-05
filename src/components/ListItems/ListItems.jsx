@@ -1,58 +1,71 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 
 import css from './ListItems.module.css';
 
-import FollowerItem from '@components/FollowerItem/FollowerItem.jsx';
-
-import RecipesPreview from '../RecipesPreview';
-
-import { selectUser } from '@/redux/auth/authSlice';
+import { selectUser, followUser, unfollowUser, removeRecipeFromFavorites } from '@redux/auth/authSlice';
 import {
   fetchRecipes,
   fetchFavorites,
   fetchFollowers,
   fetchFollowing
-} from '@/redux/users/usersSlice';
+} from '@redux/users/usersSlice';
+
+import FollowerItem from '@components/FollowerItem/FollowerItem.jsx';
+
+import { useViewport } from '@hooks/useViewport.js';
+
+import Loader from '../Loader/Loader';
+import RecipesPreview from '../RecipesPreview';
 
 
-const ListItems = ({ type }) => {
+const ListItems = ({ type, user }) => {
   const dispatch = useDispatch();
   const userLists = useSelector((state) => state.users);
-  const user = useSelector(selectUser);
+  const currentUser = useSelector(selectUser);
 
-  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768);
+  const { width } = useViewport();
+  const isMobile = width < 768;
+
+  const isUserFollowed = useCallback((userId) => {
+    if (!currentUser?.followingIds) return false;
+    return currentUser.followingIds.some(id => id === userId);
+  }, [currentUser.followingIds]);
+
+  const handleFollowToggle = useCallback(async (userId, isCurrentlyFollowed) => {
+    // Dispatch follow or unfollow action based on current state
+    if (isCurrentlyFollowed) {
+      await dispatch(unfollowUser(userId));
+      if (type === 'following') {
+        await dispatch(fetchFollowing(user.id));
+      }
+    } else {
+      await dispatch(followUser(userId));
+    }
+  }, [dispatch, user.id, type]);
+
+  const handleOnDelete = useCallback(async (recipeId) => {
+    // Dispatch delete action
+    await dispatch(removeRecipeFromFavorites(recipeId));
+    if (type === 'favorites') {
+      await dispatch(fetchFavorites(user.id));
+    }
+  }, [dispatch, user.id, type]);
+
   useEffect(() => {
-    const mq = window.matchMedia('(max-width: 767.98px)');
-    const onChange = e => setIsMobile(e.matches);
-    mq.addEventListener?.('change', onChange);
-    setIsMobile(mq.matches);
-    return () => mq.removeEventListener?.('change', onChange);
-  }, []);
-
-  function isUserFollowed(currentUserId, followersArray) {
-    if (!Array.isArray(followersArray)) return false;
-    return followersArray.some(user => user.id === currentUserId);
-  }
-
-  useEffect(() => {
-    if (!user?.id) return;
-
     switch (type) {
     case 'recipes':
-      if (userLists.recipes.items === null || !userLists.recipes.items) dispatch(fetchRecipes(user.id));
+      dispatch(fetchRecipes(user.id));
       break;
     case 'favorites':
-      if (userLists.favorites.items === null || !userLists.recipes.items) dispatch(fetchFavorites(user.id));
+      dispatch(fetchFavorites(user.id));
       break;
     case 'followers':
-      if (userLists.followers.items === null || !userLists.recipes.items) dispatch(fetchFollowers(user.id));
-      // we need this list to understand is we subscribed to current user
-      if (userLists.following.items === null || !userLists.recipes.items) dispatch(fetchFollowing(user.id));
+      dispatch(fetchFollowers(user.id));
       break;
     case 'following':
-      if (userLists.following.items === null || !userLists.recipes.items) dispatch(fetchFollowing(user.id));
+      dispatch(fetchFollowing(user.id));
       break;
     default:
       break;
@@ -61,7 +74,7 @@ const ListItems = ({ type }) => {
 
   const listState = userLists[type];
 
-  if (listState.loading) return <p>Loading...</p>;
+  if (listState.loading) return <Loader />;
   if (listState.error) return <p>Error: {listState.error}</p>;
   if ((type === 'recipes' || type === 'favorites') && listState.items?.length === 0) return <p className={css.infoText}>Nothing has been added to your recipes list yet.
     Please browse our recipes and add your favorites for easy access in the future.</p>;
@@ -72,15 +85,21 @@ const ListItems = ({ type }) => {
     <ul>
       {listState.items?.map((item) =>
         type === 'recipes' || type === 'favorites' ? (
-          <li key={item.id}><RecipesPreview/></li>
+          <li key={item.id}>
+            <RecipesPreview
+              recipe={item}
+              isOwner={user.userId === currentUser.id}
+              onDelete={handleOnDelete}
+            />
+          </li>
         ) : (
           <li key={item.id}>
             <FollowerItem
-              id={item.id}
-              username={item.name}
-              avatar={item.avatarUrl}
-              isFollowing={type === 'following' ? true : (isUserFollowed(item.id, userLists.following.items))}
-              recipesCount={isMobile ? 0 : 3}/>
+              user={item}
+              isCurrent={item.id === currentUser.id}
+              isFollowing={type === 'following' ? true : (isUserFollowed(item.id))}
+              recipesCount={isMobile ? 0 : 3}
+              onFollowToggle={handleFollowToggle}/>
           </li>
         )
       )}

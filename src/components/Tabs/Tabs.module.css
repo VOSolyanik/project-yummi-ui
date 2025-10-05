@@ -63,7 +63,7 @@
 }
 
 @media screen and (min-width: 1440px) {
-  .tabContainer {
+  .tabsContainer {
     max-width: 846px;
   }
 }

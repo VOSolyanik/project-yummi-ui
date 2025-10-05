@@ -8,10 +8,10 @@ export const fetchRecipes = createAsyncThunk(
     try {
       const response = await recipesAPI.getRecipesByCategory(categoryId, page, limit, ingredient, area);
       return {
-        recipes: response.data.recipes,
-        totalPages: response.data.totalPages,
-        currentPage: response.data.currentPage,
-        totalRecipes: response.data.totalRecipes
+        items: response.items,
+        totalCount: response.totalCount,
+        currentPage: page,
+        totalPages: response.totalCount ? Math.ceil(response.totalCount / limit) : 0
       };
     } catch (error) {
       return rejectWithValue(error.message);
@@ -20,10 +20,10 @@ export const fetchRecipes = createAsyncThunk(
 );
 
 const initialState = {
-  recipes: [],
-  totalPages: 0,
+  items: [],
   currentPage: 1,
-  totalRecipes: 0,
+  totalCount: 0,
+  totalPages: 0,
   isLoading: false,
   error: null
 };
@@ -36,10 +36,10 @@ const recipesSlice = createSlice({
       state.error = null;
     },
     clearRecipes: (state) => {
-      state.recipes = [];
+      state.items = [];
       state.totalPages = 0;
       state.currentPage = 1;
-      state.totalRecipes = 0;
+      state.totalCount = 0;
     }
   },
   extraReducers: (builder) => {
@@ -50,10 +50,10 @@ const recipesSlice = createSlice({
       })
       .addCase(fetchRecipes.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.recipes = action.payload.recipes;
+        state.items = action.payload.items;
         state.totalPages = action.payload.totalPages;
         state.currentPage = action.payload.currentPage;
-        state.totalRecipes = action.payload.totalRecipes;
+        state.totalCount = action.payload.totalCount;
       })
       .addCase(fetchRecipes.rejected, (state, action) => {
         state.isLoading = false;
@@ -64,11 +64,11 @@ const recipesSlice = createSlice({
 
 export const { clearError, clearRecipes } = recipesSlice.actions;
 
-export const selectRecipes = (state) => state.recipes.recipes;
+export const selectRecipes = (state) => state.recipes.items;
 export const selectTotalPages = (state) => state.recipes.totalPages;
 export const selectCurrentPage = (state) => state.recipes.currentPage;
-export const selectTotalRecipes = (state) => state.recipes.totalRecipes;
-export const selectIsLoadingRecipes = (state) => state.recipes.isLoading;
-export const selectRecipesError = (state) => state.recipes.error;
+export const selectTotalCount = (state) => state.recipes.totalCount;
+export const selectIsLoading = (state) => state.recipes.isLoading;
+export const selectError = (state) => state.recipes.error;
 
 export default recipesSlice.reducer;

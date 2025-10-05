@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -7,53 +7,59 @@ import clsx from 'clsx';
 
 import css from './UserPage.module.css';
 
+import { selectUser, selectActionInProgress, followUser, unfollowUser } from '@redux/auth/authSlice';
+import { fetchUserById, selectSelectedUser, selectIsLoadingSelectedUser } from '@redux/users/usersSlice';
+
+import Button from '@components/Button/Button';
+import Loader from '@components/Loader/Loader';
 import MainTitle from '@components/MainTitle/MainTitle';
 import Subtitle from '@components/Subtitle/Subtitle';
+import Tabs from '@components/Tabs/Tabs';
+import UserInfoCard from '@components/UserInfoCard/UserInfoCard';
 
 import { useAuthModal } from '@hooks/useAuthModal.js';
 
-import Button from '@/components/Button/Button';
-import Tabs from '@/components/Tabs/Tabs';
-import UserInfoCard from '@/components/UserInfoCard/UserInfoCard';
-import { getCurrentUser, selectAuthToken, selectUser, selectAuthLoading } from '@/redux/auth/authSlice';
-import { fetchUserById, selectSelectedUser } from '@/redux/users/usersSlice';
-
 const UserPage = () => {
-  const { userId } = useParams();
   const dispatch = useDispatch();
+  const { userId } = useParams();
   const { openLogoutModal } = useAuthModal();
-  const token = useSelector(selectAuthToken);
   const currentUser = useSelector(selectUser);
   const selectedUser = useSelector(selectSelectedUser);
-  const isLoading = useSelector(selectAuthLoading);
+  const isLoading = useSelector(selectIsLoadingSelectedUser);
+  const isActionInProgress = useSelector(selectActionInProgress);
+
+  const profileId = useMemo(
+    () => userId === 'me' ? currentUser?.id : userId,
+    [userId, currentUser?.id]
+  );
+
+  const isCurrentUserProfile = useMemo(
+    () => profileId === currentUser?.id,
+    [profileId, currentUser?.id]
+  );
+
+  const isFollowed = useMemo(
+    () => !isCurrentUserProfile && currentUser?.followingIds?.some(id => id === selectedUser?.id),
+    [currentUser, selectedUser, isCurrentUserProfile]
+  );
 
   useEffect(() => {
-    if (userId && userId !== 'me' && !selectedUser && !isLoading) {
-      dispatch(fetchUserById(userId));
-    }
-    else if (token && !currentUser && !isLoading) {
-      dispatch(getCurrentUser());
-    }
-  }, [dispatch, token, currentUser, isLoading, userId, selectedUser]);
+    dispatch(fetchUserById(profileId));
+  }, [dispatch, profileId]);
+
 
   const handleLogout = () => {
     openLogoutModal();
   };
 
-  // TODO: зробити логіку кнопки Follow.
-  // Зробила thunks (follow/unfollow) у usersSlice.js
-  // але потрібно ще доповнити slice для них, щось не змогла придумати як правильно.
-  // У компоненті FollowerItem є також логіка follow/unfollow, але там не через store,
-  // тож потрібно буде і там переробити.
-
   const handleFollow = () => {
-    // if (!selectedUser) return;
+    if (isActionInProgress || isCurrentUserProfile) return;
 
-    // if (selectedUser.isFollowed) {
-    //   dispatch(unfollowUser(selectedUser.id));
-    // } else {
-    //   dispatch(unfollowUser(selectedUser.id));
-    // }
+    if (isFollowed) {
+      dispatch(unfollowUser(selectedUser.id));
+    } else {
+      dispatch(followUser(selectedUser.id));
+    }
   };
 
   return (
@@ -70,29 +76,25 @@ const UserPage = () => {
           Reveal your culinary art, share your favorite recipe and create gastronomic masterpieces with us.
         </Subtitle>
       </div>
-      {userId && userId !== 'me' ? (
+      {isLoading || !selectedUser ? (<Loader />) : (
         <div className={css.sectionWrapper}>
           <div>
-            <UserInfoCard user={selectedUser} isCurrent={false}/>
-            <Button className={css.btn} variant="primary" onClick={handleFollow}>
-              {
-                selectedUser?.isFollowed
-                  ? 'UNFOLLOW'
-                  : 'FOLLOW'
-              }
-            </Button>
+            <UserInfoCard user={selectedUser} isCurrent={isCurrentUserProfile}/>
+            {isCurrentUserProfile ? (
+              <Button className={css.btn} variant="primary" onClick={handleLogout}>
+                LOG OUT
+              </Button>
+            ) : (
+              <Button className={css.btn} variant="primary" onClick={handleFollow}>
+                {
+                  isFollowed
+                    ? 'UNFOLLOW'
+                    : 'FOLLOW'
+                }
+              </Button>
+            )}
           </div>
-          <Tabs isCurrent={false}/>
-        </div>
-      ) : (
-        <div className={css.sectionWrapper}>
-          <div>
-            <UserInfoCard user={currentUser} isCurrent={true}/>
-            <Button className={css.btn} variant="primary" onClick={handleLogout}>
-              LOG OUT
-            </Button>
-          </div>
-          <Tabs isCurrent={true}/>
+          <Tabs user={selectedUser} isCurrent={isCurrentUserProfile}/>
         </div>
       )}
     </div>

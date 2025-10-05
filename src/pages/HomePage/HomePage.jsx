@@ -1,6 +1,7 @@
-import { useState } from 'react';
-
 import { Helmet } from 'react-helmet-async';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { selectSelectedCategory, setSelectedCategory, clearSelectedCategory } from '@redux/categories/categoriesSlice';
 
 import Categories from '@components/Categories/Categories';
 import HeroBanner from '@components/HeroBanner/HeroBanner';
@@ -9,33 +10,29 @@ import Recipes from '@components/Recipes/Recipes';
 import { BASE_TITLE } from '@constants/pages';
 
 const HomePage = () => {
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [showRecipes, setShowRecipes] = useState(false);
+  const dispatch = useDispatch();
+  const selectedCategory = useSelector(selectSelectedCategory);
 
-  const handleCategorySelect = categoryData => {
-    if (categoryData?.category && categoryData?.recipes) {
-      setSelectedCategory(categoryData);
-      setShowRecipes(true);
-    }
+  const handleCategorySelect = (category) => {
+    dispatch(setSelectedCategory(category));
   };
 
   const handleBackToCategories = () => {
-    setShowRecipes(false);
-    setSelectedCategory(null);
+    dispatch(clearSelectedCategory());
   };
 
   return (
     <>
       <Helmet>
         <title>
-          {BASE_TITLE} - {showRecipes ? 'Recipes' : 'Categories'}
+          {BASE_TITLE} - {!selectedCategory ? 'Recipes' : 'Categories'}
         </title>
       </Helmet>
 
       <HeroBanner />
 
-      {showRecipes ? (
-        <Recipes categoryData={selectedCategory} onBackToCategories={handleBackToCategories} />
+      {selectedCategory ? (
+        <Recipes category={selectedCategory} onBackToCategories={handleBackToCategories} />
       ) : (
         <Categories onCategorySelect={handleCategorySelect} />
       )}

@@ -1,12 +1,14 @@
 import React, { useState, useCallback, useMemo } from 'react';
 
-import toast from 'react-hot-toast';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { addToFavorites, removeFromFavorites, clearFavoritesCache } from '@services/favoritesApi.js';
+
 import PropTypes from 'prop-types';
 
 import css from './RecipeCard.module.css';
+
+import { addRecipeToFavorites, removeRecipeFromFavorites, selectActionInProgress } from '@redux/auth/authSlice';
 
 import Button from '@components//Button/Button';
 import Icon from '@components/Icon/Icon';
@@ -27,17 +29,21 @@ import noImagePlaceholder from '@assets/images/no-image.png';
  * @param {Function|null} props.onFavoriteChange - Callback for favorite change
  */
 const RecipeCard = ({
-  recipe,
-  favoriteRecipeIds = null,
-  onFavoriteChange = null
+  recipe
 }) => {
+  const dispatch = useDispatch();
   const [imageError, setImageError] = useState(false);
-  const [isUpdatingFavorite, setIsUpdatingFavorite] = useState(false);
+  const isUpdatingFavorite = useSelector(selectActionInProgress);
   const { user, isAuthenticated } = useAuth();
   const { openSignInModal } = useAuthModal();
 
+  const favoriteRecipeIds = useMemo(() => user?.favoriteIds ? new Set(user.favoriteIds) : null, [user?.favoriteIds]);
+
   // Calculate isFavorite from favoriteRecipeIds instead of local state
-  const isFavorite = isAuthenticated && favoriteRecipeIds ? favoriteRecipeIds.has(recipe.id) : false;
+  const isFavorite = useMemo(
+    () => isAuthenticated && favoriteRecipeIds ? favoriteRecipeIds.has(recipe.id) : false,
+    [isAuthenticated, favoriteRecipeIds, recipe.id]
+  );
 
   const firstName = useMemo(() => {
     return recipe.owner?.name ? recipe.owner.name.split(' ')[0] : 'Unknown';
@@ -48,7 +54,7 @@ const RecipeCard = ({
       return recipe.owner.avatarUrl;
     }
     const name = recipe.owner?.name || 'User';
-    return `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=random`;
+    return `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=bfbebe&color=050505`;
   }, [recipe.owner?.avatarUrl, recipe.owner?.name]);
 
 
@@ -66,53 +72,14 @@ const RecipeCard = ({
       return;
     }
 
-    setIsUpdatingFavorite(true);
-
-    try {
-      if (isFavorite) {
-        // Remove from favorites
-        await removeFromFavorites(recipe.id);
-        clearFavoritesCache(user?.id); // Clear cache after modification
-        toast.success('Recipe removed from favorites');
-        // Notify parent component about the change
-        if (typeof onFavoriteChange === 'function') {
-          onFavoriteChange(recipe.id, false);
-        }
-      } else {
-        // Add to favorites
-        await addToFavorites(recipe.id);
-        clearFavoritesCache(user?.id); // Clear cache after modification
-        toast.success('Recipe added to favorites');
-        // Notify parent component about the change
-        if (typeof onFavoriteChange === 'function') {
-          onFavoriteChange(recipe.id, true);
-        }
-      }
-    } catch (error) {
-      // Handle specific server errors
-      const errorMessage = error.response?.data?.message || error.message;
-
-      if (errorMessage.includes('already in favorites')) {
-        // Recipe is already in favorites, notify parent to update UI
-        toast.success('Recipe is already in favorites');
-        if (typeof onFavoriteChange === 'function') {
-          onFavoriteChange(recipe.id, true);
-        }
-      } else if (errorMessage.includes('not in favorites')) {
-        // Recipe is not in favorites, notify parent to update UI
-        toast.success('Recipe is not in favorites');
-        if (typeof onFavoriteChange === 'function') {
-          onFavoriteChange(recipe.id, false);
-        }
-      } else {
-        // Other errors
-        toast.error('Failed to update favorites');
-        console.error('Error updating favorites:', error);
-      }
-    } finally {
-      setIsUpdatingFavorite(false);
+    if (isFavorite) {
+      // Remove from favorites
+      dispatch(removeRecipeFromFavorites(recipe.id));
+    } else {
+      // Add to favorites
+      dispatch(addRecipeToFavorites(recipe.id));
     }
-  }, [isAuthenticated, openSignInModal, user?.id, recipe.id, isFavorite, isUpdatingFavorite, onFavoriteChange]);
+  }, [isAuthenticated, openSignInModal, recipe.id, isFavorite, isUpdatingFavorite, dispatch]);
 
   const handleImageError = useCallback(() => {
     setImageError(true);
