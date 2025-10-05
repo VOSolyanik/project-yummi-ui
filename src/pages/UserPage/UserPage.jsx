@@ -29,15 +29,9 @@ const UserPage = () => {
   const isLoading = useSelector(selectIsLoadingSelectedUser);
   const isActionInProgress = useSelector(selectActionInProgress);
 
-  const profileId = useMemo(
-    () => userId === 'me' ? currentUser?.id : userId,
-    [userId, currentUser?.id]
-  );
+  const profileId = useMemo(() => (userId === 'me' ? currentUser?.id : userId), [userId, currentUser?.id]);
 
-  const isCurrentUserProfile = useMemo(
-    () => profileId === currentUser?.id,
-    [profileId, currentUser?.id]
-  );
+  const isCurrentUserProfile = useMemo(() => profileId === currentUser?.id, [profileId, currentUser?.id]);
 
   const user = isCurrentUserProfile ? currentUser : selectedUser;
 
@@ -56,7 +50,6 @@ const UserPage = () => {
     };
   }, [dispatch, isCurrentUserProfile, profileId]);
 
-
   const handleLogout = () => {
     openLogoutModal();
   };
@@ -74,7 +67,7 @@ const UserPage = () => {
   return (
     <div className={clsx('container', css.container)}>
       <div className={css.titlesContainer}>
-        <PathInfo currentPage='Profile'/>
+        <PathInfo currentPage="Profile" />
         <MainTitle level={2} id="profile-heading" className={css.title}>
           Profile
         </MainTitle>
@@ -83,25 +76,23 @@ const UserPage = () => {
           Reveal your culinary art, share your favorite recipe and create gastronomic masterpieces with us.
         </Subtitle>
       </div>
-      {isLoading || !user ? (<Loader />) : (
+      {isLoading || !user ? (
+        <Loader />
+      ) : (
         <div className={css.sectionWrapper}>
           <div>
-            <UserInfoCard user={user} isCurrent={isCurrentUserProfile}/>
+            <UserInfoCard user={user} isCurrent={isCurrentUserProfile} />
             {isCurrentUserProfile ? (
               <Button className={css.btn} variant="primary" onClick={handleLogout}>
                 LOG OUT
               </Button>
             ) : (
               <Button className={css.btn} variant="primary" onClick={handleFollow}>
-                {
-                  isFollowed
-                    ? 'UNFOLLOW'
-                    : 'FOLLOW'
-                }
+                {isFollowed ? 'UNFOLLOW' : 'FOLLOW'}
               </Button>
             )}
           </div>
-          <Tabs user={user} isCurrent={isCurrentUserProfile}/>
+          <Tabs user={user} isCurrent={isCurrentUserProfile} />
         </div>
       )}
     </div>
