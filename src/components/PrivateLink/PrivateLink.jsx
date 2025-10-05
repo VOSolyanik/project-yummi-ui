@@ -12,6 +12,14 @@ const PrivateLink = ({
   const { isAuthenticated } = useAuth();
   const { openSignInModal } = useAuthModal();
 
+  if (isAuthenticated) {
+    return (
+      <Component to={to} {...props}>
+        {children}
+      </Component>
+    );
+  }
+
   const handleClick = (e) => {
     if (!isAuthenticated) {
       e.preventDefault(); // block navigation
@@ -20,7 +28,7 @@ const PrivateLink = ({
   };
 
   return (
-    <Component onClick={handleClick} {...props}>
+    <Component to={to}  {...props} onClick={handleClick}>
       {children}
     </Component>
   );
