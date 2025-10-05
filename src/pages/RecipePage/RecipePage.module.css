@@ -39,7 +39,6 @@
 
 @media (min-width: 1440px) {
   .contentWrapper {
-    flex-direction: row;
     align-items: flex-start;
     gap: 80px;
   }
