@@ -13,7 +13,8 @@ const RecipePagination = ({
     if (!totalPages || totalPages === 0) {
       return [1];
     }
-    
+
+
     const window = 3;
     const current = currentPage || 1;
     
@@ -53,7 +54,8 @@ const RecipePagination = ({
   }, [totalPages, currentPage]);
 
   const handlePageClick = useCallback((page) => {
-    if (page !== currentPage && !isLoading) {
+    const current = currentPage || 1;
+    if (page !== current && !isLoading) {
       onPageChange(page);
     }
   }, [currentPage, isLoading, onPageChange]);

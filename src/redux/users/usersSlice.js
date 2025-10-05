@@ -16,9 +16,9 @@ export const fetchUserById = createAsyncThunk(
 
 export const fetchRecipes = createAsyncThunk(
   'users/fetchRecipes',
-  async (userId, { rejectWithValue }) => {
+  async ({ userId, page = 1, limit = 12 }, { rejectWithValue }) => {
     try {
-      const res = await usersAPI.getRecipes(userId);
+      const res = await usersAPI.getRecipes(userId, page, limit);
       return res.data;
     } catch (err) {
       return rejectWithValue(err.response?.data || 'Failed to fetch recipes');
@@ -28,9 +28,9 @@ export const fetchRecipes = createAsyncThunk(
 
 export const fetchFavorites = createAsyncThunk(
   'users/fetchFavorites',
-  async (userId, { rejectWithValue }) => {
+  async ({ userId, page = 1, limit = 12 }, { rejectWithValue }) => {
     try {
-      const res = await usersAPI.getFavorites(userId);
+      const res = await usersAPI.getFavorites(userId, page, limit);
       return res.data;
     } catch (err) {
       return rejectWithValue(err.response?.data || 'Failed to fetch favorites');
@@ -40,9 +40,9 @@ export const fetchFavorites = createAsyncThunk(
 
 export const fetchFollowers = createAsyncThunk(
   'users/fetchFollowers',
-  async (userId, { rejectWithValue }) => {
+  async ({ userId, page = 1, limit = 12 }, { rejectWithValue }) => {
     try {
-      const res = await usersAPI.getFollowers(userId);
+      const res = await usersAPI.getFollowers(userId, page, limit);
       return res.data;
     } catch (err) {
       return rejectWithValue(err.response?.data || 'Failed to fetch followers');
@@ -52,9 +52,9 @@ export const fetchFollowers = createAsyncThunk(
 
 export const fetchFollowing = createAsyncThunk(
   'users/fetchFollowing',
-  async (userId, { rejectWithValue }) => {
+  async ({ userId, page = 1, limit = 12 }, { rejectWithValue }) => {
     try {
-      const res = await usersAPI.getFollowing(userId);
+      const res = await usersAPI.getFollowing(userId, page, limit);
       return res.data;
     } catch (err) {
       return rejectWithValue(err.response?.data || 'Failed to fetch following');
@@ -64,10 +64,10 @@ export const fetchFollowing = createAsyncThunk(
 
 const initialState = {
   selectedUser: { user: null, loading: false, error: null },
-  recipes: { items: null, limit: 12, page: 1, totalCount: 0, loading: false, error: null },
-  favorites: { items: null, limit: 12, page: 1, totalCount: 0, loading: false, error: null },
-  followers: { items: null, limit: 12, page: 1, totalCount: 0, loading: false, error: null },
-  following: { items: null, limit: 12, page: 1, totalCount: 0, loading: false, error: null }
+  recipes: { items: null, currentPage: 1, totalPages: 0, totalCount: 0, loading: false, error: null },
+  favorites: { items: null, currentPage: 1, totalPages: 0, totalCount: 0, loading: false, error: null },
+  followers: { items: null, currentPage: 1, totalPages: 0, totalCount: 0, loading: false, error: null },
+  following: { items: null, currentPage: 1, totalPages: 0, totalCount: 0, loading: false, error: null }
 };
 
 const usersSlice = createSlice({
@@ -105,6 +105,9 @@ const usersSlice = createSlice({
       .addCase(fetchRecipes.fulfilled, (state, action) => {
         state.recipes.loading = false;
         state.recipes.items = action.payload.items;
+        state.recipes.totalCount = action.payload.totalCount;
+        state.recipes.totalPages = action.payload.totalCount ? Math.ceil(action.payload.totalCount / 12) : 0;
+        state.recipes.currentPage = action.payload.currentPage ?? action.meta.arg.page ?? 1;
       })
       .addCase(fetchRecipes.rejected, (state, action) => {
         state.recipes.loading = false;
@@ -117,8 +120,12 @@ const usersSlice = createSlice({
         state.favorites.loading = true;
       })
       .addCase(fetchFavorites.fulfilled, (state, action) => {
+        console.log(action.payload);
         state.favorites.loading = false;
         state.favorites.items = action.payload.items;
+        state.favorites.totalCount = action.payload.totalCount;
+        state.favorites.totalPages = action.payload.totalCount ? Math.ceil(action.payload.totalCount / 12) : 0;
+        state.favorites.currentPage = action.payload.currentPage ?? action.meta.arg.page ?? 1;
       })
       .addCase(fetchFavorites.rejected, (state, action) => {
         state.favorites.loading = false;
@@ -133,6 +140,9 @@ const usersSlice = createSlice({
       .addCase(fetchFollowers.fulfilled, (state, action) => {
         state.followers.loading = false;
         state.followers.items = action.payload.items;
+        state.followers.totalCount = action.payload.totalCount;
+        state.followers.totalPages = action.payload.totalCount ? Math.ceil(action.payload.totalCount / 12) : 0;
+        state.followers.currentPage = action.payload.currentPage ?? action.meta.arg.page ?? 1;
       })
       .addCase(fetchFollowers.rejected, (state, action) => {
         state.followers.loading = false;
@@ -147,6 +157,9 @@ const usersSlice = createSlice({
       .addCase(fetchFollowing.fulfilled, (state, action) => {
         state.following.loading = false;
         state.following.items = action.payload.items;
+        state.following.totalCount = action.payload.totalCount;
+        state.following.totalPages = action.payload.totalCount ? Math.ceil(action.payload.totalCount / 12) : 0;
+        state.following.currentPage = action.payload.currentPage ?? action.meta.arg.page ?? 1;
       })
       .addCase(fetchFollowing.rejected, (state, action) => {
         state.following.loading = false;
