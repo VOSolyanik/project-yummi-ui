@@ -1,23 +1,34 @@
+import { Link } from 'react-router-dom';
+
 import { useAuth } from '@hooks/useAuth.js';
 import { useAuthModal } from '@hooks/useAuthModal';
 
 const PrivateLink = ({
-  as: Component = 'a',
+  as: Component = Link,
   children,
+  to,
   ...props
 }) => {
   const { isAuthenticated } = useAuth();
   const { openSignInModal } = useAuthModal();
 
+  if (isAuthenticated) {
+    return (
+      <Component to={to} {...props}>
+        {children}
+      </Component>
+    );
+  }
+
   const handleClick = (e) => {
     if (!isAuthenticated) {
       e.preventDefault(); // block navigation
-      openSignInModal();
+      openSignInModal({ redirectTo: to });
     }
   };
 
   return (
-    <Component onClick={handleClick} {...props}>
+    <Component to={to}  {...props} onClick={handleClick}>
       {children}
     </Component>
   );
