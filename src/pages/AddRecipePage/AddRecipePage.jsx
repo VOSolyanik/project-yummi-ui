@@ -24,7 +24,7 @@ const initialValues = {
   description: '',
   categoryId: '',
   areaId: '',
-  time: 10,
+  time: 1,
   ingredientId: '',
   ingredientAmount: '',
   ingredients: [],
