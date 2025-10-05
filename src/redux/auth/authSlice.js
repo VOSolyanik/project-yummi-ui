@@ -103,8 +103,7 @@ export const uploadAvatar = createAsyncThunk(
       const response = await authAPI.uploadUserAvatar(formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
-
-      return response.data;
+      return response;
     } catch (err) {
       return rejectWithValue(err.response?.data || 'Upload failed');
     }
