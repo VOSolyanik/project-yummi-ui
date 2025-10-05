@@ -14,9 +14,7 @@ const RecipePagination = ({
       return [1];
     }
 
-    console.log(totalPages);
-    console.log(currentPage);
-    
+
     const window = 3;
     const current = currentPage || 1;
     
