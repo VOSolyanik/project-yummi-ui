@@ -11,6 +11,7 @@ import PrivateRoute from '@components/PrivateRoute/PrivateRoute';
 import SharedLayout from '@components/SharedLayout/SharedLayout';
 
 import { AuthModalProvider } from '@contexts/AuthModalContext';
+import { ViewportProvider } from '@contexts/ViewportContext';
 
 import './App.module.css';
 
@@ -24,7 +25,6 @@ const RecipePage = lazy(() => import('@pages/RecipePage/RecipePage'));
 const UIKitPage = lazy(() => import('@pages/UIKitPage/UIKitPage'));
 const UserProfilePage = lazy(() => import('@/pages/UserPage/UserPage'));
 
-
 const App = () => {
   return (
     <>
@@ -35,72 +35,74 @@ const App = () => {
         />
       </Helmet>
       <AppBootstrap>
-        <AuthModalProvider>
-          <BrowserRouter>
-            <Toaster position="top-right" />
-            <Suspense fallback={<Loader />}>
-              <Routes>
-                <Route path="/" element={<SharedLayout />}>
-                  <Route
-                    index
-                    element={
-                      <Suspense fallback={<Loader />}>
-                        <HomePage />
-                      </Suspense>
-                    }
-                  />
-                  {isUIKitEnabled && (
+        <ViewportProvider>
+          <AuthModalProvider>
+            <BrowserRouter>
+              <Toaster position="top-right" />
+              <Suspense fallback={<Loader />}>
+                <Routes>
+                  <Route path="/" element={<SharedLayout />}>
                     <Route
-                      path="/uikit"
+                      index
                       element={
                         <Suspense fallback={<Loader />}>
-                          <UIKitPage />
+                          <HomePage />
                         </Suspense>
                       }
                     />
-                  )}
-                  <Route
-                    path="/user/:userId"
-                    element={
-                      <PrivateRoute>
+                    {isUIKitEnabled && (
+                      <Route
+                        path="/uikit"
+                        element={
+                          <Suspense fallback={<Loader />}>
+                            <UIKitPage />
+                          </Suspense>
+                        }
+                      />
+                    )}
+                    <Route
+                      path="/user/:userId"
+                      element={
+                        <PrivateRoute>
+                          <Suspense fallback={<Loader />}>
+                            <UserProfilePage />
+                          </Suspense>
+                        </PrivateRoute>
+                      }
+                    />
+                    <Route
+                      path="/recipe/add"
+                      element={
+                        <PrivateRoute>
+                          <Suspense fallback={<Loader />}>
+                            <AddRecipePage />
+                          </Suspense>
+                        </PrivateRoute>
+                      }
+                    />
+                    <Route
+                      path="/recipe/:recipeId"
+                      element={
                         <Suspense fallback={<Loader />}>
-                          <UserProfilePage />
+                          <RecipePage />
                         </Suspense>
-                      </PrivateRoute>
-                    }
-                  />
+                      }
+                    />
+                  </Route>
                   <Route
-                    path="/recipe/add"
-                    element={
-                      <PrivateRoute>
-                        <Suspense fallback={<Loader />}>
-                          <AddRecipePage />
-                        </Suspense>
-                      </PrivateRoute>
-                    }
-                  />
-                  <Route
-                    path="/recipe/:recipeId"
+                    path="*"
                     element={
                       <Suspense fallback={<Loader />}>
-                        <RecipePage />
+                        <NotFoundPage />
                       </Suspense>
                     }
                   />
-                </Route>
-                <Route
-                  path="*"
-                  element={
-                    <Suspense fallback={<Loader />}>
-                      <NotFoundPage />
-                    </Suspense>
-                  }
-                />
-              </Routes>
-              <AuthModalManager />
-            </Suspense>
-          </BrowserRouter>
-        </AuthModalProvider>
+                </Routes>
+                <AuthModalManager />
+              </Suspense>
+            </BrowserRouter>
+          </AuthModalProvider>
+        </ViewportProvider>
       </AppBootstrap>
     </>
   );

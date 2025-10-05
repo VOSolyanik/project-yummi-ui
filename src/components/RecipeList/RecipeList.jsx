@@ -5,11 +5,12 @@ import css from './RecipeList.module.css';
 import RecipeCard from '@components/RecipeCard/RecipeCard';
 import RecipeCardSkeleton from '@components/RecipeCardSkeleton/RecipeCardSkeleton';
 
-const RecipeList = ({ recipes, isLoading, error, favoriteRecipeIds, onFavoriteChange }) => {
+const RecipeList = ({ recipes, isLoading, error }) => {
   // Memoize the recipes list to prevent unnecessary re-renders
   const memoizedRecipes = useMemo(() => {
     return recipes || [];
   }, [recipes]);
+
   if (isLoading) {
     return (
       <div className={css.grid}>
@@ -38,12 +39,10 @@ const RecipeList = ({ recipes, isLoading, error, favoriteRecipeIds, onFavoriteCh
 
   return (
     <div className={css.grid}>
-      {memoizedRecipes.map((recipe) => (
+      {memoizedRecipes.map(recipe => (
         <RecipeCard
           key={recipe.id}
           recipe={recipe}
-          favoriteRecipeIds={favoriteRecipeIds}
-          onFavoriteChange={onFavoriteChange}
         />
       ))}
     </div>

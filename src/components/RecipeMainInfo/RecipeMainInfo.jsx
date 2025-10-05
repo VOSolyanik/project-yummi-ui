@@ -1,24 +1,12 @@
 import React from 'react';
 
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import css from './RecipeMainInfo.module.css';
 
-import { useAuth } from '@/hooks/useAuth';
-import { useAuthModal } from '@/hooks/useAuthModal';
+import PrivateLink from '@components/PrivateLink/PrivateLink';
 
 const RecipeMainInfo = ({ recipe }) => {
-  const navigate = useNavigate();
-  const { isAuthenticated } = useAuth();
-  const { openSignInModal } = useAuthModal();
-
-  const handleAuthorClick = () => {
-    if (!isAuthenticated) {
-      openSignInModal();
-    } else {
-      navigate(`/user/${recipe.owner.id}`);
-    }
-  };
 
   return (
     <>
@@ -30,7 +18,7 @@ const RecipeMainInfo = ({ recipe }) => {
         </div>
         <p className={css.description}>{recipe.description}</p>
 
-        <button type="button" className={css.authorButton} onClick={handleAuthorClick}>
+        <PrivateLink as={Link} to={`/user/${recipe.owner.id}`} className={css.authorButton}>
           {recipe.owner.avatarUrl ? (
             <img src={recipe.owner.avatarUrl} alt={recipe.owner.name} className={css.authorAvatar} />
           ) : (
@@ -42,7 +30,7 @@ const RecipeMainInfo = ({ recipe }) => {
             <span className={css.authorLabel}>Created by:</span>
             <span className={css.authorName}>{recipe.owner.name}</span>
           </div>
-        </button>
+        </PrivateLink>
       </div>
     </>
   );

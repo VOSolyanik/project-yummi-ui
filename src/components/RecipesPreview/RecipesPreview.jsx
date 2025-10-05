@@ -1,28 +1,41 @@
 import React from 'react';
 
+import { Link } from 'react-router-dom';
+
 import css from './RecipesPreview.module.css';
 
-import Icon from '@components/Icon/Icon.jsx';
+import Button from '../Button/Button';
+import Icon from '../Icon/Icon';
 
-const RecipesPreview = ({ title, description, image, onOpen, onDelete }) => {
+const RecipesPreview = ({ recipe, isOwner, onDelete }) => {
+  const { id, title, description, thumbUrl } = recipe;
+
   return (
     <div className={css.card}>
-      <img src={image} alt={title} className={css.image} />
+      <img src={thumbUrl} alt={title} className={css.image} />
 
       <div className={css.section}>
-        <div className={css.text}>
-          <h3 className={css.title}>{title}</h3>
-          <p className={css.description}>{description}</p>
-        </div>
+        <h3 className={css.title}>{title}</h3>
+        <p className={css.description}>{description}</p>
+      </div>
 
-        <div className={css.buttons}>
-          <button type="button" className={css.iconButton} onClick={onOpen} aria-label="Open recipe">
-            <Icon name="arrow-up-right" className={css.icon} size={16} />
-          </button>
-          <button type="button" className={css.iconButton} onClick={onDelete} aria-label="Delete recipe">
-            <Icon name="trash" className={css.icon} size={16} />
-          </button>
-        </div>
+      <div className={css.buttons} role="group" aria-label="Recipe actions">
+        <Button
+          as={Link}
+          to={`/recipe/${id}`}
+          variant="outline"
+          size="medium"
+          aria-label="Open recipe"
+        >
+          <Icon name="arrow-up-right" size={18} />
+        </Button>
+        {isOwner && <Button
+          variant="outline"
+          onClick={onDelete}
+          size="medium"
+          aria-label="Delete recipe">
+          <Icon name="trash" size={18} />
+        </Button>}
       </div>
     </div>
   );

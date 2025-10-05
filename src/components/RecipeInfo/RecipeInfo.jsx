@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useMemo, useCallback } from 'react';
 
-import toast from 'react-hot-toast';
+import { useDispatch, useSelector } from 'react-redux';
 
 import css from './RecipeInfo.module.css';
 
-import noImagePlaceholder from '../../assets/images/no-image.png';
+import { addRecipeToFavorites, removeRecipeFromFavorites, selectActionInProgress } from '@redux/auth/authSlice';
+
+import noImagePlaceholder from '@assets/images/no-image.png';
 
 import Button from '@/components/Button/Button';
 import RecipeIngredients from '@/components/RecipeIngredients/RecipeIngredients';
@@ -12,56 +14,46 @@ import RecipeMainInfo from '@/components/RecipeMainInfo/RecipeMainInfo';
 import RecipePreparation from '@/components/RecipePreparation/RecipePreparation';
 import { useAuth } from '@/hooks/useAuth';
 import { useAuthModal } from '@/hooks/useAuthModal';
-import {
-  addToFavorites,
-  removeFromFavorites,
-  checkIfRecipeIsFavorite,
-  clearFavoritesCache
-} from '@/services/favoritesApi';
+
 
 const RecipeInfo = ({ recipe }) => {
+  const dispatch = useDispatch();
+  const isUpdatingFavorite = useSelector(selectActionInProgress);
   const { user, isAuthenticated } = useAuth();
   const { openSignInModal } = useAuthModal();
-  const [isFavorite, setIsFavorite] = useState(false);
-  const [isUpdating, setIsUpdating] = useState(false);
 
-  useEffect(() => {
-    const checkStatus = async () => {
-      if (isAuthenticated && user?.id && recipe?.id) {
-        setIsUpdating(true);
-        const result = await checkIfRecipeIsFavorite(user.id, recipe.id);
-        setIsFavorite(result);
-        setIsUpdating(false);
-      }
-    };
-    checkStatus();
-  }, [isAuthenticated, user?.id, recipe?.id]);
+  const favoriteRecipeIds = useMemo(() => user?.favoriteIds ? new Set(user.favoriteIds) : null, [user?.favoriteIds]);
 
-  const handleFavoriteToggle = async () => {
+  // Calculate isFavorite from favoriteRecipeIds instead of local state
+  const isFavorite = useMemo(
+    () => isAuthenticated && favoriteRecipeIds ? favoriteRecipeIds.has(recipe.id) : false,
+    [isAuthenticated, favoriteRecipeIds, recipe.id]
+  );
+
+
+  const handleFavoriteToggle = useCallback(async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
     if (!isAuthenticated) {
       openSignInModal();
       return;
     }
 
-    setIsUpdating(true);
-    try {
-      if (isFavorite) {
-        await removeFromFavorites(recipe.id);
-        toast.success('Removed from favorites!');
-        setIsFavorite(false);
-      } else {
-        await addToFavorites(recipe.id);
-        toast.success('Added to favorites!');
-        setIsFavorite(true);
-      }
-      clearFavoritesCache(user.id);
-    } catch (error) {
-      toast.error('Could not update favorites.');
-      console.error('Favorite toggle error:', error);
-    } finally {
-      setIsUpdating(false);
+    // Prevent multiple clicks while updating
+    if (isUpdatingFavorite) {
+      return;
     }
-  };
+
+    if (isFavorite) {
+      // Remove from favorites
+      dispatch(removeRecipeFromFavorites(recipe.id));
+    } else {
+      // Add to favorites
+      dispatch(addRecipeToFavorites(recipe.id));
+    }
+  }, [isAuthenticated, openSignInModal, recipe.id, isFavorite, isUpdatingFavorite, dispatch]);
+
 
   const handleImageError = (e) => {
     e.target.src = noImagePlaceholder;
@@ -87,10 +79,10 @@ const RecipeInfo = ({ recipe }) => {
           variant="outline"
           size="large"
           onClick={handleFavoriteToggle}
-          disabled={isUpdating}
+          disabled={isUpdatingFavorite}
           className={css.favoriteButton}
         >
-          {isUpdating ? 'Updating...' : (isFavorite ? 'Remove from favorites' : 'Add to favorites')}
+          {isUpdatingFavorite ? 'Updating...' : (isFavorite ? 'Remove from favorites' : 'Add to favorites')}
         </Button>
       </div>
     </div>

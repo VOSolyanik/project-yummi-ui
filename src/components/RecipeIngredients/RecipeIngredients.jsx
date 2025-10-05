@@ -22,7 +22,7 @@ const RecipeIngredients = ({ ingredients = [] }) => {
   // Create a map for quick lookup of images by ID
   const ingredientImageMap = useMemo(() => {
     if (!allIngredients) return new Map();
-    return new Map(allIngredients.map(item => [item.id, item.img]));
+    return new Map(allIngredients.map(item => [item.id, item.imgUrl]));
   }, [allIngredients]);
 
   const handleImageError = (e) => {

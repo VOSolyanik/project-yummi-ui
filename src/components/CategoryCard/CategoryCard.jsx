@@ -4,7 +4,13 @@ import css from './CategoryCard.module.css';
 
 import Icon from '@components/Icon/Icon';
 
-const CategoryCard = ({ category, onClick, isAllCategories = false, size = 'normal', buttonText = 'ALL CATEGORIES' }) => {
+const CategoryCard = ({
+  category,
+  onClick,
+  isAllCategories = false,
+  size = 'normal',
+  buttonText = 'ALL CATEGORIES'
+}) => {
   const handleClick = () => {
     if (onClick) {
       onClick(category);

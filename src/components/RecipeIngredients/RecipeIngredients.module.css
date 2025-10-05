@@ -61,9 +61,9 @@
 }
 
 @media (min-width: 375px) {
-    .item {
-        width: calc(50% - 8px);
-    }
+  .item {
+    width: calc(50% - 8px);
+  }
 }
 
 
@@ -72,17 +72,22 @@
     font-size: 20px;
     line-height: 1.2;
   }
+
   .list {
-      gap: 20px;
+    gap: 20px;
   }
+
   .item {
-      width: calc(33.333% - 14px);
+    width: calc(33.333% - 14px);
   }
+
   .imageWrapper {
-      width: 90px;
-      height: 90px;
+    width: 90px;
+    height: 90px;
   }
-  .itemName, .itemMeasure {
-      font-size: 16px;
+
+  .itemName,
+  .itemMeasure {
+    font-size: 16px;
   }
 }

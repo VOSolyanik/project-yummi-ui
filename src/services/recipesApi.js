@@ -15,15 +15,7 @@ export const recipesAPI = {
 
     try {
       const response = await api.get('/recipes', { params });
-
-      const transformedData = {
-        recipes: response.data.items || [],
-        totalPages: Math.ceil((response.data.totalCount || 0) / limit),
-        currentPage: page,
-        totalRecipes: response.data.totalCount || 0
-      };
-
-      return { data: transformedData, status: response.status };
+      return response.data;
     } catch (error) {
       console.error('Error fetching recipes:', error);
       throw error;
@@ -42,10 +34,11 @@ export const recipesAPI = {
   },
 
   // Get Popular Recipes
-  getPopularRecipes: async () => {
+  getPopularRecipes: async (page = 1, limit = 4) => {
     try {
-      const response = await api.get('/recipes/popular');
-      return response.data.slice(0, 4); // Slice recipes to 4
+      const params = { page, limit };
+      const response = await api.get('/recipes/popular', { params });
+      return response.data;
     } catch (error) {
       console.error('Error fetching popular recipes:', error);
       throw error;

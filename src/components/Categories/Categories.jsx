@@ -17,23 +17,13 @@ const Categories = ({ onCategorySelect }) => {
   const error = useSelector(selectError);
 
   useEffect(() => {
-    if (categories.length === 0 && !isLoading) {
+    if (categories.length === 0 && !isLoading && !error) {
       dispatch(fetchCategories());
     }
-  }, [dispatch, categories.length, isLoading]);
+  }, [dispatch, categories.length, isLoading, error]);
 
-  const handleCategoryClick = async (category) => {
-    // Just pass the category data to parent - Recipes component will fetch the recipes
-    if (onCategorySelect) {
-      const categoryData = {
-        category,
-        recipes: [], // Empty array - Recipes component will fetch
-        totalPages: 0,
-        currentPage: 1,
-        totalRecipes: 0
-      };
-      onCategorySelect(categoryData);
-    }
+  const handleCategoryClick = category => {
+    onCategorySelect(category);
   };
 
   return (

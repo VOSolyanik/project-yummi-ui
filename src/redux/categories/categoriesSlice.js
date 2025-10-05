@@ -13,6 +13,7 @@ export const fetchCategories = createAsyncThunk('categories/fetchCategories', as
 });
 
 const initialState = {
+  selectedCategory: null,
   items: [],
   isLoading: false,
   error: null
@@ -22,6 +23,12 @@ const categoriesSlice = createSlice({
   name: 'categories',
   initialState,
   reducers: {
+    setSelectedCategory: (state, action) => {
+      state.selectedCategory = action.payload;
+    },
+    clearSelectedCategory: state => {
+      state.selectedCategory = null;
+    },
     clearError: state => {
       state.error = null;
     }
@@ -43,10 +50,11 @@ const categoriesSlice = createSlice({
   }
 });
 
-export const { clearError } = categoriesSlice.actions;
+export const { setSelectedCategory, clearSelectedCategory } = categoriesSlice.actions;
 
 // Selectors
 export const selectCategories = state => state.categories.items;
+export const selectSelectedCategory = state => state.categories.selectedCategory;
 export const selectIsLoading = state => state.categories.isLoading;
 export const selectError = state => state.categories.error;
 

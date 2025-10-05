@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import css from './HeroBanner.module.css';
 
 import Button from '@components/Button/Button';
+import PrivateLink from '@components/PrivateLink/PrivateLink';
 
 import bigDesktop from '@assets/images/hero/big-desktop.webp';
 import bigDesktop2x from '@assets/images/hero/big-desktop@2x.webp';
@@ -30,7 +31,7 @@ const HeroBanner = () => {
         </p>
         <Button
           className={css.heroButton}
-          as={Link}
+          as={PrivateLink}
           to="/recipe/add"
         >
           Add Recipe

@@ -42,7 +42,4 @@
     align-items: flex-start;
     gap: 80px;
   }
-  .sidebar {
-      width: 305px;
-  }
 }

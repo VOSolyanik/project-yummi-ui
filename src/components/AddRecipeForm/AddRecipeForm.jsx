@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useCallback } from 'react';
 
 import toast from 'react-hot-toast';
 
@@ -21,7 +21,6 @@ const AddRecipeForm = ({
   initialValues,
   onSubmit
 }) => {
-  const [_, setOpenSelect] = useState(null);
   const fileUrlRef = useRef(null);
 
   useEffect(
@@ -32,6 +31,36 @@ const AddRecipeForm = ({
   );
 
   const ingredientMap = useMemo(() => Object.fromEntries(ingredientItems.map(i => [i.id, i])), [ingredientItems]);
+
+  const handleAddIngredient = useCallback(
+    (values, setFieldValue) => () => {
+      if (!values.ingredientId || !values.ingredientAmount) {
+        toast.error('Select ingredient and amount');
+        return;
+      }
+      const ing = ingredientMap[values.ingredientId];
+      const newItem = {
+        id: ing.id,
+        name: ing.name,
+        amount: values.ingredientAmount,
+        imgUrl: ing.imgUrl
+      };
+      setFieldValue('ingredients', [...values.ingredients.filter(i => i.id !== newItem.id), newItem]);
+      setFieldValue('ingredientId', '');
+      setFieldValue('ingredientAmount', '');
+    },
+    [ingredientMap]
+  );
+
+  const handleRemoveIngredient = useCallback(
+    (id, values, setFieldValue) => () => {
+      setFieldValue(
+        'ingredients',
+        values.ingredients.filter(i => i.id !== id)
+      );
+    },
+    []
+  );
 
   return (
     <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
@@ -104,25 +133,25 @@ const AddRecipeForm = ({
                 <div>
                   <div className={css.label}>Cooking time</div>
                   <div className={css.timeControl}>
-                    <button
-                      type="button"
-                      className={css.iconBtn}
+                    <Button
+                      variant="outline"
+                      size="large"
                       onClick={() => setFieldValue('time', Math.max(10, Number(values.time) - 10))}
                     >
                       <Icon name="minus" />
-                    </button>
+                    </Button>
 
                     <span className={css.timeValue + (values.time === 10 ? ' ' + css.inactiveText : '')}>
                       {values.time} min
                     </span>
 
-                    <button
-                      type="button"
-                      className={css.iconBtn}
+                    <Button
+                      variant="outline"
+                      size="large"
                       onClick={() => setFieldValue('time', Number(values.time) + 10)}
                     >
                       <Icon name="plus" />
-                    </button>
+                    </Button>
                   </div>
                   <ErrorMessage name="time" component="div" className={css.error} />
                 </div>
@@ -177,23 +206,7 @@ const AddRecipeForm = ({
                   type="button"
                   variant="outline"
                   size="large"
-                  onClick={() => {
-                    if (!values.ingredientId || !values.ingredientAmount) {
-                      toast.error('Select ingredient and amount');
-                      return;
-                    }
-                    const ing = ingredientMap[values.ingredientId];
-                    const newItem = {
-                      id: ing.id,
-                      name: ing.name,
-                      amount: values.ingredientAmount,
-                      imgUrl: ing.imgUrl
-                    };
-                    setFieldValue('ingredients', [...values.ingredients.filter(i => i.id !== newItem.id), newItem]);
-                    setFieldValue('ingredientId', '');
-                    setFieldValue('ingredientAmount', '');
-                    setOpenSelect(null);
-                  }}
+                  onClick={handleAddIngredient(values, setFieldValue)}
                 >
                   Add Ingredient
                   <Icon name="plus" />
@@ -217,12 +230,7 @@ const AddRecipeForm = ({
                       type="button"
                       className={css.ingClose}
                       title="Remove"
-                      onClick={() =>
-                        setFieldValue(
-                          'ingredients',
-                          values.ingredients.filter(i => i.id !== item.id)
-                        )
-                      }
+                      onClick={handleRemoveIngredient(item.id, values, setFieldValue)}
                     >
                       <Icon name="close" />
                     </button>
@@ -262,17 +270,15 @@ const AddRecipeForm = ({
             </div>
 
             <div className={css.actions}>
-              <button
-                type="button"
-                className={css.iconBtn}
-                title="Reset"
+              <Button
+                variant="outline"
+                size="large"
                 onClick={() => {
-                  setOpenSelect(null);
                   resetForm({ values: initialValues });
                 }}
               >
                 <Icon name="trash" />
-              </button>
+              </Button>
               <Button type="submit" variant="primary" size="large" disabled={isSubmitting}>
                 Publish
               </Button>

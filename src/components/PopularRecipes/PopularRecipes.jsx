@@ -16,8 +16,8 @@ const PopularRecipes = () => {
       try {
         setIsLoading(true);
         const data = await recipesAPI.getPopularRecipes();
-        setPopular(data);
-      } catch (error) {
+        setPopular(data.items);
+      } catch {
         setError('Failed to load popular recipes.');
       } finally {
         setIsLoading(false);
@@ -35,7 +35,7 @@ const PopularRecipes = () => {
       {!isLoading && !error && (
         <div className={css.list}>
           {popular.map(recipe => (
-            <RecipeCard key={recipe._id} recipe={recipe} />
+            <RecipeCard key={recipe.id} recipe={recipe} />
           ))}
         </div>
       )}

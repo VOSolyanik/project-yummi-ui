@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -8,6 +8,7 @@ import css from './Header.module.css';
 
 import { useAuth } from '@hooks/useAuth.js';
 import { useAuthModal } from '@hooks/useAuthModal.js';
+import { useViewport } from '@hooks/useViewport.js';
 
 import AuthBar from '../AuthBar/AuthBar';
 import Logo from '../Logo/Logo';
@@ -18,20 +19,9 @@ const Header = ({ inverse = false }) => {
   const { isAuthenticated, isLoading, user } = useAuth();
   const { openSignInModal, openSignUpModal, openLogoutModal } = useAuthModal();
   const navigate = useNavigate();
-  const [isMobile, setIsMobile] = useState(false);
 
-  useEffect(() => {
-    const checkIsMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    checkIsMobile();
-    window.addEventListener('resize', checkIsMobile);
-
-    return () => {
-      window.removeEventListener('resize', checkIsMobile);
-    };
-  }, []);
+  const { width } = useViewport();
+  const isMobile = width < 768;
 
   const handleSignInClick = () => {
     openSignInModal();
@@ -55,9 +45,7 @@ const Header = ({ inverse = false }) => {
         <Logo className={css.logo} inverse={inverse} />
 
         <div className={css.authWrapper}>
-          {isLoading ? (
-            null
-          ) : isAuthenticated ? (
+          {isLoading ? null : isAuthenticated ? (
             <UserBar
               user={user}
               onProfileClick={handleProfileClick}
@@ -65,22 +53,14 @@ const Header = ({ inverse = false }) => {
               inverse={inverse}
             />
           ) : (
-            <AuthBar
-              onSignInClick={handleSignInClick}
-              onSignUpClick={handleSignUpClick}
-              inverse={inverse}
-            />
+            <AuthBar onSignInClick={handleSignInClick} onSignUpClick={handleSignUpClick} inverse={inverse} />
           )}
         </div>
 
         {(isAuthenticated || !isMobile) && (
           <div className={css.navWrapper}>
             {/* Always show Nav for development */}
-            <NavBar
-              isAuthenticated={isAuthenticated}
-              isMobile={isMobile}
-              inverse={inverse}
-            />
+            <NavBar isAuthenticated={isAuthenticated} isMobile={isMobile} inverse={inverse} />
           </div>
         )}
       </div>

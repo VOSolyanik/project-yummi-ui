@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import { useDispatch } from 'react-redux';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 
 import { setPendingPrivateRoute } from '@redux/router/routerSlice';
 
@@ -19,16 +19,22 @@ import Loader from '../Loader/Loader';
 const PrivateRoute = ({ children }) => {
   const { isAuthenticated, isLoading } = useAuth();
   const { openSignInModal, currentModal } = useAuthModal();
-  const { previousPath, currentPath, pendingPrivateRoute } = useRouteTracker();
+  const { currentPath, pendingPrivateRoute } = useRouteTracker();
 
+  const location = useLocation();
   const dispatch = useDispatch();
 
-  console.log(previousPath, currentPath, pendingPrivateRoute);
   useEffect(() => {
 
     // If user is not authenticated and not loading
     // and modal is not yet open and this is not the same page already being handled
-    if (!isAuthenticated && !isLoading && !currentModal && pendingPrivateRoute && pendingPrivateRoute !== currentPath) {
+    if (
+      !isAuthenticated &&
+      !isLoading &&
+      !currentModal && (
+        !pendingPrivateRoute || pendingPrivateRoute !== currentPath
+      )
+    ) {
       // Store the requested private route in Redux
       dispatch(setPendingPrivateRoute(currentPath));
 
@@ -53,7 +59,7 @@ const PrivateRoute = ({ children }) => {
   // If user is not authenticated, return null
   // (modal opens in useEffect, user remains on current page)
   if (!isAuthenticated) {
-    return <Navigate to={previousPath} />;
+    return <Navigate to={location.state?.from || '/'} replace />;
   }
 
   // If user is authenticated, render child components
