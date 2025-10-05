@@ -6,6 +6,7 @@ import { selectSelectedCategory, setSelectedCategory, clearSelectedCategory } fr
 import Categories from '@components/Categories/Categories';
 import HeroBanner from '@components/HeroBanner/HeroBanner';
 import Recipes from '@components/Recipes/Recipes';
+import Testimonials from '@components/Testimonials/Testimonials';
 
 import { BASE_TITLE } from '@constants/pages';
 
@@ -13,7 +14,7 @@ const HomePage = () => {
   const dispatch = useDispatch();
   const selectedCategory = useSelector(selectSelectedCategory);
 
-  const handleCategorySelect = (category) => {
+  const handleCategorySelect = category => {
     dispatch(setSelectedCategory(category));
   };
 
@@ -36,6 +37,8 @@ const HomePage = () => {
       ) : (
         <Categories onCategorySelect={handleCategorySelect} />
       )}
+
+      <Testimonials />
     </>
   );
 };

@@ -6,3 +6,4 @@ export { usersAPI } from './usersApi.js';
 export { socialAPI } from './socialApi.js';
 export { favoritesApi } from './favoritesApi.js';
 export { default as api } from './api.js';
+export { testimonialsAPI } from './testimonialsApi.js';
