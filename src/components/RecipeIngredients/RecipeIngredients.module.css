@@ -1,0 +1,93 @@
+.ingredientsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.33;
+  text-transform: uppercase;
+  color: var(--black-color);
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.imageWrapper {
+  width: 75px;
+  height: 75px;
+  flex-shrink: 0;
+  border: 1px solid var(--secondary-text-color);
+  border-radius: 15px;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.itemDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.itemName {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--black-color);
+}
+
+.itemMeasure {
+  font-size: 14px;
+  color: var(--secondary-text-color);
+}
+
+@media (min-width: 375px) {
+  .item {
+    width: calc(50% - 8px);
+  }
+}
+
+
+@media (min-width: 768px) {
+  .title {
+    font-size: 20px;
+    line-height: 1.2;
+  }
+
+  .list {
+    gap: 20px;
+  }
+
+  .item {
+    width: calc(33.333% - 14px);
+  }
+
+  .imageWrapper {
+    width: 90px;
+    height: 90px;
+  }
+
+  .itemName,
+  .itemMeasure {
+    font-size: 16px;
+  }
+}

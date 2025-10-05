@@ -98,7 +98,7 @@ const AddRecipePage = () => {
       </Helmet>
 
       <section className={css.container}>
-        <PathInfo current='Add recipe'/>
+        <PathInfo currentPage='Add recipe'/>
         <MainTitle level={2} id='add-recipe-heading' className={css.title}>Add Recipe</MainTitle>
         <Subtitle className={css.text}>
           Reveal your culinary art, share your favorite recipe

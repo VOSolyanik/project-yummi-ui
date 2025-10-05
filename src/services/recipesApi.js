@@ -22,6 +22,29 @@ export const recipesAPI = {
     }
   },
 
+  // Get rcipe by ID
+  getRecipeById: async (recipeId) => {
+    try {
+      const response = await api.get(`/recipes/${recipeId}`);
+      return response.data;
+    } catch (error) {
+      console.error(`Error fetching recipe with ID ${recipeId}:`, error);
+      throw error;
+    }
+  },
+
+  // Get Popular Recipes
+  getPopularRecipes: async (page = 1, limit = 4) => {
+    try {
+      const params = { page, limit };
+      const response = await api.get('/recipes/popular', { params });
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching popular recipes:', error);
+      throw error;
+    }
+  },
+
   createRecipe: async (formData) => {
     try {
       const { data } = await api.post('/recipes', formData, {

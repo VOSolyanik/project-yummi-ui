@@ -58,7 +58,7 @@ const RecipeCard = ({
   }, [recipe.owner?.avatarUrl, recipe.owner?.name]);
 
 
-  const handleFavoriteClick = useCallback(async (e) => {
+  const handleFavoriteToggle = useCallback(async (e) => {
     e.preventDefault();
     e.stopPropagation();
 
@@ -125,7 +125,7 @@ const RecipeCard = ({
             <Button
               variant={isFavorite ? 'primary' : 'outline'}
               size="medium"
-              onClick={handleFavoriteClick}
+              onClick={handleFavoriteToggle}
               disabled={isUpdatingFavorite}
               aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
             >

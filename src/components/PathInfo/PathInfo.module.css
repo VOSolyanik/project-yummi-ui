@@ -1,44 +1,30 @@
-.wrapper {
-  margin-bottom: 32px;
-}
-
-.list {
+.pathInfo {
   display: flex;
   align-items: center;
-  gap: 6px;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.base {
+  gap: 8px;
   font-size: 12px;
-  font-style: normal;
   font-weight: 700;
-  line-height: 18px;
-  letter-spacing: -0.24px;
   text-transform: uppercase;
+  line-height: 1.5;
 }
 
-.homeLink {
-  color: var(--gray-color);
+.link {
+  color: var(--secondary-text-color);
   text-decoration: none;
-}
-.homeLink:hover {
-  text-decoration: none;
-  cursor: pointer;
+  transition: color 0.2s ease;
 }
 
-.sep {
-  color: var(--gray-color);
-}
-
-.current {
+.link:hover {
   color: var(--black-color);
 }
 
-@media only screen and (min-width: 768px) {
-  .wrapper {
-    margin-bottom: 40px;
-  }
+.separator {
+  color: var(--secondary-text-color);
+}
+
+.currentPage {
+  color: var(--black-color);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

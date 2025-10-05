@@ -1,0 +1,36 @@
+.preparationSection {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.33;
+  text-transform: uppercase;
+  color: var(--black-color);
+}
+
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.step {
+  font-size: 14px;
+  line-height: 1.43;
+  color: var(--charcoal-color);
+}
+
+@media (min-width: 768px) {
+  .title {
+    font-size: 20px;
+    line-height: 1.2;
+  }
+  .step {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+}
