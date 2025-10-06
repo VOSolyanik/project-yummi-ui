@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -20,8 +20,9 @@ import Loader from '../Loader/Loader';
 import RecipePagination from '../RecipePagination/RecipePagination';
 import RecipesPreview from '../RecipesPreview';
 
-const MOBILE_ITEMS_PER_PAGE = 8;
-const DESKTOP_ITEMS_PER_PAGE = 12;
+import { deleteRecipe } from '@/redux/recipes/recipesSlice';
+
+const ITEMS_PER_PAGE = 9;
 
 const ListItems = ({ type, user }) => {
   const dispatch = useDispatch();
@@ -41,7 +42,7 @@ const ListItems = ({ type, user }) => {
     if (isCurrentlyFollowed) {
       await dispatch(unfollowUser(userId));
       if (type === 'following') {
-        await dispatch(fetchFollowing(user.id));
+        await dispatch(fetchFollowing({ userId: user.id, page: 1, limit: ITEMS_PER_PAGE }));
       }
     } else {
       await dispatch(followUser(userId));
@@ -50,62 +51,54 @@ const ListItems = ({ type, user }) => {
 
   const handleOnDelete = useCallback(async (recipeId) => {
     // Dispatch delete action
-    await dispatch(removeRecipeFromFavorites(recipeId));
+    if (type === 'recipes') {
+      await dispatch(deleteRecipe(recipeId));
+      await dispatch(fetchRecipes({ userId: user.id, page: 1, limit: ITEMS_PER_PAGE }));
+    }
+
     if (type === 'favorites') {
-      await dispatch(fetchFavorites(user.id));
+      await dispatch(removeRecipeFromFavorites(recipeId));
+      await dispatch(fetchFavorites({ userId: user.id, page: 1, limit: ITEMS_PER_PAGE }));
     }
   }, [dispatch, user.id, type]);
-
-  const itemsPerPage = useMemo(() => {
-    return isMobile
-      ? MOBILE_ITEMS_PER_PAGE
-      : DESKTOP_ITEMS_PER_PAGE;
-  }, [isMobile]);
 
   useEffect(() => {
     switch (type) {
     case 'recipes':
-      dispatch(fetchRecipes({ userId: user.id, page: 1, limit: itemsPerPage }));
+      dispatch(fetchRecipes({ userId: user.id, page: 1, limit: ITEMS_PER_PAGE }));
       break;
     case 'favorites':
-      dispatch(fetchFavorites({ userId: user.id, page: 1, limit: itemsPerPage }));
+      dispatch(fetchFavorites({ userId: user.id, page: 1, limit: ITEMS_PER_PAGE }));
       break;
     case 'followers':
-      dispatch(fetchFollowers({ userId: user.id, page: 1, limit: itemsPerPage }));
+      dispatch(fetchFollowers({ userId: user.id, page: 1, limit: ITEMS_PER_PAGE }));
       break;
     case 'following':
-      dispatch(fetchFollowing({ userId: user.id, page: 1, limit: itemsPerPage }));
+      dispatch(fetchFollowing({ userId: user.id, page: 1, limit: ITEMS_PER_PAGE }));
       break;
     default:
       break;
     }
-  }, [type, dispatch, user.id, itemsPerPage]);
+  }, [type, dispatch, user.id]);
 
   const handlePageChange = useCallback((page) => {
-    // dispatch(fetchRecipes({
-    //   categoryId,
-    //   page,
-    //   limit: itemsPerPage,
-    //   ingredient: selectedIngredient?.id || null,
-    //   area: selectedArea?.id || null
-    // }));
     switch (type) {
     case 'recipes':
-      dispatch(fetchRecipes({ userId: user.id, page, limit: itemsPerPage }));
+      dispatch(fetchRecipes({ userId: user.id, page, limit: ITEMS_PER_PAGE }));
       break;
     case 'favorites':
-      dispatch(fetchFavorites({ userId: user.id, page, limit: itemsPerPage }));
+      dispatch(fetchFavorites({ userId: user.id, page, limit: ITEMS_PER_PAGE }));
       break;
     case 'followers':
-      dispatch(fetchFollowers({ userId: user.id, page, limit: itemsPerPage }));
+      dispatch(fetchFollowers({ userId: user.id, page, limit: ITEMS_PER_PAGE }));
       break;
     case 'following':
-      dispatch(fetchFollowing({ userId: user.id, page, limit: itemsPerPage }));
+      dispatch(fetchFollowing({ userId: user.id, page, limit: ITEMS_PER_PAGE }));
       break;
     default:
       break;
     }
-  }, [type, dispatch, user.id, itemsPerPage]);
+  }, [type, dispatch, user.id]);
 
   const listState = userLists[type];
 
@@ -124,7 +117,7 @@ const ListItems = ({ type, user }) => {
             <li key={item.id}>
               <RecipesPreview
                 recipe={item}
-                isOwner={user.userId === currentUser.id}
+                isOwner={user.id === currentUser.id}
                 onDelete={handleOnDelete}
               />
             </li>
@@ -141,51 +134,16 @@ const ListItems = ({ type, user }) => {
         )}
       </ul>
       {listState.items && listState.items.length > 0 && (
-        <RecipePagination
-          currentPage={listState.currentPage}
-          totalPages={listState.totalPages}
-          onPageChange={handlePageChange}
-          isLoading={listState.isLoading}
-          totalRecipes={listState.totalCount}
-        />
+        <div className={css.paginationWrapper}>
+          <RecipePagination
+            currentPage={listState.currentPage}
+            totalPages={listState.totalPages}
+            onPageChange={handlePageChange}
+            isLoading={listState.isLoading}
+            totalRecipes={listState.totalCount}
+          />
+        </div>
       )}
-      
-      {/* {listState.items && listState.items.length > 0 && type === 'recipes' && (
-        <RecipePagination
-          currentPage={recipes.currentPage}
-          totalPages={recipes.totalPages}
-          onPageChange={handlePageChange}
-          isLoading={recipes.isLoading}
-          totalRecipes={recipes.totalRecipes}
-        />
-      )}
-      {listState.items && listState.items.length > 0 && type === 'favorites' && (
-        <RecipePagination
-          currentPage={favorites.currentPage}
-          totalPages={favorites.totalPages}
-          onPageChange={handlePageChange}
-          isLoading={favorites.isLoading}
-          totalRecipes={favorites.totalRecipes}
-        />
-      )}
-      {listState.items && listState.items.length > 0 && type === 'followers' && (
-        <RecipePagination
-          currentPage={followers.currentPage}
-          totalPages={followers.totalPages}
-          onPageChange={handlePageChange}
-          isLoading={followers.isLoading}
-          totalRecipes={followers.totalRecipes}
-        />
-      )}
-      {listState.items && listState.items.length > 0 && type === 'following' && (
-        <RecipePagination
-          currentPage={following.currentPage}
-          totalPages={following.totalPages}
-          onPageChange={handlePageChange}
-          isLoading={following.isLoading}
-          totalRecipes={following.totalRecipes}
-        />
-      )} */}
     </div>
   );
 };

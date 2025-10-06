@@ -31,7 +31,7 @@ const RecipesPreview = ({ recipe, isOwner, onDelete }) => {
         </Button>
         {isOwner && <Button
           variant="outline"
-          onClick={onDelete}
+          onClick={() => onDelete(id)}
           size="medium"
           aria-label="Delete recipe">
           <Icon name="trash" size={18} />

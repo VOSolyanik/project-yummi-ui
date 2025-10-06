@@ -54,14 +54,15 @@ const UserPage = () => {
     openLogoutModal();
   };
 
-  const handleFollow = () => {
+  const handleFollow = async () => {
     if (isActionInProgress || isCurrentUserProfile) return;
 
     if (isFollowed) {
-      dispatch(unfollowUser(selectedUser.id));
+      await dispatch(unfollowUser(selectedUser.id));
     } else {
-      dispatch(followUser(selectedUser.id));
+      await dispatch(followUser(selectedUser.id));
     }
+    await dispatch(fetchUserById(selectedUser.id));
   };
 
   return (

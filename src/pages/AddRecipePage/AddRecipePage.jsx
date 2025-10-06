@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { Helmet } from 'react-helmet-async';
 import toast from 'react-hot-toast';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import css from './AddRecipePage.module.css';
@@ -13,6 +14,7 @@ import Subtitle from '@components/Subtitle/Subtitle.jsx';
 
 import { BASE_TITLE } from '@constants/pages';
 
+import { getCurrentUser } from '@/redux/auth/authSlice.js';
 import { categoriesAPI } from '@/services/categoriesApi.js';
 import { recipesAPI } from '@/services/index.js';
 import { filtersAPI } from '@/services/recipesApi.js';
@@ -32,6 +34,7 @@ const initialValues = {
 };
 
 const AddRecipePage = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [lists, setLists] = useState({ ingredients: [] });
@@ -81,6 +84,7 @@ const AddRecipePage = () => {
 
       const recipeId = created?.id ?? created?.recipe?.id;
       toast.success('Recipe successfully added');
+      dispatch(getCurrentUser());
       navigate(`/recipe/${recipeId}`);
     } catch (e) {
       toast.error(e?.response?.data?.message || e?.message || 'Recipe was not added');
