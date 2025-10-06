@@ -69,6 +69,12 @@ const Recipes = ({ category, onBackToCategories }) => {
     }
   }, [dispatch, categoryId, itemsPerPage]);
 
+  useEffect(() => {
+    return () => {
+      dispatch(clearFilters());
+    };
+  }, [dispatch]);
+
   const handleFiltersChange = useCallback(({ ingredient, area }) => {
     dispatch(fetchRecipes({
       categoryId,
