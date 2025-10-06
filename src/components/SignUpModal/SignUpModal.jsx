@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import css from './SignUpModal.module.css';
 
 import { useAuth } from '@hooks/useAuth.js';
@@ -7,13 +9,20 @@ import Modal from '../Modal/Modal';
 import SignUpForm from '../SignUpForm/SignUpForm';
 
 const SignUpModal = ({ isOpen, onClose, onSwitchToSignIn, onSuccess }) => {
-  const { register, isLoading } = useAuth();
+  const { register, isLoading, isAuthenticated } = useAuth();
+
+  useEffect(() => {
+    if (isOpen && isAuthenticated) {
+      onSuccess?.();
+    }
+  }, [isOpen, isAuthenticated, onSuccess]);
 
   const handleSignUp = async (values, { setSubmitting }) => {
     try {
       const result = await register(values);
       if (result && (result.user || result.token || result === true)) {
         onSuccess?.();
+        onClose();
       }
     } catch (error) {
       console.error('Sign up error:', error);

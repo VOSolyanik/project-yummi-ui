@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import css from './LogoutModal.module.css';
 
 import { useAuth } from '@hooks/useAuth.js';
@@ -6,17 +8,19 @@ import Button from '../Button/Button';
 import Modal from '../Modal/Modal';
 
 const LogoutModal = ({ isOpen, onSuccess, onClose }) => {
-  const { logout, isLoading } = useAuth();
+  const { logout } = useAuth();
+  const [busy, setBusy] = useState(false);
 
   const handleLogout = async () => {
     try {
+      setBusy(true);
       await logout();
-      if (onSuccess) {
-        onSuccess();
-      }
+      onSuccess?.();
       onClose();
     } catch (error) {
       console.error('Logout error:', error);
+    } finally {
+      setBusy(false);
     }
   };
 
@@ -29,16 +33,18 @@ const LogoutModal = ({ isOpen, onSuccess, onClose }) => {
         <div className={css.buttonGroup}>
           <Button
             onClick={handleLogout}
-            disabled={isLoading}
+            disabled={busy}
+            aria-busy={busy}
             size="large"
           >
-            LOG OUT
+            {busy ? 'Logging out...' : 'Log out'}
           </Button>
 
           <Button
             onClick={onClose}
             variant="outline"
             size="large"
+            disabled={busy}
           >
             CANCEL
           </Button>
