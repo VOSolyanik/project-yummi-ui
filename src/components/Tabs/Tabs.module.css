@@ -10,15 +10,6 @@
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
-}
-
-.tabList::after {
-  content: '';
-  position: absolute;
-  display: block;
-  right: 16px;
-  left: 16px;
-  bottom: 0;
   border-bottom: 1px solid var(--gray-color);
 }
 
@@ -73,11 +64,6 @@
   .tabList {
     padding: 0;
     gap: 40px;
-  }
-
-  .tabList::after {
-    right: 0;
-    left: 0;
   }
 
   .tabContent {

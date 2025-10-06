@@ -20,7 +20,6 @@
 }
 
 .favoriteButton {
-  width: 50%;
   align-self: flex-start;
 }
 
@@ -28,7 +27,7 @@
   .recipeInfo {
     gap: 40px;
   }
-  
+
   .detailsWrapper {
     gap: 40px;
   }
