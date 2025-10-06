@@ -43,7 +43,7 @@ export const useAuth = () => {
 
   const logout = useCallback(async () => {
     await dispatch(logoutUser());
-    navigate('/');
+    navigate('/', { state: 'global' });
   }, [dispatch, navigate]);
 
   return {

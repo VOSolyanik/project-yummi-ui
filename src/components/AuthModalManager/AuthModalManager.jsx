@@ -48,7 +48,7 @@ const AuthModalManager = () => {
   };
 
   const handleLogoutSuccess = () => {
-    navigate('/');
+    navigate('/', { state: 'global' });
   };
 
   if (!currentModal) return null;
