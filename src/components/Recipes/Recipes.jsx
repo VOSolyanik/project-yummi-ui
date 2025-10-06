@@ -2,6 +2,8 @@ import React, { useEffect, useCallback, useMemo } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 
+import clsx from 'clsx';
+
 import css from './Recipes.module.css';
 
 import {
@@ -96,7 +98,7 @@ const Recipes = ({ category, onBackToCategories }) => {
   }, [dispatch, onBackToCategories]);
 
   return (
-    <section className={css.recipes} aria-labelledby="recipes-heading">
+    <section className={clsx(css.recipes, 'container')} aria-labelledby="recipes-heading">
       <div className={css.header}>
         <button
           type="button"

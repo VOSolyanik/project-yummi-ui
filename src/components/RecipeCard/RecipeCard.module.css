@@ -36,8 +36,6 @@
 
 .title {
   margin: 0;
-
-  font-family: 'Mulish', sans-serif;
   font-style: normal;
   font-weight: 800;
   font-size: 20px;
@@ -54,9 +52,8 @@
 
 .description {
   margin: 0;
-  height: 48px;
+  max-height: 48px;
 
-  font-family: 'Mulish', sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
@@ -149,7 +146,7 @@
   .description {
     font-size: 14px;
     line-height: 20px;
-    height: 40px;
+    max-height: 40px;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;

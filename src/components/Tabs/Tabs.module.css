@@ -1,15 +1,25 @@
 .tabsContainer {
-  width: 100%;
-  max-width: 343px;
+  margin: 0 -16px;
 }
 
 .tabList {
+  position: relative;
   display: flex;
   gap: 30px;
-  border-bottom: 1px solid var(--gray-color);
+  padding: 0 16px;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
+}
+
+.tabList::after {
+  content: '';
+  position: absolute;
+  display: block;
+  right: 16px;
+  left: 16px;
+  bottom: 0;
+  border-bottom: 1px solid var(--gray-color);
 }
 
 .tabList::-webkit-scrollbar {
@@ -21,9 +31,16 @@
   border-radius: 3px;
 }
 
+.tabContent {
+  min-height: 200px;
+  padding: 0 16px;
+}
+
 .tabBtn {
+  position: relative;
+  z-index: 2;
   flex: 0 0 auto;
-  padding-bottom: 14px;
+  padding: 0 0 14px;
   color: var(--gray-color);
   background: none;
   border: none;
@@ -50,11 +67,22 @@
 @media screen and (min-width: 768px) {
   .tabsContainer {
     max-width: 704px;
-    margin-top: 40px;
+    margin: 40px 0 0;
   }
 
   .tabList {
+    padding: 0;
     gap: 40px;
+  }
+
+  .tabList::after {
+    right: 0;
+    left: 0;
+  }
+
+  .tabContent {
+    padding: 0;
+    min-height: 350px;
   }
 
   .tabBtn {

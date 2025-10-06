@@ -82,13 +82,6 @@ const ListItems = ({ type, user }) => {
   }, [type, dispatch, user.id, itemsPerPage]);
 
   const handlePageChange = useCallback((page) => {
-    // dispatch(fetchRecipes({
-    //   categoryId,
-    //   page,
-    //   limit: itemsPerPage,
-    //   ingredient: selectedIngredient?.id || null,
-    //   area: selectedArea?.id || null
-    // }));
     switch (type) {
     case 'recipes':
       dispatch(fetchRecipes({ userId: user.id, page, limit: itemsPerPage }));
@@ -118,7 +111,7 @@ const ListItems = ({ type, user }) => {
 
   return (
     <div className={css.content}>
-      <ul>
+      <ul className={css.list}>
         {listState.items?.map((item) =>
           type === 'recipes' || type === 'favorites' ? (
             <li key={item.id}>
@@ -149,43 +142,6 @@ const ListItems = ({ type, user }) => {
           totalRecipes={listState.totalCount}
         />
       )}
-      
-      {/* {listState.items && listState.items.length > 0 && type === 'recipes' && (
-        <RecipePagination
-          currentPage={recipes.currentPage}
-          totalPages={recipes.totalPages}
-          onPageChange={handlePageChange}
-          isLoading={recipes.isLoading}
-          totalRecipes={recipes.totalRecipes}
-        />
-      )}
-      {listState.items && listState.items.length > 0 && type === 'favorites' && (
-        <RecipePagination
-          currentPage={favorites.currentPage}
-          totalPages={favorites.totalPages}
-          onPageChange={handlePageChange}
-          isLoading={favorites.isLoading}
-          totalRecipes={favorites.totalRecipes}
-        />
-      )}
-      {listState.items && listState.items.length > 0 && type === 'followers' && (
-        <RecipePagination
-          currentPage={followers.currentPage}
-          totalPages={followers.totalPages}
-          onPageChange={handlePageChange}
-          isLoading={followers.isLoading}
-          totalRecipes={followers.totalRecipes}
-        />
-      )}
-      {listState.items && listState.items.length > 0 && type === 'following' && (
-        <RecipePagination
-          currentPage={following.currentPage}
-          totalPages={following.totalPages}
-          onPageChange={handlePageChange}
-          isLoading={following.isLoading}
-          totalRecipes={following.totalRecipes}
-        />
-      )} */}
     </div>
   );
 };

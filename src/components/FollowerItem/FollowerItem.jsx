@@ -54,8 +54,7 @@ const FollowerItem = ({ user, isCurrent, isFollowing, recipesCount, onFollowTogg
       <Button
         as={NavLink}
         to={`/user/${user.id}`}
-        variant="outline"
-        size="large">
+        variant="outline">
         <Icon name="arrow-up-right"/>
       </Button>
     </div>
