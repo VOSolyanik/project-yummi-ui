@@ -1,14 +1,15 @@
 /* Mobile-first base styles */
 .header {
-  min-height: 38px;
+  margin-top: 0.5rem;
+  padding: 1rem 0;
+  min-height: 70px;
   transition: all 0.2s ease;
-  margin-bottom: 64px;
 }
 
 /* Inverse mode for dark backgrounds */
 .header.inverse {
   position: relative;
-  margin: 1rem 0.5rem -54px;
+  margin: 0.5rem 0.5rem -78px;
   z-index: 2;
 }
 
@@ -35,11 +36,13 @@
 /* Tablet styles (768px+) */
 @media screen and (min-width: 768px) {
   .header {
-    min-height: 50px;
+    padding: 1.25rem 0;
+    margin-top: 1rem;
   }
 
   .header.inverse {
-    margin: 1rem 0.5rem -82px;
+    padding: 1.25rem 0;
+    margin: 1rem 0.5rem -94px;
   }
 
   .logo {
@@ -60,10 +63,12 @@
 /* Desktop styles (1440px+) */
 @media screen and (min-width: 1440px) {
   .header {
-    margin-bottom: 80px;
+    padding: 1.25rem 0;
+    margin-top: 1.25rem;
   }
 
   .header.inverse {
-    margin: 1.25rem 0.5rem -85px;
+    padding: 1.25rem 0;
+    margin: 1.25rem 0.5rem -98px;
   }
 }

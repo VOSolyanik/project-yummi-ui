@@ -1,12 +1,13 @@
 .heroWrapper {
   width: 100%;
   box-sizing: border-box;
+  padding: 8px;
 }
 
 .hero {
   background-color: var(--black-color);
   border-radius: 20px;
-  padding: 100px 16px;
+  padding: 54px 16px 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
