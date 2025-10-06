@@ -92,7 +92,7 @@ const UserPage = () => {
               </Button>
             )}
           </div>
-          <Tabs user={user} isCurrent={isCurrentUserProfile} />
+          <Tabs user={user} isCurrent={isCurrentUserProfile} className={css.tabs} />
         </div>
       )}
     </div>

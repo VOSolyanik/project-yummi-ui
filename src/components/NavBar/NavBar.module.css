@@ -94,12 +94,13 @@
 }
 
 .menuContainer {
-  flex: 1;
+  flex: 0 0 672px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding-bottom: 1rem;
-  max-height: 672px;
+  padding: 0 1.5rem 1rem;
+  height: 672px;
+  overflow: hidden;
   color: var(--white-color);
 }
 
@@ -118,11 +119,11 @@
 }
 
 .mobileImages {
-  flex-grow: 0 0 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 32px;
+  margin-bottom: -12px;
 }
 
 .smallImage {

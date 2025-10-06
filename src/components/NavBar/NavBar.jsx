@@ -1,15 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
-import { useDispatch } from 'react-redux';
 import { NavLink, useLocation } from 'react-router-dom';
 
 import clsx from 'clsx';
 
 import css from './NavBar.module.css';
-
-import { clearSelectedCategory } from '@redux/categories/categoriesSlice';
-
-// Import hero images (mobile only for mobile menu)
 
 import bigMobile from '@assets/images/hero/big-mobile.webp';
 import bigMobile2x from '@assets/images/hero/big-mobile@2x.webp';
@@ -27,12 +22,6 @@ const navItems = [
 ];
 
 const NavMenuList = ({ className = '', inverse = false }) => {
-  const dispatch = useDispatch();
-
-  const handleHomeClick = () => {
-    dispatch(clearSelectedCategory());
-  };
-
   return (
     <ul className={clsx(css.navList, className, inverse && css.inverse)}>
       {navItems.map(item => (
@@ -51,16 +40,15 @@ const NavMenuList = ({ className = '', inverse = false }) => {
               {item.label}
             </PrivateLink>
           ) : (
-            // For pablic links will using NavLink
+            // For public links will using NavLink
             <NavLink
               to={item.to}
+              state='global'
               className={({ isActive }) =>
                 clsx(css.navLink, {
                   [css.activeLink]: isActive
                 })
               }
-              onClick={item.to === '/' ? handleHomeClick : undefined}
-
             >
               {item.label}
             </NavLink>

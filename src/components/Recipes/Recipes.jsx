@@ -1,6 +1,8 @@
-import React, { useEffect, useCallback, useMemo, useRef } from 'react';
+import React, { useEffect, useCallback, useMemo } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
+
+import clsx from 'clsx';
 
 import css from './Recipes.module.css';
 
@@ -27,6 +29,7 @@ import RecipeList from '@components/RecipeList/RecipeList';
 import RecipePagination from '@components/RecipePagination/RecipePagination';
 import Subtitle from '@components/Subtitle/Subtitle';
 
+import { useScrollToTop } from '@hooks/useScrollToTop.js';
 import { useViewport } from '@hooks/useViewport.js';
 
 const MOBILE_ITEMS_PER_PAGE = 8;
@@ -37,8 +40,6 @@ const Recipes = ({ category, onBackToCategories }) => {
   const { width } = useViewport();
   const isMobile = width < 768;
 
-  const contentRef = useRef(null);
-
   const recipes = useSelector(selectRecipes);
   const currentPage = useSelector(selectCurrentPage);
   const totalPages = useSelector(selectTotalPages);
@@ -47,6 +48,9 @@ const Recipes = ({ category, onBackToCategories }) => {
   const error = useSelector(selectError);
   const selectedIngredient = useSelector(selectSelectedIngredient);
   const selectedArea = useSelector(selectSelectedArea);
+
+  // Use custom hook for smooth scrolling when page changes
+  const contentRef = useScrollToTop(currentPage);
 
   const isAllCategories = category?.name === 'All Categories';
   const categoryId = category?.id || 'all';
@@ -77,14 +81,6 @@ const Recipes = ({ category, onBackToCategories }) => {
     };
   }, [dispatch]);
 
-  useEffect(() => {
-    // Перевіряємо, чи існує елемент, перш ніж викликати скрол
-    if (contentRef.current) {
-      // Виконуємо плавне прокручування до верхньої частини елемента
-      contentRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  }, [currentPage]);
-
   const handleFiltersChange = useCallback(({ ingredient, area }) => {
     dispatch(fetchRecipes({
       categoryId,
@@ -107,12 +103,11 @@ const Recipes = ({ category, onBackToCategories }) => {
 
 
   const handleBackClick = useCallback(() => {
-    dispatch(clearFilters());
     onBackToCategories();
-  }, [dispatch, onBackToCategories]);
+  }, [onBackToCategories]);
 
   return (
-    <section className={css.recipes} aria-labelledby="recipes-heading" ref={contentRef}>
+    <section className={clsx(css.recipes, 'container')} aria-labelledby="recipes-heading" ref={contentRef}>
       <div className={css.header}>
         <button
           type="button"

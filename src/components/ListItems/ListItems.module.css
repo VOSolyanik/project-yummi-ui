@@ -1,5 +1,5 @@
 .infoText {
-  padding: 80px 0 100px 0;
+  padding: 80px 0 0;
   font-size: 14px;
   color: #bfbebe;
   font-weight: 500;
@@ -17,17 +17,23 @@
   flex: 1;
 }
 
+.list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
 @media screen and (min-width: 768px) {
   .infoText {
-    padding: 100px 47px 200px 47px;
+    padding: 100px 48px 100px;
     font: 16px;
-    color: #1a1a1a;
+    color: var(--charcoal-color);
     line-height: 24px;
   }
 }
 
 @media screen and (min-width: 1400px) {
   .infoText {
-    padding: 140px 118px 259px 118px;
+    padding: 140px 120px 200px;
   }
 }

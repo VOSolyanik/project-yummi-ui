@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { Link } from 'react-router-dom';
-
 import css from './HeroBanner.module.css';
 
 import Button from '@components/Button/Button';
@@ -33,6 +31,7 @@ const HeroBanner = () => {
           className={css.heroButton}
           as={PrivateLink}
           to="/recipe/add"
+          size='large'
         >
           Add Recipe
         </Button>

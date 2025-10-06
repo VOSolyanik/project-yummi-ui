@@ -28,7 +28,7 @@ const Categories = ({ onCategorySelect }) => {
 
   return (
     <section className={css.categories} aria-labelledby="categories-heading">
-      <div className={css.container}>
+      <div className='container'>
         <MainTitle level={2} id="categories-heading" className={css.title}>
           CATEGORIES
         </MainTitle>

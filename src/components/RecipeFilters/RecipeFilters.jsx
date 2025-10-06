@@ -63,17 +63,13 @@ const RecipeFilters = ({ onFiltersChange }) => {
     }))
   ], [ingredients]);
 
-  const areaOptions = useMemo(() => {
-    const sortedAreas = [...(areas || [])].sort((a, b) => a.name.localeCompare(b.name));
-
-    return [
-      { value: '', label: 'All Areas' },
-      ...sortedAreas.map(area => ({
-        value: area.id,
-        label: area.name
-      }))
-    ];
-  }, [areas]);
+  const areaOptions = useMemo(() => [
+    { value: '', label: 'All Areas' },
+    ...(areas || []).map(area => ({
+      value: area.id,
+      label: area.name
+    }))
+  ], [areas]);
 
   if (!ingredients && !areas) {
     return null;
