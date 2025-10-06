@@ -29,6 +29,7 @@ import RecipeList from '@components/RecipeList/RecipeList';
 import RecipePagination from '@components/RecipePagination/RecipePagination';
 import Subtitle from '@components/Subtitle/Subtitle';
 
+import { useScrollToTop } from '@hooks/useScrollToTop.js';
 import { useViewport } from '@hooks/useViewport.js';
 
 const MOBILE_ITEMS_PER_PAGE = 8;
@@ -47,6 +48,9 @@ const Recipes = ({ category, onBackToCategories }) => {
   const error = useSelector(selectError);
   const selectedIngredient = useSelector(selectSelectedIngredient);
   const selectedArea = useSelector(selectSelectedArea);
+
+  // Use custom hook for smooth scrolling when page changes
+  const contentRef = useScrollToTop(currentPage);
 
   const isAllCategories = category?.name === 'All Categories';
   const categoryId = category?.id || 'all';
@@ -71,6 +75,12 @@ const Recipes = ({ category, onBackToCategories }) => {
     }
   }, [dispatch, categoryId, itemsPerPage]);
 
+  useEffect(() => {
+    return () => {
+      dispatch(clearFilters());
+    };
+  }, [dispatch]);
+
   const handleFiltersChange = useCallback(({ ingredient, area }) => {
     dispatch(fetchRecipes({
       categoryId,
@@ -93,12 +103,11 @@ const Recipes = ({ category, onBackToCategories }) => {
 
 
   const handleBackClick = useCallback(() => {
-    dispatch(clearFilters());
     onBackToCategories();
-  }, [dispatch, onBackToCategories]);
+  }, [onBackToCategories]);
 
   return (
-    <section className={clsx(css.recipes, 'container')} aria-labelledby="recipes-heading">
+    <section className={clsx(css.recipes, 'container')} aria-labelledby="recipes-heading" ref={contentRef}>
       <div className={css.header}>
         <button
           type="button"
