@@ -1,15 +1,14 @@
 .page {
-  padding-top: 64px;
-  padding-bottom: 64px;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
   display: flex;
   flex-direction: column;
-  gap: 32px;
 }
 
 .error {
-    color: var(--error-color);
-    text-align: center;
-    font-size: 1.2rem;
+  color: var(--error-color);
+  text-align: center;
+  font-size: 1.2rem;
 }
 
 .contentWrapper {
@@ -27,14 +26,13 @@
 }
 
 @media (min-width: 768px) {
-    .page {
-        padding-top: 80px;
-        padding-bottom: 80px;
-        gap: 40px;
-    }
-    .contentWrapper {
-        gap: 40px;
-    }
+  .page {
+    padding-top: 60px;
+    padding-bottom: 48px;
+  }
+  .contentWrapper {
+    gap: 40px;
+  }
 }
 
 @media (min-width: 1440px) {

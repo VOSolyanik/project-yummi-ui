@@ -489,9 +489,11 @@
   text-decoration: underline;
   cursor: pointer;
 }
+
 .filePreview {
   display: none;
 }
+
 .formDropdown {
   width: 100%;
   max-width: 343px;

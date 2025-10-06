@@ -2,20 +2,23 @@
 .container {
   max-width: 375px;
   margin: 0 auto;
-  padding: 0 16px;
+  padding-left: 16px;
+  padding-right: 16px;
   width: 100%;
 }
 /* Styles for Tablet devices */
 @media only screen and (min-width: 768px) {
   .container {
     max-width: 768px;
-    padding: 0 32px;
+    padding-left: 24px;
+    padding-right: 24px;
   }
 }
 /* Styles for Desktop devices */
 @media only screen and (min-width: 1440px) {
   .container {
     max-width: 1360px;
-    padding: 0 40px;
+    padding-left: 40px;
+    padding-right: 40px;
   }
 }

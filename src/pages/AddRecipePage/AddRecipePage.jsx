@@ -4,6 +4,8 @@ import { Helmet } from 'react-helmet-async';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
+import clsx from 'clsx';
+
 import css from './AddRecipePage.module.css';
 
 import AddRecipeForm from '@components/AddRecipeForm/AddRecipeForm';
@@ -95,7 +97,7 @@ const AddRecipePage = () => {
         <title>{BASE_TITLE} - Add Recipe</title>
       </Helmet>
 
-      <section className={css.container}>
+      <section className={clsx(css.container, 'container')}>
         <PathInfo currentPage='Add recipe' className={css.pathInfo}/>
         <MainTitle level={2} id='add-recipe-heading' className={css.title}>Add Recipe</MainTitle>
         <Subtitle className={css.text}>

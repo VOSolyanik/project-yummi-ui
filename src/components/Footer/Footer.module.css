@@ -23,12 +23,14 @@
 @media screen and (min-width: 768px) {
   .footer {
     padding: 2rem 0;
+    margin: 0 -0.5rem;
   }
 }
 
 /* Desktop styles (1440px+) */
 @media screen and (min-width: 1440px) {
   .footer {
-    padding: 2.5rem 0 4.5rem;
+    padding: 3.5rem 0 4.5rem;
+    margin: 0 -0.75rem;
   }
 }

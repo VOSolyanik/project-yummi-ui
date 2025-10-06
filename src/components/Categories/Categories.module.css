@@ -3,27 +3,10 @@
   background-color: var(--main-bg-color);
 }
 
-.container {
-  width: 100%;
-  margin: 0 auto;
-  max-width: 343px;
-}
-
-@media screen and (max-width: 374px) {
-  .container {
-    max-width: 100%;
-    padding: 0 16px;
-  }
-}
-
 /* Tablet styles (768px-1439px) */
-@media screen and (min-width: 768px) and (max-width: 1439px) {
+@media screen and (min-width: 768px){
   .categories {
-    padding: 96px 0 100px 0;
-  }
-
-  .container {
-    max-width: 704px;
+    padding: 92px 0 100px 0;
   }
 }
 
@@ -31,9 +14,5 @@
 @media screen and (min-width: 1440px) {
   .categories {
     padding: 112px 0 120px 0;
-  }
-
-  .container {
-    max-width: 1280px;
   }
 }
