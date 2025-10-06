@@ -199,6 +199,10 @@ const UIKitPage = () => {
               <span>heart</span>
             </div>
             <div className={css.iconSample}>
+              <Icon name="loader" size={24} />
+              <span>loader</span>
+            </div>
+            <div className={css.iconSample}>
               <Icon name="trash" size={24} />
               <span>trash</span>
             </div>
@@ -363,9 +367,7 @@ const UIKitPage = () => {
           <div className={css.componentDemo}>
             <div style={{ maxWidth: '400px' }}>
               <RecipesPreview
-                title="Delicious Pasta Recipe"
-                description="A mouth-watering pasta dish with fresh ingredients and aromatic herbs that will delight your taste buds."
-                image="/src/assets/images/no-image.png"
+                recipe={mockRecipe}
                 onOpen={() => console.log('Open recipe')}
                 onDelete={() => console.log('Delete recipe')}
               />
