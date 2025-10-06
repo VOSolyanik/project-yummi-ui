@@ -412,29 +412,6 @@ The `vercel.json` file configures SPA routing:
 }
 ```
 
-### Other Deployment Platforms
-
-#### Netlify
-
-```bash
-# Build command
-npm run build
-
-# Publish directory
-dist
-
-# Redirect rules (add to _redirects file in public/)
-/*    /index.html   200
-```
-
-#### GitHub Pages
-
-```bash
-# Build for GitHub Pages
-npm run build
-
-# Deploy dist/ folder to gh-pages branch
-```
 
 ## 🧪 Testing (Future Implementation)
 
