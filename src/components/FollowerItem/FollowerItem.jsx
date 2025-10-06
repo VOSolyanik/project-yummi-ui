@@ -12,12 +12,13 @@ import Icon from '@components/Icon/Icon.jsx';
 import noAvatarImg from '@assets/images/no-avatar.webp';
 
 
-const FollowerItem = ({ user, isCurrent, isFollowing, recipesCount, onFollowToggle }) => {
+const FollowerItem = ({ user, isCurrent, isFollowing, isFollowLoading, recipesCount, onFollowToggle }) => {
   const recipesToShow = user?.latestRecipes ? user.latestRecipes.slice(0, recipesCount) : [];
 
   const handleFollowToggle = () => {
     onFollowToggle(user.id, isFollowing);
   };
+  console.log('FollowerItem render:', isFollowLoading);
 
   return (
     <div className={css.component}>
@@ -38,7 +39,9 @@ const FollowerItem = ({ user, isCurrent, isFollowing, recipesCount, onFollowTogg
             <Button
               onClick={handleFollowToggle}
               variant="outline"
+              disabled={isFollowLoading}
             >
+              {isFollowLoading && <Icon name="loader" className={css.loader} />}
               {isFollowing ? 'Unfollow' : 'Follow'}
             </Button>
           )}
@@ -54,8 +57,7 @@ const FollowerItem = ({ user, isCurrent, isFollowing, recipesCount, onFollowTogg
       <Button
         as={NavLink}
         to={`/user/${user.id}`}
-        variant="outline"
-        size="large">
+        variant="outline">
         <Icon name="arrow-up-right"/>
       </Button>
     </div>

@@ -5,6 +5,8 @@ import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
+import clsx from 'clsx';
+
 import css from './AddRecipePage.module.css';
 
 import AddRecipeForm from '@components/AddRecipeForm/AddRecipeForm';
@@ -26,7 +28,7 @@ const initialValues = {
   description: '',
   categoryId: '',
   areaId: '',
-  time: 10,
+  time: 1,
   ingredientId: '',
   ingredientAmount: '',
   ingredients: [],
@@ -99,7 +101,7 @@ const AddRecipePage = () => {
         <title>{BASE_TITLE} - Add Recipe</title>
       </Helmet>
 
-      <section className={css.container}>
+      <section className={clsx(css.container, 'container')}>
         <PathInfo currentPage='Add recipe' className={css.pathInfo}/>
         <MainTitle level={2} id='add-recipe-heading' className={css.title}>Add Recipe</MainTitle>
         <Subtitle className={css.text}>

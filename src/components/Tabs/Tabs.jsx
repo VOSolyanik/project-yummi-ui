@@ -6,7 +6,7 @@ import css from './Tabs.module.css';
 
 import ListItems from '../ListItems/ListItems';
 
-const Tabs = ({ user, isCurrent }) => {
+const Tabs = ({ user, isCurrent, className = '' }) => {
   const [activeTab, setActiveTab] = useState('recipes');
 
   useEffect(() => {
@@ -16,7 +16,7 @@ const Tabs = ({ user, isCurrent }) => {
   }, [isCurrent, activeTab]);
 
   return (
-    <div className={css.tabsContainer}>
+    <div className={clsx(css.tabsContainer, className)}>
       <div className={css.tabList}>
         <button
           className={clsx(css.tabBtn, {
@@ -24,7 +24,7 @@ const Tabs = ({ user, isCurrent }) => {
           })}
           onClick={() => setActiveTab('recipes')}
         >
-          My recipes
+          {isCurrent ? 'My recipes' : 'Recipes'}
         </button>
         {isCurrent && (
           <button

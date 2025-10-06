@@ -7,7 +7,7 @@ import css from './RecipesPreview.module.css';
 import Button from '../Button/Button';
 import Icon from '../Icon/Icon';
 
-const RecipesPreview = ({ recipe, isOwner, onDelete }) => {
+const RecipesPreview = ({ recipe, isOwner, isDeleteInProgress, onDelete }) => {
   const { id, title, description, thumbUrl } = recipe;
 
   return (
@@ -34,7 +34,7 @@ const RecipesPreview = ({ recipe, isOwner, onDelete }) => {
           onClick={() => onDelete(id)}
           size="medium"
           aria-label="Delete recipe">
-          <Icon name="trash" size={18} />
+          <Icon name={isDeleteInProgress ? 'loader' : 'trash'} size={18} />
         </Button>}
       </div>
     </div>

@@ -33,8 +33,13 @@ const AddRecipeForm = ({
   const ingredientMap = useMemo(() => Object.fromEntries(ingredientItems.map(i => [i.id, i])), [ingredientItems]);
 
   const handleAddIngredient = useCallback(
-    (values, setFieldValue) => () => {
+    (values, setFieldValue, validateField, setFieldTouched, setFieldError) => () => {
       if (!values.ingredientId || !values.ingredientAmount) {
+        if (!values.ingredientAmount) {
+          setFieldTouched('ingredientAmount', true, false);
+          setFieldError('ingredientAmount', 'Amount is required');
+          document.getElementById('ingredientAmount')?.focus();
+        }
         toast.error('Select ingredient and amount');
         return;
       }
@@ -45,9 +50,12 @@ const AddRecipeForm = ({
         amount: values.ingredientAmount,
         imgUrl: ing.imgUrl
       };
-      setFieldValue('ingredients', [...values.ingredients.filter(i => i.id !== newItem.id), newItem]);
+      setFieldValue('ingredients', [...values.ingredients.filter(i => i.id !== newItem.id), newItem], true);
+      validateField('ingredients');
       setFieldValue('ingredientId', '');
       setFieldValue('ingredientAmount', '');
+      setFieldTouched('ingredientAmount', false, false);
+      setFieldError('ingredientAmount', undefined);
     },
     [ingredientMap]
   );
@@ -64,7 +72,10 @@ const AddRecipeForm = ({
 
   return (
     <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
-      {({ values, setFieldValue, isSubmitting, resetForm, errors, touched }) => (
+      {({ values, setFieldValue, isSubmitting,
+        resetForm, errors,
+        touched, validateField,
+        setFieldTouched, setFieldError }) => (
         <Form className={css.form}>
           <PhotoUpload name="photo" />
 
@@ -136,19 +147,19 @@ const AddRecipeForm = ({
                     <Button
                       variant="outline"
                       size="large"
-                      onClick={() => setFieldValue('time', Math.max(10, Number(values.time) - 10))}
+                      onClick={() => setFieldValue('time', Math.max(1, Number(values.time) - 5))}
                     >
                       <Icon name="minus" />
                     </Button>
 
-                    <span className={css.timeValue + (values.time === 10 ? ' ' + css.inactiveText : '')}>
+                    <span className={css.timeValue + (values.time === 1 ? ' ' + css.inactiveText : '')}>
                       {values.time} min
                     </span>
 
                     <Button
                       variant="outline"
                       size="large"
-                      onClick={() => setFieldValue('time', Number(values.time) + 10)}
+                      onClick={() => setFieldValue('time', values.time === 1 ? 5 : Number(values.time) + 5)}
                     >
                       <Icon name="plus" />
                     </Button>
@@ -187,6 +198,7 @@ const AddRecipeForm = ({
                       <input
                         {...field}
                         type="text"
+                        id="ingredientAmount"
                         maxLength={20}
                         className={
                           css.textareaUnderlined +
@@ -206,7 +218,8 @@ const AddRecipeForm = ({
                   type="button"
                   variant="outline"
                   size="large"
-                  onClick={handleAddIngredient(values, setFieldValue)}
+                  onClick={handleAddIngredient(values, setFieldValue,
+                    validateField, setFieldTouched, setFieldError)}
                 >
                   Add Ingredient
                   <Icon name="plus" />

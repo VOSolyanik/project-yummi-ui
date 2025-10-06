@@ -1,5 +1,3 @@
-import { useNavigate } from 'react-router-dom';
-
 import css from './SignUpModal.module.css';
 
 import { useAuth } from '@hooks/useAuth.js';
@@ -10,16 +8,12 @@ import SignUpForm from '../SignUpForm/SignUpForm';
 
 const SignUpModal = ({ isOpen, onClose, onSwitchToSignIn, onSuccess }) => {
   const { register, isLoading } = useAuth();
-  const navigate = useNavigate();
 
   const handleSignUp = async (values, { setSubmitting }) => {
     try {
-      await register(values);
-      if (onSuccess) {
-        onSuccess();
-      } else {
-        if (onClose) onClose();
-        navigate('/');
+      const { payload } = await register(values);
+      if (payload && (payload.user || payload.token)) {
+        onSuccess?.();
       }
     } catch (error) {
       console.error('Sign up error:', error);

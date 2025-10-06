@@ -1,5 +1,3 @@
-import { useNavigate } from 'react-router-dom';
-
 import css from './SignInModal.module.css';
 
 import { useAuth } from '@hooks/useAuth.js';
@@ -10,20 +8,15 @@ import SignInForm from '../SignInForm/SignInForm';
 
 const SignInModal = ({ isOpen, onClose, onSwitchToSignUp, onSuccess }) => {
   const { login, isLoading } = useAuth();
-  const navigate = useNavigate();
 
   const handleSignIn = async (values, { setSubmitting }) => {
     try {
-      await login(values);
-      if (onSuccess) {
-        onSuccess();
-      } else {
-        if (onClose) onClose();
-        navigate('/');
+      const { payload } = await login(values);
+      if (payload && (payload.user || payload.token)) {
+        onSuccess?.();
       }
     } catch (error) {
       console.error('Sign in error:', error);
-      // Error toast will be shown by the auth system
     } finally {
       setSubmitting(false);
     }

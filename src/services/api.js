@@ -14,7 +14,7 @@ const api = axios.create({
     'Content-Type': 'application/json',
     'X-Requested-With': 'XMLHttpRequest' // CSRF protection header
   },
-  timeout: 10000
+  timeout: 30000
 });
 
 // Request interceptor - add token to every request
