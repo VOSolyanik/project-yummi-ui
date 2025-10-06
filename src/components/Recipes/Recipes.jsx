@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useMemo } from 'react';
+import React, { useEffect, useCallback, useMemo, useRef } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -36,6 +36,8 @@ const Recipes = ({ category, onBackToCategories }) => {
   const dispatch = useDispatch();
   const { width } = useViewport();
   const isMobile = width < 768;
+
+  const contentRef = useRef(null);
 
   const recipes = useSelector(selectRecipes);
   const currentPage = useSelector(selectCurrentPage);
@@ -75,6 +77,14 @@ const Recipes = ({ category, onBackToCategories }) => {
     };
   }, [dispatch]);
 
+  useEffect(() => {
+    // Перевіряємо, чи існує елемент, перш ніж викликати скрол
+    if (contentRef.current) {
+      // Виконуємо плавне прокручування до верхньої частини елемента
+      contentRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [currentPage]);
+
   const handleFiltersChange = useCallback(({ ingredient, area }) => {
     dispatch(fetchRecipes({
       categoryId,
@@ -102,7 +112,7 @@ const Recipes = ({ category, onBackToCategories }) => {
   }, [dispatch, onBackToCategories]);
 
   return (
-    <section className={css.recipes} aria-labelledby="recipes-heading">
+    <section className={css.recipes} aria-labelledby="recipes-heading" ref={contentRef}>
       <div className={css.header}>
         <button
           type="button"
