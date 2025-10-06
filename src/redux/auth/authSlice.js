@@ -176,7 +176,8 @@ const initialState = {
   token: null, // Let Redux-persist handle initial token loading
   isAuthenticated: false, // Only authenticated after successful getCurrentUser
   isLoading: false,
-  isActionInProgress: false, // For tracking ongoing actions like follow/unfollow
+  followInProgress: {}, // For tracking ongoing actions like follow/unfollow
+  favoriteInProgress: {}, // For tracking ongoing actions like add/remove favorites
   error: null
 };
 
@@ -307,11 +308,11 @@ const authSlice = createSlice({
         toast.error(action.payload || 'Failed to upload avatar');
       })
       // Follow user
-      .addCase(followUser.pending, (state) => {
-        state.isActionInProgress = true;
+      .addCase(followUser.pending, (state, action) => {
+        state.followInProgress[action.meta.arg] = true;
       })
       .addCase(followUser.fulfilled, (state, action) => {
-        state.isActionInProgress = false;
+        state.followInProgress[action.meta.arg] = false;
         state.error = null;
 
         if (state.user && state.user.id !== action.payload.userId) {
@@ -320,16 +321,16 @@ const authSlice = createSlice({
         toast.success(action.payload.message || 'User followed');
       })
       .addCase(followUser.rejected, (state, action) => {
-        state.isActionInProgress = false;
+        state.followInProgress[action.meta.arg] = false;
         state.error = action.payload;
         toast.error(action.payload || 'Failed to follow user');
       })
       // Unfollow user
-      .addCase(unfollowUser.pending, (state) => {
-        state.isActionInProgress = true;
+      .addCase(unfollowUser.pending, (state, action) => {
+        state.followInProgress[action.meta.arg] = true;
       })
       .addCase(unfollowUser.fulfilled, (state, action) => {
-        state.isActionInProgress = false;
+        state.followInProgress[action.meta.arg] = false;
         state.error = null;
 
         if (state.user && state.user.id !== action.payload.userId) {
@@ -338,16 +339,16 @@ const authSlice = createSlice({
         toast.success(action.payload.message || 'User unfollowed');
       })
       .addCase(unfollowUser.rejected, (state, action) => {
-        state.isActionInProgress = false;
+        state.followInProgress[action.meta.arg] = false;
         state.error = action.payload;
         toast.error(action.payload || 'Failed to unfollow user');
       })
       // Add recipe to favorites
-      .addCase(addRecipeToFavorites.pending, (state) => {
-        state.isActionInProgress = true;
+      .addCase(addRecipeToFavorites.pending, (state, action) => {
+        state.favoriteInProgress[action.meta.arg] = true;
       })
       .addCase(addRecipeToFavorites.fulfilled, (state, action) => {
-        state.isActionInProgress = false;
+        state.favoriteInProgress[action.meta.arg] = false;
         state.error = null;
         if (state.user) {
           state.user.favoriteIds = [...(state.user.favoriteIds || []), action.payload.recipeId];
@@ -355,16 +356,16 @@ const authSlice = createSlice({
         toast.success(action.payload.message || 'Recipe added to favorites');
       })
       .addCase(addRecipeToFavorites.rejected, (state, action) => {
-        state.isActionInProgress = false;
+        state.favoriteInProgress[action.meta.arg] = false;
         state.error = action.payload;
         toast.error(action.payload || 'Failed to add recipe to favorites');
       })
       // Remove recipe from favorites
-      .addCase(removeRecipeFromFavorites.pending, (state) => {
-        state.isActionInProgress = true;
+      .addCase(removeRecipeFromFavorites.pending, (state, action) => {
+        state.favoriteInProgress[action.meta.arg] = true;
       })
       .addCase(removeRecipeFromFavorites.fulfilled, (state, action) => {
-        state.isActionInProgress = false;
+        state.favoriteInProgress[action.meta.arg] = false;
         state.error = null;
         if (state.user) {
           state.user.favoriteIds = state.user.favoriteIds.filter(id => id !== action.payload.recipeId);
@@ -372,7 +373,7 @@ const authSlice = createSlice({
         toast.success(action.payload.message || 'Recipe removed from favorites');
       })
       .addCase(removeRecipeFromFavorites.rejected, (state, action) => {
-        state.isActionInProgress = false;
+        state.favoriteInProgress[action.meta.arg] = false;
         state.error = action.payload;
         toast.error(action.payload || 'Failed to remove recipe from favorites');
       })
@@ -397,7 +398,8 @@ export const selectIsAuthenticated = state => state.auth.isAuthenticated;
 export const selectUser = state => state.auth.user;
 export const selectAuthToken = state => state.auth.token;
 export const selectAuthLoading = state => state.auth.isLoading;
-export const selectActionInProgress = state => state.auth.isActionInProgress;
+export const selectFollowInProgress = state => state.auth.followInProgress;
+export const selectFavoriteInProgress = state => state.auth.favoriteInProgress;
 export const selectAuthError = state => state.auth.error;
 
 export default authSlice.reducer;

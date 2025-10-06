@@ -19,8 +19,8 @@ const SignUpModal = ({ isOpen, onClose, onSwitchToSignIn, onSuccess }) => {
 
   const handleSignUp = async (values, { setSubmitting }) => {
     try {
-      const result = await register(values);
-      if (result && (result.user || result.token || result === true)) {
+      const { payload } = await register(values);
+      if (payload && (payload.user || payload.token)) {
         onSuccess?.();
         onClose();
       }

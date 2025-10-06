@@ -6,8 +6,6 @@ import clsx from 'clsx';
 
 import css from './NavBar.module.css';
 
-// Import hero images (mobile only for mobile menu)
-
 import bigMobile from '@assets/images/hero/big-mobile.webp';
 import bigMobile2x from '@assets/images/hero/big-mobile@2x.webp';
 import smallMobile from '@assets/images/hero/small-mobile.webp';
@@ -20,7 +18,7 @@ import PrivateLink from '../PrivateLink/PrivateLink';
 const navItems = [
   { to: '/', label: 'Home' },
   ...(import.meta.env.VITE_SHOW_UI_KIT === 'true' ? [{ to: '/uikit', label: 'UI Kit' }] : []),
-  { to: '/recipe/add', label: 'Add recipe' }
+  { to: '/recipe/add', label: 'Add recipe', isPrivate: true }
 ];
 
 const NavMenuList = ({ className = '', inverse = false }) => {
@@ -28,22 +26,39 @@ const NavMenuList = ({ className = '', inverse = false }) => {
     <ul className={clsx(css.navList, className, inverse && css.inverse)}>
       {navItems.map(item => (
         <li key={item.to}>
-          <PrivateLink
-            as={NavLink}
-            to={item.to}
-            className={({ isActive }) =>
-              clsx(css.navLink, {
-                [css.activeLink]: isActive
-              })
-            }
-          >
-            {item.label}
-          </PrivateLink>
+          {item.isPrivate ? (
+            // For private links will using PrivateLink
+            <PrivateLink
+              as={NavLink}
+              to={item.to}
+              className={({ isActive }) =>
+                clsx(css.navLink, {
+                  [css.activeLink]: isActive
+                })
+              }
+            >
+              {item.label}
+            </PrivateLink>
+          ) : (
+            // For public links will using NavLink
+            <NavLink
+              to={item.to}
+              state='global'
+              className={({ isActive }) =>
+                clsx(css.navLink, {
+                  [css.activeLink]: isActive
+                })
+              }
+            >
+              {item.label}
+            </NavLink>
+          )}
         </li>
       ))}
     </ul>
   );
 };
+
 
 const NavBar = ({ inverse = false }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);

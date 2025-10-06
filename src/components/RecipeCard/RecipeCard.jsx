@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 
 import css from './RecipeCard.module.css';
 
-import { addRecipeToFavorites, removeRecipeFromFavorites, selectActionInProgress } from '@redux/auth/authSlice';
+import { addRecipeToFavorites, removeRecipeFromFavorites, selectFavoriteInProgress } from '@redux/auth/authSlice';
 
 import Button from '@components//Button/Button';
 import Icon from '@components/Icon/Icon';
@@ -33,7 +33,7 @@ const RecipeCard = ({
 }) => {
   const dispatch = useDispatch();
   const [imageError, setImageError] = useState(false);
-  const isUpdatingFavorite = useSelector(selectActionInProgress);
+  const favoriteInProgress = useSelector(selectFavoriteInProgress);
   const { user, isAuthenticated } = useAuth();
   const { openSignInModal } = useAuthModal();
 
@@ -68,7 +68,7 @@ const RecipeCard = ({
     }
 
     // Prevent multiple clicks while updating
-    if (isUpdatingFavorite) {
+    if (favoriteInProgress[recipe.id]) {
       return;
     }
 
@@ -79,7 +79,7 @@ const RecipeCard = ({
       // Add to favorites
       dispatch(addRecipeToFavorites(recipe.id));
     }
-  }, [isAuthenticated, openSignInModal, recipe.id, isFavorite, isUpdatingFavorite, dispatch]);
+  }, [isAuthenticated, openSignInModal, recipe.id, isFavorite, favoriteInProgress, dispatch]);
 
   const handleImageError = useCallback(() => {
     setImageError(true);
@@ -126,10 +126,10 @@ const RecipeCard = ({
               variant={isFavorite ? 'primary' : 'outline'}
               size="medium"
               onClick={handleFavoriteToggle}
-              disabled={isUpdatingFavorite}
+              disabled={favoriteInProgress[recipe.id]}
               aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
             >
-              <Icon name="heart" size={18} />
+              <Icon name={favoriteInProgress[recipe.id] ? 'loader' : 'heart'} size={18} />
             </Button>
 
             <Button

@@ -11,7 +11,7 @@ export const usersAPI = {
     }
   },
 
-  getRecipes: async (userId, page = 1, limit = 12) => {
+  getRecipes: async (userId, page = 1, limit = 9) => {
     const params = { page, limit };
     try {
       const response = await api.get(`/users/${userId}/recipes`, { params });
@@ -22,7 +22,7 @@ export const usersAPI = {
     }
   },
 
-  getFavorites: async (userId, page = 1, limit =  12) => {
+  getFavorites: async (userId, page = 1, limit =  9) => {
     const params = { page, limit };
     try {
       const response = await api.get(`/users/${userId}/favorites`, { params });
@@ -33,7 +33,7 @@ export const usersAPI = {
     }
   },
 
-  getFollowers: async (userId, page = 1, limit = 12) => {
+  getFollowers: async (userId, page = 1, limit = 9) => {
     const params = { page, limit };
     try {
       const response = await api.get(`/users/${userId}/followers`, { params });
@@ -44,7 +44,7 @@ export const usersAPI = {
     }
   },
 
-  getFollowing: async (userId, page = 1, limit = 12) => {
+  getFollowing: async (userId, page = 1, limit = 9) => {
     const params = { page, limit };
     try {
       const response = await api.get(`/users/${userId}/following`, { params });
