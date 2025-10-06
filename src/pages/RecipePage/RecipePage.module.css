@@ -26,16 +26,16 @@
 }
 
 @media (min-width: 768px) {
-  .page {
-    padding-top: 60px;
-    padding-bottom: 48px;
-  }
   .contentWrapper {
     gap: 40px;
   }
 }
 
 @media (min-width: 1440px) {
+  .page {
+    padding-top: 3.75rem;
+    padding-bottom: 4rem;
+  }
   .contentWrapper {
     align-items: flex-start;
     gap: 80px;

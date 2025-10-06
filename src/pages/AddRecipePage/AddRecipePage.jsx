@@ -10,6 +10,7 @@ import clsx from 'clsx';
 import css from './AddRecipePage.module.css';
 
 import AddRecipeForm from '@components/AddRecipeForm/AddRecipeForm';
+import Loader from '@components/Loader/Loader';
 import MainTitle from '@components/MainTitle/MainTitle.jsx';
 import PathInfo from '@components/PathInfo/PathInfo.jsx';
 import Subtitle from '@components/Subtitle/Subtitle.jsx';
@@ -110,7 +111,7 @@ const AddRecipePage = () => {
         </Subtitle>
 
         {loading ? (
-          <div className={css.loading}>Loading…</div>
+          <Loader />
         ) : (
           <AddRecipeForm
             ingredientItems={lists.ingredients}

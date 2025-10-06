@@ -1,6 +1,7 @@
 /* Styles for Mobile devices */
 .container {
-  margin: 0 auto 48px;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
 }
 .text {
   margin-bottom: 32px;
@@ -11,9 +12,6 @@
 }
 /* Styles for Tablet devices */
 @media only screen and (min-width: 768px) {
-  .container {
-    margin-bottom: 80px;
-  }
   .text {
     font-size: 16px;
     margin-bottom: 40px;
@@ -29,6 +27,7 @@
 /* Styles for Desktop devices */
 @media only screen and (min-width: 1440px) {
   .container {
-    margin-bottom: 64px;
+    padding-top: 3.75rem;
+    padding-bottom: 4rem;
   }
 }

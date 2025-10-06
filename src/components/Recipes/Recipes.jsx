@@ -16,7 +16,6 @@ import {
   selectCurrentPage,
   selectRecipes,
   selectTotalPages,
-  selectTotalCount,
   selectIsLoading,
   selectError
 } from '@redux/recipes/recipesSlice';
@@ -43,7 +42,6 @@ const Recipes = ({ category, onBackToCategories }) => {
   const recipes = useSelector(selectRecipes);
   const currentPage = useSelector(selectCurrentPage);
   const totalPages = useSelector(selectTotalPages);
-  const totalRecipes = useSelector(selectTotalCount);
   const isLoading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
   const selectedIngredient = useSelector(selectSelectedIngredient);
@@ -148,7 +146,6 @@ const Recipes = ({ category, onBackToCategories }) => {
               totalPages={totalPages}
               onPageChange={handlePageChange}
               isLoading={isLoading}
-              totalRecipes={totalRecipes}
             />
           </ErrorBoundary>
         </div>

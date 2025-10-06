@@ -1,6 +1,6 @@
 .container {
-  padding-top: 44px;
-  padding-bottom: 48px;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
 }
 
 .titlesContainer {
@@ -37,11 +37,6 @@
 }
 
 @media screen and (min-width: 768px) {
-  .container {
-    margin-bottom: -12px;
-    padding-bottom: 0;
-  }
-
   .breadcrumb {
     margin-bottom: 40px;
   }
@@ -58,8 +53,8 @@
 
 @media screen and (min-width: 1440px) {
   .container {
-    padding-top: 60px;
-    padding-bottom: 64px;
+    padding-top: 3.75rem;
+    padding-bottom: 4rem;
     margin-bottom: 0;
   }
 
