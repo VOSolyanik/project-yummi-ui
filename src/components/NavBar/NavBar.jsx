@@ -20,7 +20,7 @@ import PrivateLink from '../PrivateLink/PrivateLink';
 const navItems = [
   { to: '/', label: 'Home' },
   ...(import.meta.env.VITE_SHOW_UI_KIT === 'true' ? [{ to: '/uikit', label: 'UI Kit' }] : []),
-  { to: '/recipe/add', label: 'Add recipe' }
+  { to: '/recipe/add', label: 'Add recipe', isPrivate: true }
 ];
 
 const NavMenuList = ({ className = '', inverse = false }) => {
@@ -28,22 +28,38 @@ const NavMenuList = ({ className = '', inverse = false }) => {
     <ul className={clsx(css.navList, className, inverse && css.inverse)}>
       {navItems.map(item => (
         <li key={item.to}>
-          <PrivateLink
-            as={NavLink}
-            to={item.to}
-            className={({ isActive }) =>
-              clsx(css.navLink, {
-                [css.activeLink]: isActive
-              })
-            }
-          >
-            {item.label}
-          </PrivateLink>
+          {item.isPrivate ? (
+            // For private links will using PrivateLink
+            <PrivateLink
+              as={NavLink}
+              to={item.to}
+              className={({ isActive }) =>
+                clsx(css.navLink, {
+                  [css.activeLink]: isActive
+                })
+              }
+            >
+              {item.label}
+            </PrivateLink>
+          ) : (
+            // For pablic links will using NavLink
+            <NavLink
+              to={item.to}
+              className={({ isActive }) =>
+                clsx(css.navLink, {
+                  [css.activeLink]: isActive
+                })
+              }
+            >
+              {item.label}
+            </NavLink>
+          )}
         </li>
       ))}
     </ul>
   );
 };
+
 
 const NavBar = ({ inverse = false }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
