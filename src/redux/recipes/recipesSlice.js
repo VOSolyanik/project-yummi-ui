@@ -19,6 +19,18 @@ export const fetchRecipes = createAsyncThunk(
   }
 );
 
+export const deleteRecipe = createAsyncThunk(
+  'recipes/deleteRecipe',
+  async (recipeId, { rejectWithValue }) => {
+    try {
+      const response = await recipesAPI.deleteRecipe(recipeId);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 const initialState = {
   items: [],
   currentPage: 1,

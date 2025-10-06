@@ -10,7 +10,7 @@ const Icon = ({
 }) => {
   return (
     <svg
-      className={clsx(css.icon, className)}
+      className={clsx(css.icon, className, name === 'loader' && css.loader)}
       width={size}
       height={size}
       {...props}

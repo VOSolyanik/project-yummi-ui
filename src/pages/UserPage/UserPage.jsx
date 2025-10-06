@@ -7,10 +7,11 @@ import clsx from 'clsx';
 
 import css from './UserPage.module.css';
 
-import { selectUser, selectActionInProgress, followUser, unfollowUser } from '@redux/auth/authSlice';
+import { selectUser, selectFollowInProgress, followUser, unfollowUser } from '@redux/auth/authSlice';
 import { fetchUserById, selectSelectedUser, selectIsLoadingSelectedUser, clearState } from '@redux/users/usersSlice';
 
 import Button from '@components/Button/Button';
+import Icon from '@components/Icon/Icon';
 import Loader from '@components/Loader/Loader';
 import MainTitle from '@components/MainTitle/MainTitle';
 import PathInfo from '@components/PathInfo/PathInfo';
@@ -27,7 +28,7 @@ const UserPage = () => {
   const currentUser = useSelector(selectUser);
   const selectedUser = useSelector(selectSelectedUser);
   const isLoading = useSelector(selectIsLoadingSelectedUser);
-  const isActionInProgress = useSelector(selectActionInProgress);
+  const followInProgress = useSelector(selectFollowInProgress);
 
   const profileId = useMemo(() => (userId === 'me' ? currentUser?.id : userId), [userId, currentUser?.id]);
 
@@ -54,14 +55,15 @@ const UserPage = () => {
     openLogoutModal();
   };
 
-  const handleFollow = () => {
-    if (isActionInProgress || isCurrentUserProfile) return;
+  const handleFollow = async () => {
+    if (followInProgress[selectedUser.id] || isCurrentUserProfile) return;
 
     if (isFollowed) {
-      dispatch(unfollowUser(selectedUser.id));
+      await dispatch(unfollowUser(selectedUser.id));
     } else {
-      dispatch(followUser(selectedUser.id));
+      await dispatch(followUser(selectedUser.id));
     }
+    await dispatch(fetchUserById(selectedUser.id));
   };
 
   return (
@@ -76,7 +78,7 @@ const UserPage = () => {
           Reveal your culinary art, share your favorite recipe and create gastronomic masterpieces with us.
         </Subtitle>
       </div>
-      {isLoading || !user ? (
+      {isLoading && !user ? (
         <Loader />
       ) : (
         <div className={css.sectionWrapper}>
@@ -87,7 +89,8 @@ const UserPage = () => {
                 LOG OUT
               </Button>
             ) : (
-              <Button className={css.btn} variant="primary" onClick={handleFollow}>
+              <Button className={css.btn} variant="primary" onClick={handleFollow} disabled={followInProgress[user?.id]}>
+                {followInProgress[user?.id] && <Icon name="loader" />}
                 {isFollowed ? 'UNFOLLOW' : 'FOLLOW'}
               </Button>
             )}

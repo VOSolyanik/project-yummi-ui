@@ -35,9 +35,7 @@ const NetworkLinks = () => {
             rel="noopener noreferrer"
             variant="outline"
             aria-label={`Visit our ${link.name} page`}
-          >
-            <Icon name={link.icon} size={20} />
-          </Button>
+          ><Icon name={link.icon} size={20} /></Button>
         </li>
       ))}
     </ul>

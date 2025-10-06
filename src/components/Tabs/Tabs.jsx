@@ -24,7 +24,7 @@ const Tabs = ({ user, isCurrent, className = '' }) => {
           })}
           onClick={() => setActiveTab('recipes')}
         >
-          My recipes
+          {isCurrent ? 'My recipes' : 'Recipes'}
         </button>
         {isCurrent && (
           <button

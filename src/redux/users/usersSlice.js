@@ -16,10 +16,10 @@ export const fetchUserById = createAsyncThunk(
 
 export const fetchRecipes = createAsyncThunk(
   'users/fetchRecipes',
-  async ({ userId, page = 1, limit = 12 }, { rejectWithValue }) => {
+  async ({ userId, page = 1, limit = 9 }, { rejectWithValue }) => {
     try {
       const res = await usersAPI.getRecipes(userId, page, limit);
-      return res.data;
+      return { ...res.data, currentPage: page, limit };
     } catch (err) {
       return rejectWithValue(err.response?.data || 'Failed to fetch recipes');
     }
@@ -28,10 +28,10 @@ export const fetchRecipes = createAsyncThunk(
 
 export const fetchFavorites = createAsyncThunk(
   'users/fetchFavorites',
-  async ({ userId, page = 1, limit = 12 }, { rejectWithValue }) => {
+  async ({ userId, page = 1, limit = 9 }, { rejectWithValue }) => {
     try {
       const res = await usersAPI.getFavorites(userId, page, limit);
-      return res.data;
+      return { ...res.data, currentPage: page, limit };
     } catch (err) {
       return rejectWithValue(err.response?.data || 'Failed to fetch favorites');
     }
@@ -40,10 +40,10 @@ export const fetchFavorites = createAsyncThunk(
 
 export const fetchFollowers = createAsyncThunk(
   'users/fetchFollowers',
-  async ({ userId, page = 1, limit = 12 }, { rejectWithValue }) => {
+  async ({ userId, page = 1, limit = 9 }, { rejectWithValue }) => {
     try {
       const res = await usersAPI.getFollowers(userId, page, limit);
-      return res.data;
+      return { ...res.data, currentPage: page, limit };
     } catch (err) {
       return rejectWithValue(err.response?.data || 'Failed to fetch followers');
     }
@@ -52,10 +52,10 @@ export const fetchFollowers = createAsyncThunk(
 
 export const fetchFollowing = createAsyncThunk(
   'users/fetchFollowing',
-  async ({ userId, page = 1, limit = 12 }, { rejectWithValue }) => {
+  async ({ userId, page = 1, limit = 9 }, { rejectWithValue }) => {
     try {
       const res = await usersAPI.getFollowing(userId, page, limit);
-      return res.data;
+      return { ...res.data, currentPage: page, limit };
     } catch (err) {
       return rejectWithValue(err.response?.data || 'Failed to fetch following');
     }
@@ -106,8 +106,10 @@ const usersSlice = createSlice({
         state.recipes.loading = false;
         state.recipes.items = action.payload.items;
         state.recipes.totalCount = action.payload.totalCount;
-        state.recipes.totalPages = action.payload.totalCount ? Math.ceil(action.payload.totalCount / 12) : 0;
-        state.recipes.currentPage = action.payload.currentPage ?? action.meta.arg.page ?? 1;
+        state.recipes.totalPages = action.payload.totalCount
+          ? Math.ceil(action.payload.totalCount / action.payload.limit)
+          : 0;
+        state.recipes.currentPage = action.payload.currentPage;
       })
       .addCase(fetchRecipes.rejected, (state, action) => {
         state.recipes.loading = false;
@@ -120,12 +122,13 @@ const usersSlice = createSlice({
         state.favorites.loading = true;
       })
       .addCase(fetchFavorites.fulfilled, (state, action) => {
-        console.log(action.payload);
         state.favorites.loading = false;
         state.favorites.items = action.payload.items;
         state.favorites.totalCount = action.payload.totalCount;
-        state.favorites.totalPages = action.payload.totalCount ? Math.ceil(action.payload.totalCount / 12) : 0;
-        state.favorites.currentPage = action.payload.currentPage ?? action.meta.arg.page ?? 1;
+        state.favorites.totalPages = action.payload.totalCount
+          ? Math.ceil(action.payload.totalCount / action.payload.limit)
+          : 0;
+        state.favorites.currentPage = action.payload.currentPage;
       })
       .addCase(fetchFavorites.rejected, (state, action) => {
         state.favorites.loading = false;
@@ -141,8 +144,10 @@ const usersSlice = createSlice({
         state.followers.loading = false;
         state.followers.items = action.payload.items;
         state.followers.totalCount = action.payload.totalCount;
-        state.followers.totalPages = action.payload.totalCount ? Math.ceil(action.payload.totalCount / 12) : 0;
-        state.followers.currentPage = action.payload.currentPage ?? action.meta.arg.page ?? 1;
+        state.followers.totalPages = action.payload.totalCount
+          ? Math.ceil(action.payload.totalCount / action.payload.limit)
+          : 0;
+        state.followers.currentPage = action.payload.currentPage;
       })
       .addCase(fetchFollowers.rejected, (state, action) => {
         state.followers.loading = false;
@@ -158,8 +163,10 @@ const usersSlice = createSlice({
         state.following.loading = false;
         state.following.items = action.payload.items;
         state.following.totalCount = action.payload.totalCount;
-        state.following.totalPages = action.payload.totalCount ? Math.ceil(action.payload.totalCount / 12) : 0;
-        state.following.currentPage = action.payload.currentPage ?? action.meta.arg.page ?? 1;
+        state.following.totalPages = action.payload.totalCount
+          ? Math.ceil(action.payload.totalCount / action.payload.limit)
+          : 0;
+        state.following.currentPage = action.payload.currentPage;
       })
       .addCase(fetchFollowing.rejected, (state, action) => {
         state.following.loading = false;
@@ -172,8 +179,5 @@ export const { clearState } = usersSlice.actions;
 
 export const selectSelectedUser = (state) => state.users.selectedUser.user;
 export const selectIsLoadingSelectedUser = (state) => state.users.selectedUser.loading;
-export const selectListRecipes = (state) => state.users.recipes.items;
-export const selectIsLoadingListRecipes = (state) => state.users.recipes.isLoading;
-export const selectListRecipesError = (state) => state.users.recipes.error;
 
 export default usersSlice.reducer;

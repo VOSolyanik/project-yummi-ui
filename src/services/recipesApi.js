@@ -55,6 +55,16 @@ export const recipesAPI = {
       console.error('Failed to create recipe:', error);
       throw error;
     }
+  },
+
+  deleteRecipe: async (recipeId) => {
+    try {
+      const response = await api.delete(`/recipes/${recipeId}`);
+      return response.data;
+    } catch (error) {
+      console.error(`Error deleting recipe with ID ${recipeId}:`, error);
+      throw error;
+    }
   }
 };
 

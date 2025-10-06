@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import css from './RecipeInfo.module.css';
 
-import { addRecipeToFavorites, removeRecipeFromFavorites, selectActionInProgress } from '@redux/auth/authSlice';
+import { addRecipeToFavorites, removeRecipeFromFavorites, selectFavoriteInProgress } from '@redux/auth/authSlice';
 
 import noImagePlaceholder from '@assets/images/no-image.png';
 
@@ -18,7 +18,7 @@ import { useAuthModal } from '@/hooks/useAuthModal';
 
 const RecipeInfo = ({ recipe }) => {
   const dispatch = useDispatch();
-  const isUpdatingFavorite = useSelector(selectActionInProgress);
+  const favoriteInProgress = useSelector(selectFavoriteInProgress);
   const { user, isAuthenticated } = useAuth();
   const { openSignInModal } = useAuthModal();
 
@@ -41,7 +41,7 @@ const RecipeInfo = ({ recipe }) => {
     }
 
     // Prevent multiple clicks while updating
-    if (isUpdatingFavorite) {
+    if (favoriteInProgress[recipe.id]) {
       return;
     }
 
@@ -52,7 +52,7 @@ const RecipeInfo = ({ recipe }) => {
       // Add to favorites
       dispatch(addRecipeToFavorites(recipe.id));
     }
-  }, [isAuthenticated, openSignInModal, recipe.id, isFavorite, isUpdatingFavorite, dispatch]);
+  }, [isAuthenticated, openSignInModal, recipe.id, isFavorite, favoriteInProgress, dispatch]);
 
 
   const handleImageError = (e) => {
@@ -79,10 +79,10 @@ const RecipeInfo = ({ recipe }) => {
           variant="outline"
           size="large"
           onClick={handleFavoriteToggle}
-          disabled={isUpdatingFavorite}
+          disabled={favoriteInProgress[recipe.id]}
           className={css.favoriteButton}
         >
-          {isUpdatingFavorite ? 'Updating...' : (isFavorite ? 'Remove from favorites' : 'Add to favorites')}
+          {favoriteInProgress[recipe.id] ? 'Updating...' : (isFavorite ? 'Remove from favorites' : 'Add to favorites')}
         </Button>
       </div>
     </div>
