@@ -31,8 +31,8 @@
     "react-router-dom": "^7.9.1",
     "react-spinners": "^0.17.0",
     "redux-persist": "^6.0.0",
-    "yup": "^1.7.1",
-    "swiper": "^10.1.0"
+    "swiper": "^10.1.0",
+    "yup": "^1.7.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",
@@ -50,9 +50,15 @@
     "eslint-plugin-react-refresh": "^0.4.21",
     "globals": "^16.4.0",
     "husky": "^9.1.7",
+    "imagemin-gifsicle": "^7.0.0",
+    "imagemin-mozjpeg": "^10.0.0",
+    "imagemin-pngquant": "^10.0.0",
+    "imagemin-svgo": "^11.0.1",
+    "imagemin-webp": "^8.0.0",
     "lint-staged": "^16.2.0",
     "prettier": "^3.6.2",
     "svgstore": "^3.0.1",
-    "vite": "^7.1.7"
+    "vite": "^7.1.7",
+    "vite-plugin-imagemin": "^0.6.1"
   }
 }
