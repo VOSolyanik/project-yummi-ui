@@ -1,6 +1,8 @@
 .categories {
   padding: 56px 0 64px 0;
   background-color: var(--main-bg-color);
+  /* Reserve minimum space to prevent layout shift */
+  min-height: 500px;
 }
 
 /* Tablet styles (768px-1439px) */

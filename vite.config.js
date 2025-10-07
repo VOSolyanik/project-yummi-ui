@@ -3,6 +3,7 @@ import { fileURLToPath } from 'url';
 
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
+import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js';
 import ViteImageOptimize from 'vite-plugin-imagemin';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -11,6 +12,14 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 export default defineConfig({
   plugins: [
     react(),
+    // CSS injection plugin to eliminate render-blocking CSS
+    cssInjectedByJsPlugin({
+      topExecutionPriority: false,
+      jsAssetsFilterFunction: function (outputAsset) {
+        // Only inject CSS for main chunks to reduce render blocking
+        return outputAsset.isEntry || outputAsset.isDynamicEntry;
+      }
+    }),
     // Image optimization plugin
     ViteImageOptimize({
       // GIF optimization
@@ -49,6 +58,8 @@ export default defineConfig({
   ],
   build: {
     sourcemap: true,
+    // CSS code splitting for better performance
+    cssCodeSplit: true,
     // Additional build optimizations
     rollupOptions: {
       output: {
@@ -59,6 +70,16 @@ export default defineConfig({
           router: ['react-router-dom'],
           forms: ['formik', 'yup'],
           ui: ['react-hot-toast', 'react-helmet-async', 'clsx']
+        },
+        // Optimize CSS file naming for better caching
+        assetFileNames: (assetInfo) => {
+          if (/\.(css)$/.test(assetInfo.name)) {
+            return 'assets/css/[name]-[hash][extname]';
+          }
+          if (/\.(png|jpe?g|gif|svg|webp|avif)$/.test(assetInfo.name)) {
+            return 'assets/images/[name]-[hash][extname]';
+          }
+          return 'assets/[name]-[hash][extname]';
         }
       }
     },

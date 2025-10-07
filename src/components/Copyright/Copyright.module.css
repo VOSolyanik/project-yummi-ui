@@ -6,6 +6,8 @@
   letter-spacing: -0.02em;
   color: var(--charcoal-color);
   text-align: center;
+  /* Prevent layout shift by reserving minimum space */
+  min-height: 20px;
 }
 
 @media screen and (min-width: 768px) {

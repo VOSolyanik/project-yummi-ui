@@ -40,14 +40,24 @@ const HeroBanner = () => {
             <source srcSet={`${smallDesktop} 1x, ${smallDesktop2x} 2x`} media="(min-width: 1152px)" type="image/webp" />
             <source srcSet={`${smallTablet} 1x, ${smallTablet2x} 2x`} media="(min-width: 768px)" type="image/webp" />
             <source srcSet={`${smallMobile} 1x, ${smallMobile2x} 2x`} media="(max-width: 767px)" type="image/webp" />
-            <img src={smallMobile} alt="Hero secondary image" loading="eager" className="image" />
+            <img
+              src={smallMobile}
+              alt="Hero secondary image"
+              loading="eager"
+              className="image"
+            />
           </picture>
 
           <picture className={`picture ${css.bigImage}`}>
             <source srcSet={`${bigDesktop} 1x, ${bigDesktop2x} 2x`} media="(min-width: 1152px)" type="image/webp" />
             <source srcSet={`${bigTablet} 1x, ${bigTablet2x} 2x`} media="(min-width: 768px)" type="image/webp" />
             <source srcSet={`${bigMobile} 1x, ${bigMobile2x} 2x`} media="(max-width: 767px)" type="image/webp" />
-            <img src={bigMobile} alt="Hero main image" loading="eager" className="image" />
+            <img
+              src={bigMobile}
+              alt="Hero main image"
+              loading="eager"
+              className="image"
+            />
           </picture>
         </div>
       </div>

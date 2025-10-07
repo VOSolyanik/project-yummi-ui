@@ -54,10 +54,16 @@
 
 .smallImage {
   width: 77px;
+  height: 72px;
+  /* Reserve space to prevent layout shift */
+  min-height: 72px;
 }
 
 .bigImage {
   width: 190px;
+  height: 178px;
+  /* Reserve space to prevent layout shift */
+  min-height: 178px;
 }
 
 @media screen and (min-width: 768px) {
@@ -79,10 +85,14 @@
 
   .smallImage {
     width: 128px;
+    height: 119px;
+    min-height: 119px;
   }
 
   .bigImage {
     width: 302px;
+    height: 283px;
+    min-height: 283px;
   }
 }
 
@@ -99,13 +109,5 @@
   }
   .mediaWrap {
     margin-top: 46px;
-  }
-
-  .smallImage {
-    width: 128px;
-  }
-
-  .bigImage {
-    width: 302px;
   }
 }
